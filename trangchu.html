@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SmartExpense — Tổng quan</title>
+<style>
+  :root {
+    --bg: #eef7ff;
+    --card: #fff;
+    --border: #e5e7eb;
+    --text: #0f172a;
+    --primary: #0b63ff;
+    --primary-hover: #084bcc;
+    --shadow: 0 3px 8px rgba(0,0,0,.05);
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  /* Sidebar */
+  .sidebar {
+    width: 220px;
+    background: #fff;
+    border-right: 1px solid var(--border);
+    padding: 20px 12px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+  }
+  .logo {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 20px; padding: 0 6px;
+  }
+  .logo img { width: 32px; height: 32px; }
+  .logo b { font-size: 18px; }
+  .nav { display: flex; flex-direction: column; gap: 6px; }
+  .nav a {
+    text-decoration: none; color: #374151;
+    padding: 10px 12px;
+    border-radius: 8px;
+    display: block;
+  }
+  .nav a.active, .nav a:hover {
+    background: var(--primary); color: #fff;
+  }
+
+  /* Main */
+  .main { flex: 1; padding: 20px; }
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .topbar h1 { margin: 0; }
+  .searchbox {
+    padding: 8px 12px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    min-width: 240px;
+    background: #f9fafb;
+  }
+  .avatar {
+    width: 36px; height: 36px;
+    background: #ffe58a;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold;
+  }
+
+  /* Cards */
+  .cards {
+    margin: 20px 0;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+  }
+  .card h4 {
+    margin: 0 0 6px; font-size: 13px; color: #6b7280;
+  }
+  .value { font-size: 20px; font-weight: bold; }
+  .progress {
+    background: #f0f3f8;
+    border-radius: 10px;
+    height: 6px;
+    margin: 6px 0;
+  }
+  .progress span {
+    display: block;
+    height: 100%;
+    background: var(--primary);
+    width: 28%;
+    border-radius: 10px;
+  }
+  .sub { font-size: 12px; color: #888; }
+  .up { color: green; font-weight: bold; }
+  .down { color: red; font-weight: bold; }
+
+  /* Layout grid */
+  .grid { display: grid; grid-template-columns: 1fr 300px; gap: 16px; }
+
+  /* Panel */
+  .panel { margin-top: 16px; }
+  .panel-title { font-weight: bold; margin-bottom: 6px; }
+  .inner {
+    background: #fff; padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+
+  /* Table */
+  .table { width: 100%; border-collapse: collapse; }
+  .table th, .table td {
+    padding: 10px; border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+  }
+  .table th { color: #6b7280; font-size: 13px; }
+
+  /* Right side */
+  .side .card { margin-bottom: 16px; }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .cards { grid-template-columns: repeat(2, 1fr); }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/833/833314.png" alt="">
+      <b>SmartExpense</b>
+    </div>
+    <nav class="nav">
+      <a href="#" class="active">Tổng quan</a>
+      <a href="#">Danh sách chi tiêu</a>
+      <a href="#">Lịch sử chi tiêu</a>
+      <a href="#">Lên lịch chi tiêu</a>
+      <a href="#">Loại chi tiêu</a>
+      <a href="#">Báo cáo</a>
+      <a href="#">Hồ sơ</a>
+      <a href="#">Cài đặt</a>
+      <a href="login.html">Đăng xuất</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="topbar">
+      <h1>Tổng quan</h1>
+      <input class="searchbox" placeholder="Tìm giao dịch...">
+      <div class="avatar">Q</div>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards">
+      <div class="card">
+        <h4>Số dư</h4>
+        <div class="value">36,450,000</div>
+        <div class="sub">Cập nhật hôm nay</div>
+      </div>
+      <div class="card">
+        <h4>Chi tháng này</h4>
+        <div class="value">8,320,000</div>
+        <div class="sub"><span class="down">+12%</span> so với tháng trước</div>
+      </div>
+      <div class="card">
+        <h4>Thu tháng này</h4>
+        <div class="value">10,500,000</div>
+        <div class="sub"><span class="up">+4%</span> so với tháng trước</div>
+      </div>
+      <div class="card">
+        <h4>Mục tiêu tiết kiệm</h4>
+        <div class="value">50,000,000</div>
+        <div class="progress"><span></span></div>
+        <div class="sub">28% hoàn thành</div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <!-- Left -->
+      <section>
+        <div class="panel">
+          <div class="panel-title">Xu hướng chi tiêu</div>
+          <div class="inner" style="height:180px; display:flex; align-items:center; justify-content:center; color:#999">
+            (Biểu đồ demo)
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-title">Giao dịch gần đây</div>
+          <div class="inner">
+            <table class="table">
+              <thead>
+                <tr><th>HẠNG MỤC</th><th>MÔ TẢ</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Ăn uống</td><td>Bữa trưa</td></tr>
+                <tr><td>Lương</td><td>Tháng 9</td></tr>
+                <tr><td>Di chuyển</td><td>Grab</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Right -->
+      <aside class="side">
+        <div class="card">
+          <b>Sổ chi tiêu của Quỳnh</b>
+          <p style="margin:6px 0">Tổng chi tiêu tháng này: 10,500,000đ</p>
+          <p style="margin:6px 0">Tổng chi tiêu hôm nay: 280,000đ</p>
+          <p style="margin:6px 0">Số tiền còn lại: 0đ</p>
+          <input style="width:100%;padding:8px;border:1px solid var(--border);border-radius:8px" placeholder="Nhập chi tiêu hôm nay">
+        </div>
+
+        <div class="card">
+          <b>Theo hạng mục</b>
+          <p>🍽️ Ăn uống: 2,150,000</p>
+          <p>🚌 Di chuyển: 1,120,000</p>
+          <p>🏠 Nhà ở: 3,400,000</p>
+        </div>
+
+        <div class="card">
+          <b>Hướng dẫn:</b>
+          <p>Cú pháp: [chi tiêu] [số tiền]</p>
+          <p>Ví dụ: "Cà phê 10000"</p>
+        </div>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>
