@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SmartExpense — Lịch sử chi tiêu</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eaf3f9;
+    --card:#ffffff;
+    --text:#0f172a;
+    --muted:#64748b;
+    --border:#e5e7eb;
+    --blue:#2563eb;
+    --blue-500:#3b82f6;
+    --green:#10b981;
+    --red:#ef4444;
+    --gray:#94a3b8;
+    --radius:14px;
+    --shadow:0 10px 26px rgba(15,23,42,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    display:grid;
+    grid-template-columns:260px 1fr;
+    min-height:100vh;
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar{
+    background:#fff; border-right:1px solid var(--border);
+    padding:18px 14px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;padding:8px 10px 16px}
+  .brand .pig{
+    width:40px;height:40px;border-radius:12px;overflow:hidden;background:#ffe8e0;
+    display:grid;place-items:center;box-shadow:var(--shadow)
+  }
+  .brand .pig img{width:100%;height:100%;object-fit:cover}
+  .brand b{font-size:18px;letter-spacing:.2px}
+  .menu{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+  .menu a{
+    display:flex;align-items:center;gap:12px;
+    padding:10px 12px;border-radius:10px;text-decoration:none;
+    color:#111827;font-weight:600;
+  }
+  .menu a .i{width:18px;text-align:center;color:#94a3b8}
+  .menu a.active{background:var(--blue);color:#fff}
+  .menu a.active .i{color:#fff}
+
+  /* ===== Main ===== */
+  .main{padding:22px 24px 40px}
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .top h1{margin:0;font-size:22px;font-weight:800}
+
+  /* ===== History box ===== */
+  .box{
+    background:rgba(59,130,246,.08);
+    border:1px solid rgba(59,130,246,.2);
+    border-radius:12px;
+    padding:14px;
+  }
+  .box h3{margin:0 0 12px;font-size:16px}
+
+  .history{
+    background:var(--card);
+    border:2px solid var(--blue-500);
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    padding:10px 12px;
+  }
+
+  .group{padding:14px 6px}
+  .group+.group{border-top:1px solid #eaf0f6}
+  .g-head{
+    font-size:13px; font-weight:800; color:#64748b; margin:0 0 10px;
+  }
+
+  .row{
+    display:grid;
+    grid-template-columns:64px 10px 10px 1fr 120px;
+    align-items:center; gap:10px; padding:10px 0;
+    border-top:1px dashed #eef2f7;
+  }
+  .row:first-of-type{border-top:0}
+
+  .time{font-weight:700; color:#1f2937}
+  .dot{
+    width:16px;height:16px;border-radius:50%; border:2px solid #d1d5db;
+    background:#fff;
+  }
+  .bar{
+    width:6px;height:24px;border-radius:4px;background:#cbd5e1;
+  }
+  .bar.green{background:#34d399}
+  .bar.red{background:#f87171}
+  .bar.blue{background:#60a5fa}
+  .name{font-weight:700; color:#2563eb}
+  .desc{font-size:12px; color:#94a3b8; margin-top:2px}
+  .amount{color:#94a3b8; text-align:right}
+
+  /* Floating pig */
+  .pig-float{
+    position:fixed; right:26px; bottom:26px; width:76px; height:76px;
+    border-radius:18px; background:#ffe8e0; display:grid; place-items:center;
+    box-shadow:var(--shadow); z-index:10;
+  }
+  .pig-float img{width:64px;height:64px}
+
+  /* Responsive */
+  @media (max-width:1024px){
+    body{grid-template-columns:1fr}
+    .sidebar{position:sticky;top:0;z-index:20}
+  }
+  @media (max-width:600px){
+    .row{grid-template-columns:54px 10px 10px 1fr 84px}
+    .amount{font-size:13px}
+  }
+</style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="pig">
+        <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="SmartExpense">
+      </div>
+      <b>SmartExpense</b>
+    </div>
+    <nav class="menu">
+      <a href="trangchu.html"><span class="i">🏠</span> Tổng quan</a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
+      <a href="lichsuchitieu.html" class="active"><span class="i">🕘</span> Lịch sử chi tiêu</a>
+      <a href="#"><span class="i">📅</span> Lên lịch chi tiêu</a>
+      <a href="#"><span class="i">🏷️</span> Loại chi tiêu</a>
+      <a href="#"><span class="i">📊</span> Báo cáo</a>
+      <a href="#"><span class="i">👤</span> Hồ sơ</a>
+      <a href="#"><span class="i">⚙️</span> Cài đặt</a>
+      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="top"><h1>Lịch sử chi tiêu</h1></div>
+
+    <section class="box">
+      <div class="history">
+        <!-- Group 2025-09-25 -->
+        <div class="group">
+          <div class="g-head">2025-09-25</div>
+
+          <div class="row">
+            <div class="time">18:54</div>
+            <div class="dot"></div>
+            <div class="bar blue"></div>
+            <div>
+              <div class="name">Ăn uống</div>
+              <div class="desc">200,000đ</div>
+            </div>
+            <div class="amount"></div>
+          </div>
+
+          <div class="row">
+            <div class="time">18:52</div>
+            <div class="dot"></div>
+            <div class="bar red"></div>
+            <div>
+              <div class="name">Tiền xăng</div>
+              <div class="desc">80,000đ</div>
+            </div>
+            <div class="amount"></div>
+          </div>
+        </div>
+
+        <!-- Group 2025-09-24 -->
+        <div class="group">
+          <div class="g-head">2025-09-24</div>
+
+          <div class="row">
+            <div class="time">16:29</div>
+            <div class="dot"></div>
+            <div class="bar green"></div>
+            <div>
+              <div class="name">Mua sắm cho vợ</div>
+              <div class="desc">2,000,000đ</div>
+            </div>
+            <div class="amount"></div>
+          </div>
+
+          <div class="row">
+            <div class="time">16:29</div>
+            <div class="dot"></div>
+            <div class="bar red"></div>
+            <div>
+              <div class="name">Cà phê</div>
+              <div class="desc">15,000đ</div>
+            </div>
+            <div class="amount"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pig bottom-right -->
+  <div class="pig-float">
+    <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="pig">
+  </div>
+
+<script>
+  // (Tuỳ chọn) Bạn có thể map dữ liệu để render tự động:
+  // const data = [{date:'2025-09-25', items:[{time:'18:54', name:'Ăn uống', amount:'200,000đ', color:'blue'}, ...]}]
+</script>
+</body>
+</html>

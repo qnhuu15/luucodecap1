@@ -54,8 +54,13 @@
     color:#111827;font-weight:600;
   }
   .menu a .i{width:18px;text-align:center;color:#94a3b8}
-  .menu a.active{background:var(--blue);color:#fff}
-  .menu a.active .i{color:#fff}
+ .menu a.active{
+  background:#fff;
+  color:#111827;
+  border:none;          
+}
+.menu a.active .i{ color:#94a3b8; }  
+
   .menu .sep{height:10px}
 
   /* ===== Main ===== */
@@ -178,16 +183,16 @@
 
 
     <nav class="menu">
-      <a href="#"><span class="i">🏠</span> Tổng quan</a>
-      <a href="#"><span class="i">🧾</span> Danh sách chi tiêu</a>
-      <a href="#"><span class="i">🕘</span> Lịch sử chi tiêu</a>
+      <a href="trangchu.html"><span class="i">🏠</span> Tổng quan</a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
+      <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
       <a href="#"><span class="i">📅</span> Lên lịch chi tiêu</a>
       <a href="#"><span class="i">🏷️</span> Loại chi tiêu</a>
       <a href="#"><span class="i">📊</span> Báo cáo</a>
       <a href="#"><span class="i">👤</span> Hồ sơ</a>
       <a href="#" class="active"><span class="i">⚙️</span> Cài đặt</a>
       <div class="sep"></div>
-      <a href="#"><span class="i">↪️</span> Đăng xuất</a>
+      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
     </nav>
   </aside>
 
