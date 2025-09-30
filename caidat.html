@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartExpense — Cài đặt</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eaf3f9; --card:#fff; --text:#0f172a; --muted:#64748b;
+    --border:#e5e7eb; --blue:#2563eb; --green:#22c55e;
+    --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    display:grid;grid-template-columns:260px 1fr;min-height:100vh;
+  }
+
+  /* Sidebar */
+  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
+  .brand .logo img{width:100%;height:100%;object-fit:cover}
+  .brand b{font-size:18px}
+  .nav{display:flex;flex-direction:column;gap:6px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
+  .nav a .i{width:18px;text-align:center}
+  .nav a.active{background:var(--blue);color:#fff}
+
+  /* Main */
+  .main{padding:22px 24px 40px}
+  .wrap{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:22px 24px;max-width:980px}
+  .container{display:flex;gap:28px}
+  .left{flex:1}
+  .right{width:340px}
+  h2{margin:0 0 18px;font-size:20px}
+
+  .section{margin-bottom:28px}
+  .row{display:flex;align-items:center;justify-content:space-between;margin:12px 0}
+  .row .label{font-weight:700}
+  .note{color:#94a3b8;font-size:14px}
+  .sub{color:#111827}
+
+  /* Switch */
+  .switch{position:relative;display:inline-block;width:48px;height:28px}
+  .switch input{opacity:0;width:0;height:0}
+  .slider{position:absolute;inset:0;border-radius:999px;background:#e5e7eb;cursor:pointer;transition:.2s}
+  .slider:before{content:"";position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.15);transition:.2s}
+  .switch input:checked + .slider{background:var(--green)}
+  .switch input:checked + .slider:before{transform:translateX(20px)}
+
+  /* Radio & checkbox line */
+  .inline{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px}
+  .chip{display:inline-flex;align-items:center;gap:8px}
+
+  /* Right list */
+  .right .block{margin-bottom:22px}
+  .right .title{font-weight:800;margin-bottom:8px}
+  .right a{display:block;color:#2563eb;text-decoration:none;margin:10px 0}
+  .muted{color:#94a3b8}
+
+  /* Pig */
+  .pig{position:fixed;right:24px;bottom:24px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+  .pig img{width:64px;height:64px}
+
+  @media (max-width:1060px){
+    body{grid-template-columns:1fr}
+    .sidebar{position:sticky;top:0;z-index:20}
+    .wrap{max-width:none}
+    .container{flex-direction:column}
+    .right{width:auto}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
+      <b>SmartExpense</b>
+    </div>
+    <nav class="nav">
+      <a href="trangchu.html"><span class="i">🏠</span> Tổng quan</a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
+      <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
+      <a href="#"><span class="i">📅</span> Lên lịch chi tiêu</a>
+      <a href="loaichitieu.html"><span class="i">🏷️</span> Loại chi tiêu</a>
+      <a href="baocao.html"><span class="i">📊</span> Báo cáo</a>
+      <a href="hoso.html"><span class="i">👤</span> Hồ sơ</a>
+      <a href="caidat.html" class="active"><span class="i">⚙️</span> Cài đặt</a>
+      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="wrap">
+      <div class="container">
+        <!-- LEFT -->
+        <div class="left">
+          <h2>Cảnh báo & Thông báo</h2>
+
+          <div class="row">
+            <div class="label">Ngân sách</div>
+            <label class="switch">
+              <input type="checkbox" id="swBudget" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="row">
+            <div class="label">Bất thường</div>
+            <label class="switch">
+              <input type="checkbox" id="swAnomaly" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="row">
+            <div class="label">OCR</div>
+            <label class="switch">
+              <input type="checkbox" id="swOCR" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="section">
+            <div class="label">Ngưỡng cảnh báo ngân sách</div>
+            <div class="inline">
+              <label class="chip"><input type="radio" name="threshold"> 30%</label>
+              <label class="chip"><input type="radio" name="threshold" checked> 95%</label>
+              <label class="chip"><input type="radio" name="threshold"> 100%</label>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="label">Phương thức thông báo</div>
+            <div class="inline">
+              <label class="chip"><input type="checkbox" checked> In-app</label>
+              <label class="chip"><input type="checkbox"> Email</label>
+              <label class="chip"><input type="checkbox"> SMS</label>
+            </div>
+          </div>
+
+          <div class="note">Tip: Đảm bảo chất lượng ảnh tốt khi chụp hóa đơn</div>
+
+          <div class="section" style="margin-top:26px">
+            <h2>Giao diện & Ngôn ngữ</h2>
+            <div class="row">
+              <div>
+                <div class="label">Chế độ</div>
+                <div class="muted">Sáng</div>
+              </div>
+              <button id="toggleTheme" class="muted" style="border:0;background:none;cursor:pointer;font-weight:700">Sáng</button>
+            </div>
+
+            <div class="row">
+              <div>
+                <div class="label">Ngôn ngữ</div>
+                <div class="muted">Tiếng Việt</div>
+              </div>
+              <div class="muted">English</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="right">
+          <div class="block">
+            <div class="title">Bảo mật</div>
+            <a href="#">Xác thực hai lớp</a>
+            <a href="#">Cảnh báo đăng nhập bất thường</a>
+            <a href="#">Quản lý thiết bị</a>
+          </div>
+
+          <div class="block">
+            <div class="title">Giao diện & Ngôn ngữ</div>
+            <div class="muted">Chế độ</div>
+            <div class="sub" style="margin:6px 0 10px">Sáng</div>
+            <div class="muted">Ngôn ngữ</div>
+            <div class="sub">Tiếng Việt</div>
+          </div>
+
+          <div class="block">
+            <div class="title">Tài khoản</div>
+            <a href="#">Hồ sơ</a>
+            <a href="#">Đổi mật khẩu</a>
+          </div>
+
+          <div class="block">
+            <div class="title">Dữ liệu & Quyền riêng tư</div>
+            <a href="#">Xuất dữ liệu</a>
+            <div class="muted">CSV/JSON</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Pig -->
+  <div class="pig"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
+
+<script>
+  // Demo handlers
+  document.getElementById('toggleTheme').addEventListener('click', function(){
+    this.textContent = this.textContent === 'Sáng' ? 'Tối' : 'Sáng';
+    alert('Đổi chế độ (demo). Bạn có thể gắn logic thật ở đây.');
+  });
+</script>
+</body>
+</html>

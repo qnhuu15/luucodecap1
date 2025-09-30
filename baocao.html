@@ -36,9 +36,6 @@
   .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
   .top h1{margin:0;font-size:22px;font-weight:800}
   .top .sp{flex:1}
-  .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-weight:700}
-  .avatar{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:4px 8px}
-  .avatar img{width:28px;height:28px;border-radius:50%}
   .btn{height:38px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:800;padding:0 14px;cursor:pointer}
 
   /* ===== Cards / Grid ===== */
@@ -94,6 +91,8 @@
       <a href="loaichitieu.html"><span class="i">🏷️</span> Loại chi tiêu</a>
       <a href="baocao.html" class="active"><span class="i">📊</span> Báo cáo</a>
       <a href="hoso.html"><span class="i">👤</span> Hồ sơ</a>
+      <!-- ✅ THÊM CÀI ĐẶT Ở ĐÂY -->
+      <a href="caidat.html"><span class="i">⚙️</span> Cài đặt</a>
       <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
     </nav>
   </aside>
@@ -104,7 +103,6 @@
       <h1>Báo cáo</h1>
       <div class="sp"></div>
       <button class="btn" id="btnDetail">Xem chi tiết báo cáo</button>
-      
     </div>
 
     <section class="grid">
@@ -120,7 +118,6 @@
         <!-- Chart mock -->
         <div class="card chart">
           <div class="panel">
-            <!-- SVG chart mock -->
             <svg viewBox="0 0 600 260" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
@@ -129,12 +126,10 @@
                 </linearGradient>
               </defs>
               <rect x="0" y="0" width="600" height="260" fill="#0b1220"/>
-              <!-- Axes -->
               <g stroke="#24324a" stroke-width="1">
                 <line x1="40" y1="220" x2="580" y2="220"/>
                 <line x1="40" y1="30"  x2="40"  y2="220"/>
               </g>
-              <!-- Area line -->
               <path d="M40,210 L120,200 L180,190 L240,175 L300,170 L360,160 L420,150 L480,110 L540,60 L580,40 L580,220 L40,220 Z"
                     fill="url(#g)" stroke="#22c55e" stroke-width="3"/>
             </svg>
