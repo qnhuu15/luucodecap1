@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartExpense — Loại chi tiêu</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eaf3f9; --card:#fff; --text:#0f172a; --muted:#64748b;
+    --border:#e5e7eb; --blue:#2563eb; --blue-500:#3b82f6;
+    --green:#16a34a; --green-50:#d1fae5; --red:#ef4444;
+    --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    display:grid;grid-template-columns:260px 1fr;min-height:100vh;
+  }
+
+  /* Sidebar */
+  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
+  .brand .logo img{width:100%;height:100%;object-fit:cover}
+  .brand b{font-size:18px}
+  .nav{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;font-weight:700;color:#111827;text-decoration:none}
+  .nav a .i{width:18px;text-align:center}
+  .nav a.active{background:var(--blue);color:#fff}
+
+  /* Main */
+  .main{padding:22px 24px 40px}
+  .topbar{display:flex;align-items:center;gap:12px;justify-content:flex-end;margin-bottom:10px}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-weight:700}
+  .avatar{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:4px 8px}
+  .avatar img{width:28px;height:28px;border-radius:50%}
+  h1{margin:0 0 12px;font-size:22px;font-weight:800}
+
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+  .head{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:10px}
+  .search{flex:1;display:flex;justify-content:flex-end}
+  .search input{width:min(420px,46%);height:40px;border:1px solid var(--border);border-radius:999px;padding:0 14px;background:#f8fafc;outline:none}
+  .btn{height:40px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:800;padding:0 14px;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+  .btn:active{transform:translateY(0.5px)}
+
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:12px;border-bottom:1px solid #eef2f7;text-align:left}
+  th{font-size:12px;color:#94a3b8;letter-spacing:.3px}
+  td .dot{width:14px;height:14px;border-radius:50%;display:inline-block;vertical-align:middle}
+  .status{display:inline-flex;align-items:center;gap:6px;background:var(--green-50,#dcfce7);color:var(--green);border:1px solid #bbf7d0;border-radius:999px;font-weight:800;padding:4px 10px;font-size:12px}
+  .actions{display:flex;gap:10px}
+  .icon-btn{width:28px;height:28px;border-radius:6px;border:1px solid var(--border);background:#fff;display:grid;place-items:center;cursor:pointer}
+  .icon-btn.edit{color:#2563eb}
+  .icon-btn.del{color:#ef4444}
+
+  .table-foot{display:flex;justify-content:flex-end;align-items:center;margin-top:10px;gap:10px}
+  .page-btn{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);background:#fff;display:grid;place-items:center;cursor:pointer}
+  .page-current{background:#3b82f6;color:#fff;border-color:#3b82f6}
+
+  /* Pig */
+  .pig-float{position:fixed;right:24px;bottom:24px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+  .pig-float img{width:64px;height:64px}
+
+  @media (max-width:1024px){
+    body{grid-template-columns:1fr}
+    .sidebar{position:sticky;top:0;z-index:10}
+    .search input{width:100%}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
+      <b>SmartExpense</b>
+    </div>
+    <nav class="nav">
+      <a href="trangchu.html"><span class="i">🏠</span> Tổng quan</a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
+      <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
+      <a href="#"><span class="i">📅</span> Lên lịch chi tiêu</a>
+      <a href="loaichitieu.html" class="active"><span class="i">🏷️</span> Loại chi tiêu</a>
+      <a href="baocao.html"><span class="i">📊</span> Báo cáo</a>
+      <a href="hoso.html"><span class="i">👤</span> Hồ sơ</a>
+      <a href="#"><span class="i">⚙️</span> Cài đặt</a>
+      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+   
+
+    <h1>Loại chi tiêu</h1>
+
+    <section class="card">
+      <div class="head">
+        <div style="flex:1"></div>
+        <div class="search"><input id="search" placeholder="Tìm kiếm…"></div>
+        <button class="btn" id="btnCreate">＋ Tạo</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="tbl">
+          <thead>
+            <tr>
+              <th style="width:50px">#</th>
+              <th>Tên</th>
+              <th style="width:120px">Màu sắc</th>
+              <th>Ghi chú</th>
+              <th style="width:120px">Trạng thái</th>
+              <th style="width:120px">Hành động</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- nội dung render bằng JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="table-foot">
+        <div class="page-btn" title="Trước">‹</div>
+        <div class="page-btn page-current">1</div>
+        <div class="page-btn" title="Sau">›</div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pig -->
+  <div class="pig-float">
+    <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
+  </div>
+
+<script>
+  // ====== Dữ liệu mẫu ======
+  let rows = [
+    { name:'Ăn uống',    color:'#3b82f6', note:'',      on:true },
+    { name:'Chơi',       color:'#fb923c', note:'',      on:true },
+    { name:'Cố định',    color:'#6b7280', note:'',      on:true },
+    { name:'Đầu tư',     color:'#10b981', note:'',      on:true },
+    { name:'Chi phí khác', color:'#ef4444', note:'',    on:true },
+  ];
+
+  const tbody = document.querySelector('#tbl tbody');
+
+  function render(list = rows){
+    tbody.innerHTML = '';
+    list.forEach((r, idx)=>{
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${idx+1}</td>
+        <td>${r.name}</td>
+        <td><span class="dot" style="background:${r.color}"></span></td>
+        <td>${r.note||''}</td>
+        <td><span class="status" data-idx="${idx}">${r.on ? 'BẬT' : 'TẮT'}</span></td>
+        <td>
+          <div class="actions">
+            <button class="icon-btn edit" title="Sửa"  data-edit="${idx}">✏️</button>
+            <button class="icon-btn del"  title="Xoá"  data-del="${idx}">🗑️</button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+  render();
+
+  // Tìm kiếm
+  const search = document.getElementById('search');
+  search.addEventListener('input', e=>{
+    const q = e.target.value.toLowerCase();
+    const filtered = rows.filter(r => r.name.toLowerCase().includes(q) || (r.note||'').toLowerCase().includes(q));
+    render(filtered);
+  });
+
+  // Tạo mới nhanh
+  document.getElementById('btnCreate').addEventListener('click', ()=>{
+    const name = prompt('Tên loại chi tiêu:');
+    if(!name) return;
+    const color = prompt('Màu (hex, ví dụ #3b82f6):', '#3b82f6') || '#3b82f6';
+    rows.push({name, color, note:'', on:true});
+    render();
+  });
+
+  // Uỷ quyền click cho nút sửa/xoá + toggle trạng thái
+  tbody.addEventListener('click', (e)=>{
+    const editIdx = e.target.getAttribute('data-edit');
+    const delIdx  = e.target.getAttribute('data-del');
+    const stIdx   = e.target.getAttribute('data-idx');
+
+    if(editIdx !== null){
+      const r = rows[+editIdx];
+      const name = prompt('Sửa tên:', r.name); if(!name) return;
+      const color = prompt('Sửa màu (hex):', r.color) || r.color;
+      const note  = prompt('Ghi chú:', r.note||'') || '';
+      rows[+editIdx] = {...r, name, color, note};
+      render();
+    }
+    if(delIdx !== null){
+      if(confirm('Xoá loại chi tiêu này?')){ rows.splice(+delIdx,1); render(); }
+    }
+    if(stIdx !== null){
+      rows[+stIdx].on = !rows[+stIdx].on;
+      render();
+    }
+  });
+</script>
+</body>
+</html>

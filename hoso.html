@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartExpense — Hồ sơ</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eaf3f9; --card:#fff; --text:#0f172a; --muted:#64748b;
+    --border:#e5e7eb; --blue:#2563eb; --blue-600:#1f4fd1;
+    --green:#22c55e; --orange:#fb923c; --red:#ef4444;
+    --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
+  }
+  *{box-sizing:border-box} html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    display:grid;grid-template-columns:260px 1fr;min-height:100vh;
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
+  .brand .logo img{width:100%;height:100%;object-fit:cover}
+  .brand b{font-size:18px}
+  .nav{display:flex;flex-direction:column;gap:6px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
+  .nav a .i{width:18px;text-align:center}
+  .nav a.active{background:var(--blue);color:#fff}
+
+  /* ===== Main & Topbar ===== */
+  .main{padding:22px 24px 40px}
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-weight:700}
+  .search{flex:1;display:flex;justify-content:center}
+  .search input{width:min(520px,60vw);height:40px;border:1px solid var(--border);border-radius:999px;padding:0 14px;background:#fff;outline:none}
+  .user{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:4px 10px}
+  .user img{width:28px;height:28px;border-radius:50%}
+
+  /* ===== Grid ===== */
+  .grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:18px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
+
+  /* Profile header card */
+  .profile-head{display:grid;grid-template-columns:96px 1fr 280px;gap:16px;align-items:center}
+  .avatar-big{width:96px;height:96px;border-radius:26px;background:#fff2e5;display:grid;place-items:center}
+  .avatar-big .circle{width:76px;height:76px;border-radius:50%;background:var(--orange);display:grid;place-items:center;color:#fff;font-size:34px;font-weight:900}
+  .profile-name{font-size:22px;font-weight:800;margin:0}
+  .email{color:#6b7280;margin-top:2px}
+  .oauth{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:999px;padding:8px 12px;background:#fff;font-weight:700}
+  .plan{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border-radius:14px;padding:14px}
+  .plan .t1{opacity:.9;margin-bottom:6px}
+  .plan .name{font-size:20px;font-weight:800}
+  .btn{height:38px;border:0;border-radius:10px;background:#fff;color:#0f172a;font-weight:800;padding:0 14px;cursor:pointer}
+
+  /* Bills table */
+  .card h3{margin:0 0 10px;font-size:18px}
+  table{width:100%;border-collapse:collapse}
+  th,td{padding:12px;border-bottom:1px solid #eef2f7;text-align:left}
+  th{font-size:12px;color:#94a3b8;letter-spacing:.3px}
+
+  /* Right form */
+  .form .row{margin-bottom:12px}
+  .label{font-weight:700;margin-bottom:6px}
+  .req::after{content:" *";color:#ef4444;font-weight:800}
+  input[type="text"], input[type="number"], select{
+    width:100%;height:42px;border:1px solid var(--border);border-radius:10px;padding:0 12px;background:#f8fafc;outline:none
+  }
+
+  /* Switch */
+  .switch{position:relative;display:inline-block;width:46px;height:26px}
+  .switch input{opacity:0;width:0;height:0}
+  .slider{position:absolute;cursor:pointer;inset:0;background:#e5e7eb;border-radius:999px;transition:.2s}
+  .slider:before{content:"";position:absolute;height:20px;width:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+  .switch input:checked + .slider{background:#22c55e}
+  .switch input:checked + .slider:before{transform:translateX(20px)}
+  .help{color:#94a3b8;margin-left:6px}
+
+  .save-wrap{margin-top:12px;display:flex;justify-content:flex-end}
+  .btn-primary{height:44px;border:0;border-radius:12px;background:var(--blue);color:#fff;font-weight:800;padding:0 18px;cursor:pointer}
+
+  /* Pig */
+  .pig{position:fixed;right:24px;bottom:24px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+  .pig img{width:64px;height:64px}
+
+  @media (max-width:1100px){
+    body{grid-template-columns:1fr}
+    .sidebar{position:sticky;top:0;z-index:20}
+    .grid{grid-template-columns:1fr}
+    .profile-head{grid-template-columns:86px 1fr}
+    .plan{margin-top:10px}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
+      <b>SmartExpense</b>
+    </div>
+    <nav class="nav">
+      <a href="trangchu.html"><span class="i">🏠</span> Tổng quan</a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
+      <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
+      <a href=""><span class="i">📅</span> Lên lịch chi tiêu</a>
+      <a href="loaichitieu.html"><span class="i">🏷️</span> Loại chi tiêu</a>
+      <a href="baocao.html"><span class="i">📊</span> Báo cáo</a>
+      <a href="hoso.html" class="active"><span class="i">👤</span> Hồ sơ</a>
+      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="top">
+      
+      
+    </div>
+
+    <section class="grid">
+      <!-- Left -->
+      <div style="display:grid;gap:16px">
+        <div class="card">
+          <div class="profile-head">
+            <div class="avatar-big">
+              <div class="circle">Q</div>
+            </div>
+            <div>
+              <h2 class="profile-name">Quỳnh Như Nguyễn</h2>
+              <div class="email">quynhnhu6280@gmail.com</div>
+              <div style="margin-top:10px">
+                <span class="oauth">🔗 Đăng nhập qua Google</span>
+              </div>
+            </div>
+            <div class="plan">
+              <div class="t1">Gói của bạn</div>
+              <div class="name">Pro</div>
+              <div style="opacity:.9;margin:6px 0 10px">Hạn sử dụng: 2025-10-24</div>
+              <button class="btn">Xem thêm thông tin</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>Hóa đơn</h3>
+          <table>
+            <thead>
+              <tr><th style="width:160px">Ngày</th><th>Mô tả</th><th style="width:120px">credit</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>2025-09-23</td><td></td><td>0</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="card form">
+        <div class="row">
+          <div class="label">Quỳnh Như Nguyễn</div>
+          <input type="text" value="Quỳnh Như Nguyễn">
+        </div>
+
+        <div class="row">
+          <div class="label req">Giới tính</div>
+          <select>
+            <option>Nữ</option>
+            <option>Nam</option>
+            <option>Khác</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="label req">Đơn vị tiền tệ</div>
+          <select>
+            <option>Vietnam</option>
+            <option>United States</option>
+            <option>Japan</option>
+            <option>Euro</option>
+          </select>
+        </div>
+
+        <div class="row">
+          <div class="label req">Nhập số dư (tháng)</div>
+          <input type="number" value="0" min="0">
+        </div>
+
+        <div class="row">
+          <div class="label">Số điện thoại</div>
+          <input type="text" placeholder="">
+        </div>
+
+        <div class="row" style="display:flex;align-items:center;justify-content:space-between">
+          <div class="label">Bật loại trừ chi tiêu <span class="help">ⓘ</span></div>
+          <label class="switch"><input type="checkbox" id="sw1"><span class="slider"></span></label>
+        </div>
+
+        <div class="row" style="display:flex;align-items:center;justify-content:space-between">
+          <div class="label">Bật tự động chọn loại chi tiêu</div>
+          <label class="switch"><input type="checkbox" id="sw2" checked><span class="slider"></span></label>
+        </div>
+
+        <div class="row" style="display:flex;align-items:center;justify-content:space-between">
+          <div class="label">Báo cáo email hằng ngày <span class="help">ⓘ</span></div>
+          <label class="switch"><input type="checkbox" id="sw3"><span class="slider"></span></label>
+        </div>
+
+        <div class="save-wrap">
+          <button class="btn-primary" id="saveBtn">Lưu</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Pig -->
+  <div class="pig"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
+
+<script>
+  // Demo interaction
+  document.getElementById('saveBtn').addEventListener('click', ()=>{
+    alert('Đã lưu hồ sơ (demo). Bạn có thể nối API để gửi dữ liệu thật.');
+  });
+</script>
+</body>
+</html>

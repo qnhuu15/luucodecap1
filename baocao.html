@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartExpense — Báo cáo</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#eaf3f9; --card:#fff; --text:#0f172a; --muted:#64748b;
+    --border:#e5e7eb; --blue:#2563eb; --blue-600:#1f4fd1;
+    --green:#22c55e; --green-700:#15803d; --green-200:#bbf7d0;
+    --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+    display:grid;grid-template-columns:260px 1fr;min-height:100vh;
+  }
+
+  /* ===== Sidebar ===== */
+  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
+  .brand .logo img{width:100%;height:100%;object-fit:cover}
+  .brand b{font-size:18px}
+  .nav{display:flex;flex-direction:column;gap:6px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
+  .nav a .i{width:18px;text-align:center}
+  .nav a.active{background:var(--blue);color:#fff}
+
+  /* ===== Main ===== */
+  .main{padding:22px 24px 40px}
+  .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .top h1{margin:0;font-size:22px;font-weight:800}
+  .top .sp{flex:1}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-weight:700}
+  .avatar{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:4px 8px}
+  .avatar img{width:28px;height:28px;border-radius:50%}
+  .btn{height:38px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:800;padding:0 14px;cursor:pointer}
+
+  /* ===== Cards / Grid ===== */
+  .grid{display:grid;grid-template-columns:1.25fr .9fr;gap:16px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
+
+  /* Daily list */
+  .daily .row{display:grid;grid-template-columns:20px 1fr 200px 80px;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px dashed #eef2f7}
+  .daily .row:last-child{border-bottom:0}
+  .arrow{color:#94a3b8}
+  .date{color:#374151}
+  .bar{height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+  .bar>i{display:block;height:100%;background:#cbd5e1}
+  .bar>i.green{background:var(--green)}
+  .amount{text-align:right;color:#111827;font-weight:700}
+
+  /* Chart mock */
+  .chart{display:flex;flex-direction:column;gap:12px}
+  .chart .panel{background:#0b1220;border-radius:12px;padding:10px;height:180px;display:grid;place-items:center}
+  .chart svg{width:100%;height:100%}
+
+  /* Monthly */
+  .month .row{display:grid;grid-template-columns:80px 1fr 110px;align-items:center;gap:10px;padding:10px 6px}
+  .mbar{height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+  .mbar>i{display:block;height:100%;background:var(--green)}
+  .mamount{text-align:right;font-weight:700}
+
+  /* Floating pig + FAB */
+  .pig{position:fixed;right:24px;bottom:24px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12);z-index:10}
+  .pig img{width:64px;height:64px}
+  .fab{position:fixed;right:26px;bottom:112px;width:46px;height:46px;border-radius:999px;background:#f43f5e;color:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 6px 14px rgba(244,63,94,.35);cursor:pointer}
+
+  @media (max-width:1100px){
+    body{grid-template-columns:1fr}
+    .sidebar{position:sticky;top:0;z-index:20}
+    .grid{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
+      <b>SmartExpense</b>
+    </div>
+    <nav class="nav">
+      <a href="trangchu.html"><span class="i">🏠</span> Tổng quan</a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
+      <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
+      <a href="#"><span class="i">📅</span> Lên lịch chi tiêu</a>
+      <a href="loaichitieu.html"><span class="i">🏷️</span> Loại chi tiêu</a>
+      <a href="baocao.html" class="active"><span class="i">📊</span> Báo cáo</a>
+      <a href="hoso.html"><span class="i">👤</span> Hồ sơ</a>
+      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
+    </nav>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="top">
+      <h1>Báo cáo</h1>
+      <div class="sp"></div>
+      <button class="btn" id="btnDetail">Xem chi tiết báo cáo</button>
+      
+    </div>
+
+    <section class="grid">
+      <!-- Left: Daily list -->
+      <div class="card daily">
+        <b>Chi tiêu theo ngày</b>
+        <div id="daily"></div>
+        <button class="btn" style="margin-top:10px">Xem thêm</button>
+      </div>
+
+      <!-- Right column -->
+      <div style="display:grid;gap:16px">
+        <!-- Chart mock -->
+        <div class="card chart">
+          <div class="panel">
+            <!-- SVG chart mock -->
+            <svg viewBox="0 0 600 260" preserveAspectRatio="none">
+              <defs>
+                <linearGradient id="g" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stop-color="#22c55e" stop-opacity="0.9"/>
+                  <stop offset="100%" stop-color="#22c55e" stop-opacity="0.05"/>
+                </linearGradient>
+              </defs>
+              <rect x="0" y="0" width="600" height="260" fill="#0b1220"/>
+              <!-- Axes -->
+              <g stroke="#24324a" stroke-width="1">
+                <line x1="40" y1="220" x2="580" y2="220"/>
+                <line x1="40" y1="30"  x2="40"  y2="220"/>
+              </g>
+              <!-- Area line -->
+              <path d="M40,210 L120,200 L180,190 L240,175 L300,170 L360,160 L420,150 L480,110 L540,60 L580,40 L580,220 L40,220 Z"
+                    fill="url(#g)" stroke="#22c55e" stroke-width="3"/>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Monthly -->
+        <div class="card month">
+          <b>Chi tiêu theo tháng</b>
+          <div id="month"></div>
+          <button class="btn" style="margin-top:10px;width:110px">Xem thêm</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating toys -->
+  <div class="fab" title="Lên đầu trang">↑</div>
+  <div class="pig"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
+
+<script>
+  // ===== Demo data =====
+  const DAILY = [
+    { label:'2025-09-24 Thứ Tư', amount:2015000 },
+    { label:'2025-09-23 Thứ Ba', amount:0 },
+    { label:'2025-09-22 Thứ Hai', amount:0 },
+    { label:'2025-09-21 Chủ Nhật', amount:0 },
+    { label:'2025-09-20 Thứ Bảy', amount:0 },
+    { label:'2025-09-19 Thứ Sáu', amount:0 },
+    { label:'2025-09-18 Thứ Năm', amount:0 },
+    { label:'2025-09-17 Thứ Tư', amount:0 },
+    { label:'2025-09-16 Thứ Ba', amount:0 },
+    { label:'2025-09-15 Thứ Hai', amount:0 },
+  ];
+
+  const MONTHLY = [
+    { m:'09/2025', amount:2015000 },
+    { m:'08/2025', amount:0 },
+    { m:'07/2025', amount:0 },
+    { m:'06/2025', amount:0 },
+    { m:'05/2025', amount:0 },
+    { m:'04/2025', amount:0 },
+  ];
+
+  const fmt = n => (n||0).toLocaleString('vi-VN') + 'đ';
+
+  // ===== Render Daily =====
+  (function renderDaily(){
+    const wrap = document.getElementById('daily');
+    const max = Math.max(...DAILY.map(d=>d.amount), 1);
+    DAILY.forEach(d=>{
+      const w = Math.round((d.amount / max) * 100);
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `
+        <div class="arrow">›</div>
+        <div class="date">${d.label}</div>
+        <div class="bar"><i class="${d.amount>0?'green':''}" style="width:${w}%"></i></div>
+        <div class="amount">${fmt(d.amount)}</div>
+      `;
+      wrap.appendChild(row);
+    });
+  })();
+
+  // ===== Render Monthly =====
+  (function renderMonth(){
+    const wrap = document.getElementById('month');
+    const max = Math.max(...MONTHLY.map(m=>m.amount), 1);
+    MONTHLY.forEach(m=>{
+      const w = Math.round((m.amount / max) * 100);
+      const row = document.createElement('div');
+      row.className = 'row';
+      row.innerHTML = `
+        <div>${m.m}</div>
+        <div class="mbar"><i style="width:${w}%;"></i></div>
+        <div class="mamount">${fmt(m.amount)}</div>
+      `;
+      wrap.appendChild(row);
+    });
+  })();
+
+  // ===== Interactions =====
+  document.querySelector('.fab').onclick = ()=> window.scrollTo({top:0,behavior:'smooth'});
+  document.getElementById('btnDetail').onclick = ()=> alert('Đi tới trang chi tiết báo cáo…');
+</script>
+</body>
+</html>
