@@ -11,6 +11,11 @@
     --border:#e5e7eb; --blue:#2563eb; --green:#22c55e;
     --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
   }
+  html.dark{
+    --bg:#0b1220; --card:#0f172a; --text:#f8fafc; --muted:#9aa4b2;
+    --border:#1f2937; --blue:#3b82f6; --green:#22c55e;
+  }
+
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
@@ -19,20 +24,44 @@
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
 
-
-  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-  .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
-  .brand .logo img{width:100%;height:100%;object-fit:cover}
-  .brand b{font-size:18px}
-  .nav{display:flex;flex-direction:column;gap:6px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
+  /* Sidebar (đồng bộ dark) */
+  .sidebar{
+    background:var(--card);
+    border-right:1px solid var(--border);
+    padding:18px 14px;
+    color:var(--text);
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;margin-bottom:12px;
+    padding-bottom:6px;border-bottom:1px solid var(--border);
+    position:relative;z-index:1;
+  }
+  .brand .logo{
+    width:44px;height:44px;border-radius:10px;overflow:hidden;
+    background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);
+    flex-shrink:0;
+  }
+  .brand .logo img{width:100%;height:100%;object-fit:cover;display:block}
+  .brand b{
+    font-size:18px;color:var(--text);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .nav{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+  .nav a{
+    display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;
+    color:var(--text);font-weight:700;text-decoration:none
+  }
   .nav a .i{width:18px;text-align:center}
+  .nav a:hover{background:rgba(37,99,235,.12)}
+  html.dark .nav a:hover{background:rgba(59,130,246,.18)}
   .nav a.active{background:var(--blue);color:#fff}
 
-
+  /* Main */
   .main{padding:22px 24px 40px}
-  .wrap{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:22px 24px;max-width:980px}
+  .wrap{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:18px;box-shadow:var(--shadow);padding:22px 24px;max-width:980px
+  }
   .container{display:flex;gap:28px}
   .left{flex:1}
   .right{width:340px}
@@ -41,10 +70,10 @@
   .section{margin-bottom:28px}
   .row{display:flex;align-items:center;justify-content:space-between;margin:12px 0}
   .row .label{font-weight:700}
-  .note{color:#94a3b8;font-size:14px}
-  .sub{color:#111827}
+  .note{color:var(--muted);font-size:14px}
+  .sub{color:var(--text)}
 
-
+  /* Switch */
   .switch{position:relative;display:inline-block;width:48px;height:28px}
   .switch input{opacity:0;width:0;height:0}
   .slider{position:absolute;inset:0;border-radius:999px;background:#e5e7eb;cursor:pointer;transition:.2s}
@@ -52,27 +81,38 @@
   .switch input:checked + .slider{background:var(--green)}
   .switch input:checked + .slider:before{transform:translateX(20px)}
 
- 
+  /* Inline group */
   .inline{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px}
   .chip{display:inline-flex;align-items:center;gap:8px}
 
- 
+  /* Right column */
   .right .block{margin-bottom:22px}
   .right .title{font-weight:800;margin-bottom:8px}
-  .right a{display:block;color:#2563eb;text-decoration:none;margin:10px 0}
+  .right a{display:block;color:var(--blue);text-decoration:none;margin:10px 0}
   .muted{color:#94a3b8}
 
+  /* Segmented control */
+  .segmented{
+    display:inline-flex;border:1px solid var(--border);border-radius:999px;
+    background:#f8fafc;overflow:hidden
+  }
+  html.dark .segmented{background:transparent}
+  .segmented button{
+    padding:6px 14px;font-weight:700;background:transparent;border:0;cursor:pointer
+  }
+  .segmented button+button{border-left:1px solid var(--border)}
+  .segmented button.active{background:var(--blue);color:#fff}
 
+  /* Chat */
   .pig-float{
     position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;
     background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);
     z-index:30;border:0;cursor:pointer
   }
   .pig-float img{width:64px;height:64px}
-
   .chatbox{
     position:fixed;right:26px;bottom:112px;width:340px;
-    background:#fff;border:1px solid var(--border);border-radius:14px;
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
     box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;
     grid-template-rows:56px 1fr 60px;
   }
@@ -85,9 +125,11 @@
   .chat-title{line-height:1.2}
   .chat-sub{font-weight:600;opacity:.95}
   .chat-body{background:#f4fbff;overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
+  html.dark .chat-body{background:#0f1a2e}
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
   .msg.user{justify-content:flex-end}
   .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px;line-height:1.35}
+  html.dark .bubble{background:var(--card);color:var(--text)}
   .msg.bot .bubble{border-radius:14px 14px 14px 4px}
   .msg.user .bubble{border-radius:14px 14px 4px 14px;background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
@@ -95,9 +137,9 @@
   .typing span{display:inline-block;width:6px;height:6px;background:#9ca3af;border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
   .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
   @keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
-  .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
+  .chat-input{background:var(--card);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
   #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
-  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
+  html.dark #chatInput{background:transparent;color:var(--text)}
 
   @media (max-width:1060px){
     body{grid-template-columns:1fr}
@@ -112,42 +154,39 @@
 </head>
 <body>
 
-
+  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand">
       <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
       <b>SmartExpense</b>
     </div>
     <nav class="nav">
-      <a href="trangchu.html"><span class="i">🏠</span> Tổng quan</a>
-      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
-      <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
-      <a href="#"><span class="i">📅</span> Lên lịch chi tiêu</a>
-      <a href="loaichitieu.html"><span class="i">🏷️</span> Loại chi tiêu</a>
-      <a href="baocao.html"><span class="i">📊</span> Báo cáo</a>
-      <a href="hoso.html"><span class="i">👤</span> Hồ sơ</a>
-      <a href="caidat.html" class="active"><span class="i">⚙️</span> Cài đặt</a>
-      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
+      <a href="trangchu.html"><span class="i">🏠</span> <span data-i18n="nav.overview">Tổng quan</span></a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> <span data-i18n="nav.list">Danh sách chi tiêu</span></a>
+      <a href="lichsuchitieu.html"><span class="i">🕘</span> <span data-i18n="nav.history">Lịch sử chi tiêu</span></a>
+      <a href="#"><span class="i">📅</span> <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
+      <a href="loaichitieu.html"><span class="i">🏷️</span> <span data-i18n="nav.types">Loại chi tiêu</span></a>
+      <a href="baocao.html"><span class="i">📊</span> <span data-i18n="nav.report">Báo cáo</span></a>
+      <a href="hoso.html"><span class="i">👤</span> <span data-i18n="nav.profile">Hồ sơ</span></a>
+      <a href="caidat.html" class="active"><span class="i">⚙️</span> <span data-i18n="nav.settings">Cài đặt</span></a>
+      <a href="login.html"><span class="i">↪️</span> <span data-i18n="nav.logout">Đăng xuất</span></a>
     </nav>
   </aside>
 
-
+  <!-- Main -->
   <main class="main">
     <div class="wrap">
       <div class="container">
-     
-       <div class="left">
-  <h2>
-    <a href="Canhbao&thongbao.html"
-       style="text-decoration:none;color:inherit;cursor:pointer">
-      Cảnh báo &amp; Thông báo
-    </a>
-  </h2>
-
-
+        <!-- LEFT -->
+        <div class="left">
+          <h2>
+            <a href="Canhbao&amp;thongbao.html" style="text-decoration:none;color:inherit;cursor:pointer" data-i18n="settings.title">
+              Cảnh báo & Thông báo
+            </a>
+          </h2>
 
           <div class="row">
-            <div class="label">Ngân sách</div>
+            <div class="label" data-i18n="budget">Ngân sách</div>
             <label class="switch">
               <input type="checkbox" id="swBudget" checked>
               <span class="slider"></span>
@@ -155,7 +194,7 @@
           </div>
 
           <div class="row">
-            <div class="label">Bất thường</div>
+            <div class="label" data-i18n="anomaly">Bất thường</div>
             <label class="switch">
               <input type="checkbox" id="swAnomaly" checked>
               <span class="slider"></span>
@@ -163,7 +202,7 @@
           </div>
 
           <div class="row">
-            <div class="label">OCR</div>
+            <div class="label" data-i18n="ocr">OCR</div>
             <label class="switch">
               <input type="checkbox" id="swOCR" checked>
               <span class="slider"></span>
@@ -171,7 +210,7 @@
           </div>
 
           <div class="section">
-            <div class="label">Ngưỡng cảnh báo ngân sách</div>
+            <div class="label" data-i18n="threshold">Ngưỡng cảnh báo ngân sách</div>
             <div class="inline">
               <label class="chip"><input type="radio" name="threshold"> 30%</label>
               <label class="chip"><input type="radio" name="threshold" checked> 95%</label>
@@ -180,99 +219,87 @@
           </div>
 
           <div class="section">
-            <div class="label">Phương thức thông báo</div>
+            <div class="label" data-i18n="notify.method">Phương thức thông báo</div>
             <div class="inline">
-              <label class="chip"><input type="checkbox" checked> In-app</label>
-              <label class="chip"><input type="checkbox"> Email</label>
-              <label class="chip"><input type="checkbox"> SMS</label>
+              <label class="chip"><input type="checkbox" checked> <span data-i18n="inapp">In-app</span></label>
+              <label class="chip"><input type="checkbox"> <span data-i18n="email">Email</span></label>
+              <label class="chip"><input type="checkbox"> <span data-i18n="sms">SMS</span></label>
             </div>
           </div>
 
-          <div class="note">Tip: Đảm bảo chất lượng ảnh tốt khi chụp hóa đơn</div>
+          <div class="note" data-i18n="tip">Tip: Đảm bảo chất lượng ảnh tốt khi chụp hóa đơn</div>
 
+          <!-- Giao diện & Ngôn ngữ -->
           <div class="section" style="margin-top:26px">
-            <h2>Giao diện & Ngôn ngữ</h2>
+            <h2 data-i18n="appearance">Giao diện & Ngôn ngữ</h2>
+
             <div class="row">
-              <div>
-                <div class="label">Chế độ</div>
-                <div class="muted">Sáng</div>
+              <div class="label" data-i18n="mode">Chế độ</div>
+              <div class="segmented" id="themeSeg" role="tablist" aria-label="Chọn chế độ hiển thị">
+                <button type="button" data-theme="light" class="active" aria-selected="true" data-i18n="light">Sáng</button>
+                <button type="button" data-theme="dark" data-i18n="dark">Tối</button>
               </div>
-              <button id="toggleTheme" class="muted" style="border:0;background:none;cursor:pointer;font-weight:700">Sáng</button>
             </div>
 
             <div class="row">
-              <div>
-                <div class="label">Ngôn ngữ</div>
-                <div class="muted">Tiếng Việt</div>
+              <div class="label" data-i18n="language">Ngôn ngữ</div>
+              <div class="segmented" id="langSeg" role="tablist" aria-label="Chọn ngôn ngữ">
+                <button type="button" data-lang="vi" class="active" aria-selected="true">Tiếng Việt</button>
+                <button type="button" data-lang="en">English</button>
               </div>
-              <div class="muted">English</div>
             </div>
           </div>
         </div>
 
-      
+        <!-- RIGHT -->
         <div class="right">
           <div class="block">
-            <div class="title">Bảo mật</div>
-            <a href="#">Xác thực hai lớp</a>
-            <a href="#">Cảnh báo đăng nhập bất thường</a>
-            <a href="#">Quản lý thiết bị</a>
+            <div class="title" data-i18n="security">Bảo mật</div>
+            <a href="xacthuchailop.html" data-i18n="mfa">Xác thực hai lớp</a>
+            <a href="Canhbaodangnhapbatthuong.html" data-i18n="login.alert">Cảnh báo đăng nhập bất thường</a>
+            <a href="quanlythietbi.html" data-i18n="devices">Quản lý thiết bị</a>
           </div>
 
           <div class="block">
-            <div class="title">Giao diện & Ngôn ngữ</div>
-            <div class="muted">Chế độ</div>
-            <div class="sub" style="margin:6px 0 10px">Sáng</div>
-            <div class="muted">Ngôn ngữ</div>
-            <div class="sub">Tiếng Việt</div>
+            <div class="title" data-i18n="account">Tài khoản</div>
+            <a href="hoso.html" data-i18n="profile">Hồ sơ</a>
+            <a href="doimatkhau.html" data-i18n="change.pass">Đổi mật khẩu</a>
           </div>
 
           <div class="block">
-            <div class="title">Tài khoản</div>
-            <a href="#">Hồ sơ</a>
-            <a href="#">Đổi mật khẩu</a>
-          </div>
-
-          <div class="block">
-            <div class="title">Dữ liệu & Quyền riêng tư</div>
-            <a href="#">Xuất dữ liệu</a>
-            <div class="muted">CSV/JSON</div>
+            <div class="title" data-i18n="privacy">Dữ liệu & Quyền riêng tư</div>
+            <a href="xuatdulieu.html" data-i18n="export">Xuất dữ liệu</a>
+            <div class="muted" data-i18n="csvjson">CSV/JSON</div>
           </div>
         </div>
       </div>
     </div>
   </main>
 
+  <!-- Chatbox -->
   <div id="chatbox" class="chatbox" aria-hidden="true">
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
-    <div>
-      <div class="chat-title">Trợ lý thông minh</div>
-      <div class="chat-sub">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div>
-    </div>
+      <div>
+        <div class="chat-title">Trợ lý thông minh</div>
+        <div class="chat-sub">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div>
+      </div>
     </div>
     <div id="chatBody" class="chat-body"></div>
     <div class="chat-input">
-      <input id="chatInput" type="text" placeholder="Viết tin nhắn…">
+      <input id="chatInput" type="text" placeholder="Viết tin nhắn…" data-i18n="ph.chat">
       <button id="sendBtn" title="Gửi">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12L20 4L12 20L11 13L4 12Z" fill="currentColor"/></svg>
       </button>
     </div>
   </div>
 
-
   <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý">
     <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
   </button>
 
 <script>
-
-  document.getElementById('toggleTheme').addEventListener('click', function(){
-    this.textContent = this.textContent === 'Sáng' ? 'Tối' : 'Sáng';
-    alert('Đổi chế độ (demo). Bạn có thể gắn logic thật ở đây.');
-  });
-
-
+  /* ====== Chatbox ====== */
   const chatToggle = document.getElementById('chatToggle');
   const chatbox = document.getElementById('chatbox');
   const chatBody = document.getElementById('chatBody');
@@ -280,7 +307,6 @@
   const sendBtn  = document.getElementById('sendBtn');
 
   let greeted = false;
-
   function openChat() {
     chatbox.classList.add('open');
     chatbox.setAttribute('aria-hidden','false');
@@ -294,12 +320,9 @@
     chatbox.classList.remove('open');
     chatbox.setAttribute('aria-hidden','true');
   }
-  chatToggle.addEventListener('click', ()=>{
-    if (chatbox.classList.contains('open')) closeChat(); else openChat();
-  });
+  chatToggle.addEventListener('click', ()=> chatbox.classList.contains('open') ? closeChat() : openChat());
 
   function scrollBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
-
   function addMsg(text, who='bot'){
     const wrap = document.createElement('div');
     wrap.className = `msg ${who}`;
@@ -313,7 +336,6 @@
     chatBody.appendChild(wrap);
     scrollBottom();
   }
-
   function addTyping(){
     const wrap = document.createElement('div');
     wrap.className = 'msg bot';
@@ -324,15 +346,10 @@
     scrollBottom();
     return wrap;
   }
-
   function botSay(text, delay=0){
     const t = addTyping();
-    setTimeout(()=>{
-      t.remove();
-      addMsg(text,'bot');
-    }, Math.max(300, delay));
+    setTimeout(()=>{ t.remove(); addMsg(text,'bot'); }, Math.max(300, delay));
   }
-
   function handleSend(){
     const txt = chatInput.value.trim();
     if (!txt) return;
@@ -347,9 +364,90 @@
       botSay('Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?');
     }
   }
-
   sendBtn.addEventListener('click', handleSend);
   chatInput.addEventListener('keydown', (e)=>{ if (e.key==='Enter') handleSend(); });
+
+  /* ====== Theme & Language ====== */
+  const themeSeg = document.getElementById('themeSeg');
+  const langSeg  = document.getElementById('langSeg');
+
+  function setActive(groupEl, selector){
+    [...groupEl.querySelectorAll('button')].forEach(b=>{
+      const active = b.matches(selector);
+      b.classList.toggle('active', active);
+      b.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+  }
+  function applyTheme(theme){
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+    localStorage.setItem('theme', theme);
+    setActive(themeSeg, `button[data-theme="${theme}"]`);
+  }
+  function applyLang(lang){
+    localStorage.setItem('lang', lang);
+    setActive(langSeg, `button[data-lang="${lang}"]`);
+    translatePage();
+  }
+  themeSeg.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-theme]'); if(!btn) return;
+    applyTheme(btn.dataset.theme);
+  });
+  langSeg.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-lang]'); if(!btn) return;
+    applyLang(btn.dataset.lang);
+  });
+
+  /* I18N */
+  const I18N = {
+    vi: {
+      "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu",
+      "nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo",
+      "nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
+
+      "settings.title":"Cảnh báo & Thông báo",
+      "budget":"Ngân sách","anomaly":"Bất thường","ocr":"OCR",
+      "threshold":"Ngưỡng cảnh báo ngân sách","notify.method":"Phương thức thông báo",
+      "inapp":"In-app","email":"Email","sms":"SMS",
+      "appearance":"Giao diện & Ngôn ngữ","mode":"Chế độ","light":"Sáng","dark":"Tối","language":"Ngôn ngữ",
+      "security":"Bảo mật","mfa":"Xác thực hai lớp","login.alert":"Cảnh báo đăng nhập bất thường","devices":"Quản lý thiết bị",
+      "account":"Tài khoản","profile":"Hồ sơ","change.pass":"Đổi mật khẩu",
+      "privacy":"Dữ liệu & Quyền riêng tư","export":"Xuất dữ liệu","csvjson":"CSV/JSON",
+      "tip":"Tip: Đảm bảo chất lượng ảnh tốt khi chụp hóa đơn",
+      "ph.chat":"Viết tin nhắn…"
+    },
+    en: {
+      "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History",
+      "nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports",
+      "nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
+
+      "settings.title":"Alerts & Notifications",
+      "budget":"Budget","anomaly":"Anomalies","ocr":"OCR",
+      "threshold":"Budget alert threshold","notify.method":"Notification methods",
+      "inapp":"In-app","email":"Email","sms":"SMS",
+      "appearance":"Appearance & Language","mode":"Mode","light":"Light","dark":"Dark","language":"Language",
+      "security":"Security","mfa":"Two-factor authentication","login.alert":"Suspicious sign-in alerts","devices":"Device management",
+      "account":"Account","profile":"Profile","change.pass":"Change password",
+      "privacy":"Data & Privacy","export":"Export data","csvjson":"CSV/JSON",
+      "tip":"Tip: Ensure good receipt photo quality",
+      "ph.chat":"Type a message…"
+    }
+  };
+  function t(key){
+    const lang = localStorage.getItem('lang') || 'vi';
+    return (I18N[lang] && I18N[lang][key]) || key;
+  }
+  function translatePage(){
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      if (el.tagName === 'INPUT') el.placeholder = t(key);
+      else el.textContent = t(key);
+    });
+  }
+
+  /* Init theo localStorage */
+  applyTheme(localStorage.getItem('theme') || 'light');
+  applyLang(localStorage.getItem('lang')  || 'vi');
+  document.addEventListener('DOMContentLoaded', translatePage);
 </script>
 </body>
 </html>

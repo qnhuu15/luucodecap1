@@ -12,6 +12,13 @@
     --green:#22c55e; --green-700:#15803d; --green-200:#bbf7d0;
     --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
   }
+  /* Dark theme variables */
+  html.dark{
+    --bg:#0b1220; --card:#0f172a; --text:#e5e7eb; --muted:#9aa4b2;
+    --border:#1f2a44; --blue:#3b82f6;
+    --green:#22c55e; --green-700:#16a34a; --green-200:#14532d;
+  }
+
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
@@ -20,48 +27,71 @@
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
 
- 
-  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
-  .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
-  .brand .logo img{width:100%;height:100%;object-fit:cover}
-  .brand b{font-size:18px}
-  .nav{display:flex;flex-direction:column;gap:6px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
+  /* ===== Sidebar (dark-mode friendly) ===== */
+  .sidebar{
+    background:var(--card);
+    border-right:1px solid var(--border);
+    padding:18px 14px;
+    color:var(--text);
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;margin-bottom:12px;
+    padding-bottom:6px;border-bottom:1px solid var(--border);
+    position:relative;z-index:1;
+  }
+  .brand .logo{
+    width:44px;height:44px;border-radius:10px;overflow:hidden;
+    background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)
+  }
+  .brand .logo img{width:100%;height:100%;object-fit:cover;display:block}
+  .brand b{
+    font-size:18px;color:var(--text);
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .nav{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+  .nav a{
+    display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;
+    color:var(--text);font-weight:700;text-decoration:none
+  }
   .nav a .i{width:18px;text-align:center}
+  .nav a:hover{background:rgba(37,99,235,.12)}
   .nav a.active{background:var(--blue);color:#fff}
 
-
+  /* ===== Main ===== */
   .main{padding:22px 24px 40px}
   .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
   .top h1{margin:0;font-size:22px;font-weight:800}
   .top .sp{flex:1}
   .btn{height:38px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:800;padding:0 14px;cursor:pointer}
 
-
   .grid{display:grid;grid-template-columns:1.25fr .9fr;gap:16px}
-  .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
 
   .daily .row{display:grid;grid-template-columns:20px 1fr 200px 80px;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px dashed #eef2f7}
+  html.dark .daily .row{border-bottom:1px dashed #1f2a44}
   .daily .row:last-child{border-bottom:0}
   .arrow{color:#94a3b8}
-  .date{color:#374151}
+  .date{color:var(--text)}
   .bar{height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+  html.dark .bar{background:#1f2a44}
   .bar>i{display:block;height:100%;background:#cbd5e1}
   .bar>i.green{background:var(--green)}
-  .amount{text-align:right;color:#111827;font-weight:700}
+  .amount{text-align:right;color:var(--text);font-weight:700}
 
- 
   .chart{display:flex;flex-direction:column;gap:12px}
-  .chart .panel{background:#0b1220;border-radius:12px;padding:10px;height:180px;display:grid;place-items:center}
+  .chart .panel{
+    background:#0b1220;border-radius:12px;padding:10px;height:180px;
+    display:grid;place-items:center;border:1px solid #162033;
+  }
   .chart svg{width:100%;height:100%}
 
-  
   .month .row{display:grid;grid-template-columns:80px 1fr 110px;align-items:center;gap:10px;padding:10px 6px}
   .mbar{height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden}
+  html.dark .mbar{background:#1f2a44}
   .mbar>i{display:block;height:100%;background:var(--green)}
-  .mamount{text-align:right;font-weight:700}
+  .mamount{text-align:right;font-weight:700;color:var(--text)}
 
+  /* ===== Chatbox ===== */
   .pig-float{
     position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;
     background:#ffe8e0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12);
@@ -71,7 +101,7 @@
 
   .chatbox{
     position:fixed;right:26px;bottom:112px;width:340px;
-    background:#fff;border:1px solid var(--border);border-radius:14px;
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
     box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;
     grid-template-rows:56px 1fr 60px;
   }
@@ -87,6 +117,7 @@
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
   .msg.user{justify-content:flex-end}
   .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px;line-height:1.35}
+  html.dark .bubble{background:var(--card);color:var(--text)}
   .msg.bot .bubble{border-radius:14px 14px 14px 4px}
   .msg.user .bubble{border-radius:14px 14px 4px 14px;background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
@@ -94,11 +125,11 @@
   .typing span{display:inline-block;width:6px;height:6px;background:#9ca3af;border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
   .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
   @keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
-  .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
+  .chat-input{background:var(--card);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
   #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
-  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
+  html.dark #chatInput{background:transparent;color:var(--text)}
 
-
+  /* ===== FAB ===== */
   .fab{position:fixed;right:26px;bottom:112px;width:46px;height:46px;border-radius:999px;background:#f43f5e;color:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 6px 14px rgba(244,63,94,.35);cursor:pointer;z-index:20}
 
   @media (max-width:1100px){
@@ -112,7 +143,6 @@
 </style>
 </head>
 <body>
-
 
   <aside class="sidebar">
     <div class="brand">
@@ -132,7 +162,6 @@
     </nav>
   </aside>
 
-
   <main class="main">
     <div class="top">
       <h1>Báo cáo</h1>
@@ -141,16 +170,15 @@
     </div>
 
     <section class="grid">
-    
+      <!-- Left: Daily -->
       <div class="card daily">
         <b>Chi tiêu theo ngày</b>
         <div id="daily"></div>
         <button class="btn" style="margin-top:10px">Xem thêm</button>
       </div>
 
-      
+      <!-- Right: Chart + Monthly -->
       <div style="display:grid;gap:16px">
-       
         <div class="card chart">
           <div class="panel">
             <svg viewBox="0 0 600 260" preserveAspectRatio="none">
@@ -171,7 +199,6 @@
           </div>
         </div>
 
-
         <div class="card month">
           <b>Chi tiêu theo tháng</b>
           <div id="month"></div>
@@ -181,7 +208,7 @@
     </section>
   </main>
 
-
+  <!-- Chatbox -->
   <div id="chatbox" class="chatbox" aria-hidden="true">
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
@@ -199,16 +226,20 @@
     </div>
   </div>
 
-
   <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý">
     <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
   </button>
 
-
   <div class="fab" title="Lên đầu trang">↑</div>
 
 <script>
+  // ===== Apply saved theme from Settings =====
+  (function initTheme(){
+    const saved = localStorage.getItem('theme');
+    document.documentElement.classList.toggle('dark', saved === 'dark');
+  })();
 
+  // ===== Mock data =====
   const DAILY = [
     { label:'2025-09-24 Thứ Tư', amount:2015000 },
     { label:'2025-09-23 Thứ Ba', amount:0 },
@@ -221,7 +252,6 @@
     { label:'2025-09-16 Thứ Ba', amount:0 },
     { label:'2025-09-15 Thứ Hai', amount:0 },
   ];
-
   const MONTHLY = [
     { m:'09/2025', amount:2015000 },
     { m:'08/2025', amount:0 },
@@ -230,10 +260,9 @@
     { m:'05/2025', amount:0 },
     { m:'04/2025', amount:0 },
   ];
-
   const fmt = n => (n||0).toLocaleString('vi-VN') + 'đ';
 
-
+  // Render daily list
   (function renderDaily(){
     const wrap = document.getElementById('daily');
     const max = Math.max(...DAILY.map(d=>d.amount), 1);
@@ -251,7 +280,7 @@
     });
   })();
 
-
+  // Render monthly list
   (function renderMonth(){
     const wrap = document.getElementById('month');
     const max = Math.max(...MONTHLY.map(m=>m.amount), 1);
@@ -268,11 +297,13 @@
     });
   })();
 
-
+  // FAB scroll to top
   document.querySelector('.fab').onclick = ()=> window.scrollTo({top:0,behavior:'smooth'});
+
+  // Detail button (demo)
   document.getElementById('btnDetail').onclick = ()=> alert('Đi tới trang chi tiết báo cáo…');
 
-  
+  // ===== Chatbox =====
   const chatToggle = document.getElementById('chatToggle');
   const chatbox = document.getElementById('chatbox');
   const chatBody = document.getElementById('chatBody');
@@ -280,7 +311,6 @@
   const sendBtn  = document.getElementById('sendBtn');
 
   let greeted = false;
-
   function openChat() {
     chatbox.classList.add('open');
     chatbox.setAttribute('aria-hidden','false');
@@ -294,12 +324,9 @@
     chatbox.classList.remove('open');
     chatbox.setAttribute('aria-hidden','true');
   }
-  chatToggle.addEventListener('click', ()=>{
-    if (chatbox.classList.contains('open')) closeChat(); else openChat();
-  });
+  chatToggle.addEventListener('click', ()=> chatbox.classList.contains('open') ? closeChat() : openChat());
 
   function scrollBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
-
   function addMsg(text, who='bot'){
     const wrap = document.createElement('div');
     wrap.className = `msg ${who}`;
@@ -313,7 +340,6 @@
     chatBody.appendChild(wrap);
     scrollBottom();
   }
-
   function addTyping(){
     const wrap = document.createElement('div');
     wrap.className = 'msg bot';
@@ -324,15 +350,10 @@
     scrollBottom();
     return wrap;
   }
-
   function botSay(text, delay=0){
     const t = addTyping();
-    setTimeout(()=>{
-      t.remove();
-      addMsg(text,'bot');
-    }, Math.max(300, delay));
+    setTimeout(()=>{ t.remove(); addMsg(text,'bot'); }, Math.max(300, delay));
   }
-
   function handleSend(){
     const txt = chatInput.value.trim();
     if (!txt) return;
@@ -346,7 +367,6 @@
       botSay('Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?');
     }
   }
-
   sendBtn.addEventListener('click', handleSend);
   chatInput.addEventListener('keydown', (e)=>{ if (e.key==='Enter') handleSend(); });
 </script>
