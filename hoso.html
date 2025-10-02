@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SmartExpense — Hồ sơ</title>
+<title data-i18n="page.title">SmartExpense — Hồ sơ</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -12,66 +12,86 @@
     --green:#22c55e; --orange:#fb923c; --red:#ef4444;
     --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
   }
+  /* Dark theme */
+  html.dark{
+    --bg:#0b1220; --card:#0f172a; --text:#e5e7eb; --muted:#9aa4b2;
+    --border:#1f2a44; --blue:#3b82f6;
+    --green:#22c55e; --orange:#fb923c; --red:#ef4444;
+  }
+
   *{box-sizing:border-box} html,body{height:100%}
   body{
     margin:0;background:var(--bg);color:var(--text);
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
-  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+
+  /* Sidebar (theme-aware) */
+  .sidebar{background:var(--card);border-right:1px solid var(--border);padding:18px 14px;color:var(--text)}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
   .brand .logo img{width:100%;height:100%;object-fit:cover}
-  .brand b{font-size:18px}
+  .brand b{font-size:18px;color:var(--text)}
   .nav{display:flex;flex-direction:column;gap:6px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--text);font-weight:700;text-decoration:none}
+  .nav a:hover{background:rgba(37,99,235,.12)}
   .nav a.active{background:var(--blue);color:#fff}
 
+  /* Main */
   .main{padding:22px 24px 40px}
   .grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:18px}
   .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
 
   .profile-head{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center}
   .avatar-big{width:96px;height:96px;border-radius:26px;background:#fff2e5;display:grid;place-items:center}
+  html.dark .avatar-big{background:#2a1e12}
   .avatar-big .circle{width:76px;height:76px;border-radius:50%;background:var(--orange);display:grid;place-items:center;color:#fff;font-size:34px;font-weight:900}
   .profile-name{font-size:22px;font-weight:800;margin:0}
-  .email{color:#6b7280;margin-top:2px}
-  .oauth{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:999px;padding:8px 12px;background:#fff;font-weight:700}
+  .email{color:var(--muted);margin-top:2px}
+  .oauth{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:999px;padding:8px 12px;background:var(--card);font-weight:700;color:var(--text)}
 
   .card h3{margin:0 0 10px;font-size:18px}
   table{width:100%;border-collapse:collapse}
-  th,td{padding:12px;border-bottom:1px solid #eef2f7;text-align:left}
-  th{font-size:12px;color:#94a3b8;letter-spacing:.3px}
+  th,td{padding:12px;border-bottom:1px solid var(--border);text-align:left;color:var(--text)}
+  th{font-size:12px;color:var(--muted);letter-spacing:.3px}
 
   .form .row{margin-bottom:12px}
-  .label{font-weight:700;margin-bottom:6px}
+  .label{font-weight:700;margin-bottom:6px;color:var(--text)}
   .req::after{content:" *";color:#ef4444;font-weight:800}
   input[type="text"], input[type="number"], select{
-    width:100%;height:42px;border:1px solid var(--border);border-radius:10px;padding:0 12px;background:#f8fafc;outline:none
+    width:100%;height:42px;border:1px solid var(--border);border-radius:10px;padding:0 12px;background:#f8fafc;outline:none;color:var(--text)
+  }
+  html.dark input[type="text"], html.dark input[type="number"], html.dark select{
+    background:transparent;color:var(--text)
   }
 
+  /* Switch */
   .switch{position:relative;display:inline-block;width:46px;height:26px}
   .switch input{opacity:0;width:0;height:0}
   .slider{position:absolute;cursor:pointer;inset:0;background:#e5e7eb;border-radius:999px;transition:.2s}
+  html.dark .slider{background:#1f2a44}
   .slider:before{content:"";position:absolute;height:20px;width:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.15)}
   .switch input:checked + .slider{background:#22c55e}
   .switch input:checked + .slider:before{transform:translateX(20px)}
-  .help{color:#94a3b8;margin-left:6px}
+  .help{color:var(--muted);margin-left:6px}
   .save-wrap{margin-top:12px;display:flex;justify-content:flex-end}
   .btn-primary{height:44px;border:0;border-radius:12px;background:var(--blue);color:#fff;font-weight:800;padding:0 18px;cursor:pointer}
 
+  /* Chat */
   .pig-float{position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);z-index:30;border:0;cursor:pointer}
   .pig-float img{width:64px;height:64px}
-  .chatbox{position:fixed;right:26px;bottom:112px;width:340px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;grid-template-rows:56px 1fr 60px}
+  .chatbox{position:fixed;right:26px;bottom:112px;width:340px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;grid-template-rows:56px 1fr 60px}
   .chatbox.open{display:grid}
   .chat-head{background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;font-weight:800}
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
   .chat-title{line-height:1.2}
   .chat-sub{font-weight:600;opacity:.95}
   .chat-body{background:#f4fbff;overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
+  html.dark .chat-body{background:#0b1220}
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
   .msg.user{justify-content:flex-end}
-  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px;line-height:1.35}
+  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px;line-height:1.35;color:#0f172a}
+  html.dark .bubble{background:var(--card);color:var(--text)}
   .msg.bot .bubble{border-radius:14px 14px 14px 4px}
   .msg.user .bubble{border-radius:14px 14px 4px 14px;background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
@@ -79,9 +99,10 @@
   .typing span{display:inline-block;width:6px;height:6px;background:#9ca3af;border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
   .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
   @keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
-  .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
-  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
-  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
+  .chat-input{background:var(--card);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
+  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none;color:#0f172a}
+  html.dark #chatInput{background:transparent;color:var(--text)}
+  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer}
 </style>
 </head>
 <body>
@@ -92,15 +113,15 @@
       <b>SmartExpense</b>
     </div>
     <nav class="nav">
-      <a href="trangchu.html"><span class="i">🏠</span> Tổng quan</a>
-      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
-      <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
-      <a href="#"><span class="i">📅</span> Lên lịch chi tiêu</a>
-      <a href="loaichitieu.html"><span class="i">🏷️</span> Loại chi tiêu</a>
-      <a href="baocao.html"><span class="i">📊</span> Báo cáo</a>
-      <a href="hoso.html" class="active"><span class="i">👤</span> Hồ sơ</a>
-      <a href="caidat.html"><span class="i">⚙️</span> Cài đặt</a>
-      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
+      <a href="trangchu.html"><span class="i">🏠</span> <span data-i18n="nav.overview">Tổng quan</span></a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> <span data-i18n="nav.list">Danh sách chi tiêu</span></a>
+      <a href="lichsuchitieu.html"><span class="i">🕘</span> <span data-i18n="nav.history">Lịch sử chi tiêu</span></a>
+      <a href="#"><span class="i">📅</span> <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
+      <a href="loaichitieu.html"><span class="i">🏷️</span> <span data-i18n="nav.types">Loại chi tiêu</span></a>
+      <a href="baocao.html"><span class="i">📊</span> <span data-i18n="nav.report">Báo cáo</span></a>
+      <a href="hoso.html" class="active"><span class="i">👤</span> <span data-i18n="nav.profile">Hồ sơ</span></a>
+      <a href="caidat.html"><span class="i">⚙️</span> <span data-i18n="nav.settings">Cài đặt</span></a>
+      <a href="login.html"><span class="i">↪️</span> <span data-i18n="nav.logout">Đăng xuất</span></a>
     </nav>
   </aside>
 
@@ -111,62 +132,228 @@
           <div class="profile-head">
             <div class="avatar-big"><div class="circle">Q</div></div>
             <div>
-              <h2 class="profile-name">Quỳnh Như Nguyễn</h2>
-              <div class="email">quynhnhu6280@gmail.com</div>
+              <h2 class="profile-name" id="fullNameValue">Quỳnh Như Nguyễn</h2>
+              <div class="email" id="emailValue">quynhnhu6280@gmail.com</div>
               <div style="margin-top:10px">
-                <span class="oauth">🔗 Đăng nhập qua Google</span>
+                <span class="oauth">🔗 <span data-i18n="profile.oauth">Đăng nhập qua Google</span></span>
               </div>
             </div>
-          
           </div>
         </div>
 
         <div class="card">
-          <h3>Hóa đơn</h3>
+          <h3 data-i18n="invoices.title">Hóa đơn</h3>
           <table>
-            <thead><tr><th style="width:160px">Ngày</th><th>Mô tả</th><th style="width:120px">credit</th></tr></thead>
-            <tbody><tr><td>2025-09-23</td><td></td><td>0</td></tr></tbody>
+            <thead>
+              <tr>
+                <th style="width:160px" data-i18n="invoices.date">Ngày</th>
+                <th data-i18n="invoices.desc">Mô tả</th>
+                <th style="width:120px" data-i18n="invoices.credit">Credit</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>2025-09-23</td><td></td><td>0</td></tr>
+            </tbody>
           </table>
         </div>
       </div>
 
       <div class="card form">
-        <div class="row"><div class="label">Quỳnh Như Nguyễn</div><input type="text" value="Quỳnh Như Nguyễn"></div>
-        <div class="row"><div class="label req">Giới tính</div><select><option>Nữ</option><option>Nam</option><option>Khác</option></select></div>
-        <div class="row"><div class="label req">Đơn vị tiền tệ</div><select><option>Vietnam</option><option>United States</option><option>Japan</option><option>Euro</option></select></div>
-        <div class="row"><div class="label req">Nhập số dư (tháng)</div><input type="number" value="0" min="0"></div>
-        <div class="row"><div class="label">Số điện thoại</div><input type="text"></div>
-        <div class="row" style="display:flex;align-items:center;justify-content:space-between"><div class="label">Bật loại trừ chi tiêu <span class="help">ⓘ</span></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-        <div class="row" style="display:flex;align-items:center;justify-content:space-between"><div class="label">Bật tự động chọn loại chi tiêu</div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
-        <div class="row" style="display:flex;align-items:center;justify-content:space-between"><div class="label">Báo cáo email hằng ngày <span class="help">ⓘ</span></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
-        <div class="save-wrap"><button class="btn-primary" id="saveBtn">Lưu</button></div>
+        <div class="row">
+          <div class="label" data-i18n="form.fullName">Họ & Tên</div>
+          <input id="fullNameInput" type="text" value="Quỳnh Như Nguyễn">
+        </div>
+        <div class="row">
+          <div class="label req" data-i18n="form.gender">Giới tính</div>
+          <select>
+            <option data-i18n="gender.female">Nữ</option>
+            <option data-i18n="gender.male">Nam</option>
+            <option data-i18n="gender.other">Khác</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="label req" data-i18n="form.currency">Đơn vị tiền tệ</div>
+          <select>
+            <option>Vietnam</option><option>United States</option><option>Japan</option><option>Euro</option>
+          </select>
+        </div>
+        <div class="row">
+          <div class="label req" data-i18n="form.monthlyBalance">Nhập số dư (tháng)</div>
+          <input type="number" value="0" min="0">
+        </div>
+        <div class="row">
+          <div class="label" data-i18n="form.phone">Số điện thoại</div>
+          <input type="text" placeholder="">
+        </div>
+        <div class="row" style="display:flex;align-items:center;justify-content:space-between">
+          <div class="label">
+            <span data-i18n="toggles.exclude">Bật loại trừ chi tiêu</span>
+            <span class="help">ⓘ</span>
+          </div>
+          <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+        <div class="row" style="display:flex;align-items:center;justify-content:space-between">
+          <div class="label" data-i18n="toggles.autoCategory">Bật tự động chọn loại chi tiêu</div>
+          <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+        </div>
+        <div class="row" style="display:flex;align-items:center;justify-content:space-between">
+          <div class="label">
+            <span data-i18n="toggles.dailyReport">Báo cáo email hằng ngày</span>
+            <span class="help">ⓘ</span>
+          </div>
+          <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+        </div>
+        <div class="save-wrap"><button class="btn-primary" id="saveBtn" data-i18n="btn.save">Lưu</button></div>
       </div>
     </section>
   </main>
 
+  <!-- Chatbox -->
   <div id="chatbox" class="chatbox" aria-hidden="true">
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
-      <div><div class="chat-title">Trợ lý thông minh</div><div class="chat-sub">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div></div>
+      <div>
+        <div class="chat-title" data-i18n="chat.title">Trợ lý thông minh</div>
+        <div class="chat-sub" data-i18n="chat.sub">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div>
+      </div>
     </div>
     <div id="chatBody" class="chat-body"></div>
-    <div class="chat-input"><input id="chatInput" type="text" placeholder="Viết tin nhắn…"><button id="sendBtn" title="Gửi">➤</button></div>
+    <div class="chat-input">
+      <input id="chatInput" type="text" data-i18n="ph.chat" placeholder="Viết tin nhắn…">
+      <button id="sendBtn" title="Gửi" aria-label="Gửi" data-i18n="send.title" data-i18n-attr="title,aria-label">➤</button>
+    </div>
   </div>
-  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></button>
+  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý" data-i18n="chat.open" data-i18n-attr="aria-label">
+    <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
+  </button>
 
 <script>
-document.getElementById('saveBtn').addEventListener('click', ()=>alert('Đã lưu hồ sơ (demo).'));
+  /* ===== Apply saved theme ===== */
+  (function initTheme(){
+    const saved = localStorage.getItem('theme'); // 'light' | 'dark'
+    document.documentElement.classList.toggle('dark', saved === 'dark');
+  })();
 
-const chatToggle=document.getElementById('chatToggle');
-const chatbox=document.getElementById('chatbox');
-const chatBody=document.getElementById('chatBody');
-const chatInput=document.getElementById('chatInput');
-const sendBtn=document.getElementById('sendBtn');
-function addMsg(text,who='bot'){const wrap=document.createElement('div');wrap.className='msg '+who;const av=document.createElement('div');av.className='avatar-s';av.textContent=who==='bot'?'🐷':'👤';const b=document.createElement('div');b.className='bubble';b.textContent=text;if(who==='bot'){wrap.append(av,b);}else{wrap.append(b,av);}chatBody.appendChild(wrap);chatBody.scrollTop=chatBody.scrollHeight;}
-function handleSend(){const t=chatInput.value.trim();if(!t)return;addMsg(t,'user');chatInput.value='';setTimeout(()=>addMsg('Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?'),500);}
-chatToggle.onclick=()=>chatbox.classList.toggle('open');
-sendBtn.onclick=handleSend;
-chatInput.onkeydown=e=>{if(e.key==='Enter')handleSend();};
+  /* ===== i18n ===== */
+  const I18N = {
+    vi:{
+      "page.title":"SmartExpense — Hồ sơ",
+      "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu",
+      "nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo",
+      "nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
+
+      "profile.oauth":"Đăng nhập qua Google",
+
+      "invoices.title":"Hóa đơn","invoices.date":"Ngày","invoices.desc":"Mô tả","invoices.credit":"Credit",
+
+      "form.fullName":"Họ & Tên","form.gender":"Giới tính","form.currency":"Đơn vị tiền tệ",
+      "form.monthlyBalance":"Nhập số dư (tháng)","form.phone":"Số điện thoại",
+      "gender.female":"Nữ","gender.male":"Nam","gender.other":"Khác",
+
+      "toggles.exclude":"Bật loại trừ chi tiêu","toggles.autoCategory":"Bật tự động chọn loại chi tiêu",
+      "toggles.dailyReport":"Báo cáo email hằng ngày",
+
+      "btn.save":"Lưu","alert.saved":"Đã lưu hồ sơ (demo).",
+
+      "chat.title":"Trợ lý thông minh","chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn",
+      "chat.open":"Mở trợ lý","ph.chat":"Viết tin nhắn…","send.title":"Gửi",
+      "chat.greet":"Mình có thể giúp cập nhật hồ sơ, đổi ngôn ngữ/giao diện và trả lời câu hỏi của bạn.",
+      "chat.ok":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?"
+    },
+    en:{
+      "page.title":"SmartExpense — Profile",
+      "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History",
+      "nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports",
+      "nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
+
+      "profile.oauth":"Sign in with Google",
+
+      "invoices.title":"Invoices","invoices.date":"Date","invoices.desc":"Description","invoices.credit":"Credit",
+
+      "form.fullName":"Full name","form.gender":"Gender","form.currency":"Currency",
+      "form.monthlyBalance":"Monthly balance","form.phone":"Phone number",
+      "gender.female":"Female","gender.male":"Male","gender.other":"Other",
+
+      "toggles.exclude":"Enable expense exclusion","toggles.autoCategory":"Enable auto category",
+      "toggles.dailyReport":"Daily email report",
+
+      "btn.save":"Save","alert.saved":"Profile saved (demo).",
+
+      "chat.title":"Smart assistant","chat.sub":"Hi! 👋 Glad to help",
+      "chat.open":"Open assistant","ph.chat":"Type a message…","send.title":"Send",
+      "chat.greet":"I can help update your profile, switch language/theme, and answer questions.",
+      "chat.ok":"Got it. What would you like me to do next?"
+    }
+  };
+
+  function t(key){
+    const lang = localStorage.getItem('lang') || 'vi';
+    return (I18N[lang] && I18N[lang][key]) || key;
+  }
+  function translatePage(){
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      const val = t(key);
+      const attr = el.getAttribute('data-i18n-attr');
+      if(attr){
+        attr.split(',').forEach(a=>el.setAttribute(a.trim(), val));
+      }else if(el.tagName==='INPUT'){
+        el.placeholder = val;
+      }else{
+        el.textContent = val;
+      }
+    });
+    document.title = t('page.title');
+    document.documentElement.setAttribute('lang', localStorage.getItem('lang') || 'vi');
+
+    // Translate select options with data-i18n too
+    document.querySelectorAll('option[data-i18n]').forEach(op=>{
+      op.textContent = t(op.getAttribute('data-i18n'));
+    });
+  }
+
+  // Init i18n
+  translatePage();
+
+  /* ===== Profile save (demo) ===== */
+  document.getElementById('saveBtn').addEventListener('click', ()=>{
+    const name = document.getElementById('fullNameInput').value.trim();
+    if(name){
+      document.getElementById('fullNameValue').textContent = name;
+    }
+    alert(t('alert.saved'));
+  });
+
+  /* ===== Chatbox ===== */
+  const chatToggle=document.getElementById('chatToggle');
+  const chatbox=document.getElementById('chatbox');
+  const chatBody=document.getElementById('chatBody');
+  const chatInput=document.getElementById('chatInput');
+  const sendBtn=document.getElementById('sendBtn');
+  let greeted=false;
+
+  function addMsg(text,who='bot'){
+    const wrap=document.createElement('div'); wrap.className='msg '+who;
+    const av=document.createElement('div'); av.className='avatar-s'; av.textContent=who==='bot'?'🐷':'👤';
+    const b=document.createElement('div'); b.className='bubble'; b.textContent=text;
+    if(who==='bot'){wrap.append(av,b);} else {wrap.append(b,av);}
+    chatBody.appendChild(wrap); chatBody.scrollTop=chatBody.scrollHeight;
+  }
+  function openChat(){
+    chatbox.classList.add('open'); chatbox.setAttribute('aria-hidden','false');
+    if(!greeted){ addMsg(t('chat.greet')); greeted=true; }
+    setTimeout(()=>chatInput.focus(),100);
+  }
+  function closeChat(){ chatbox.classList.remove('open'); chatbox.setAttribute('aria-hidden','true'); }
+  chatToggle.onclick=()=> chatbox.classList.contains('open') ? closeChat() : openChat();
+
+  function handleSend(){
+    const txt = chatInput.value.trim(); if(!txt) return;
+    addMsg(txt,'user'); chatInput.value='';
+    addMsg(t('chat.ok'));
+  }
+  sendBtn.onclick=handleSend;
+  chatInput.onkeydown=e=>{ if(e.key==='Enter') handleSend(); };
 </script>
 </body>
 </html>
