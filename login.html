@@ -105,7 +105,7 @@
 
 <body>
     <div class="login-container">
-        <!-- Logo -->
+        
         <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw"
             alt="logo">
 
@@ -127,16 +127,21 @@
         </div>
     </div>
 
-    <script>
-        const form = document.getElementById("loginForm");
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
+   <script>
+    const form = document.getElementById("loginForm");
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-            alert("Email: " + email + "\nMật khẩu: " + password);
-        });
-    </script>
+        if (email && password) {
+            window.location.href = "trangchu.html";
+        } else {
+            alert("Vui lòng nhập đầy đủ thông tin!");
+        }
+    });
+</script>
+
 </body>
 
 </html>

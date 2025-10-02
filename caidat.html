@@ -19,7 +19,7 @@
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
 
-  /* Sidebar */
+
   .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
@@ -30,7 +30,7 @@
   .nav a .i{width:18px;text-align:center}
   .nav a.active{background:var(--blue);color:#fff}
 
-  /* Main */
+
   .main{padding:22px 24px 40px}
   .wrap{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:22px 24px;max-width:980px}
   .container{display:flex;gap:28px}
@@ -44,7 +44,7 @@
   .note{color:#94a3b8;font-size:14px}
   .sub{color:#111827}
 
-  /* Switch */
+
   .switch{position:relative;display:inline-block;width:48px;height:28px}
   .switch input{opacity:0;width:0;height:0}
   .slider{position:absolute;inset:0;border-radius:999px;background:#e5e7eb;cursor:pointer;transition:.2s}
@@ -52,19 +52,52 @@
   .switch input:checked + .slider{background:var(--green)}
   .switch input:checked + .slider:before{transform:translateX(20px)}
 
-  /* Radio & checkbox line */
+ 
   .inline{display:flex;gap:18px;flex-wrap:wrap;margin-top:8px}
   .chip{display:inline-flex;align-items:center;gap:8px}
 
-  /* Right list */
+ 
   .right .block{margin-bottom:22px}
   .right .title{font-weight:800;margin-bottom:8px}
   .right a{display:block;color:#2563eb;text-decoration:none;margin:10px 0}
   .muted{color:#94a3b8}
 
-  /* Pig */
-  .pig{position:fixed;right:24px;bottom:24px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12)}
-  .pig img{width:64px;height:64px}
+
+  .pig-float{
+    position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;
+    background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);
+    z-index:30;border:0;cursor:pointer
+  }
+  .pig-float img{width:64px;height:64px}
+
+  .chatbox{
+    position:fixed;right:26px;bottom:112px;width:340px;
+    background:#fff;border:1px solid var(--border);border-radius:14px;
+    box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;
+    grid-template-rows:56px 1fr 60px;
+  }
+  .chatbox.open{display:grid}
+  .chat-head{
+    background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;
+    padding:10px 12px;font-weight:800;
+  }
+  .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
+  .chat-title{line-height:1.2}
+  .chat-sub{font-weight:600;opacity:.95}
+  .chat-body{background:#f4fbff;overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
+  .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
+  .msg.user{justify-content:flex-end}
+  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px;line-height:1.35}
+  .msg.bot .bubble{border-radius:14px 14px 14px 4px}
+  .msg.user .bubble{border-radius:14px 14px 4px 14px;background:var(--blue);border:none;color:#fff}
+  .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
+  .typing{display:inline-block;min-width:34px}
+  .typing span{display:inline-block;width:6px;height:6px;background:#9ca3af;border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
+  .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+  @keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
+  .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
+  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
+  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
 
   @media (max-width:1060px){
     body{grid-template-columns:1fr}
@@ -72,12 +105,14 @@
     .wrap{max-width:none}
     .container{flex-direction:column}
     .right{width:auto}
+    .chatbox{right:16px;bottom:96px;width:min(92vw,360px)}
+    .pig-float{right:16px}
   }
 </style>
 </head>
 <body>
 
-  <!-- Sidebar -->
+
   <aside class="sidebar">
     <div class="brand">
       <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
@@ -96,11 +131,11 @@
     </nav>
   </aside>
 
-  <!-- Main -->
+
   <main class="main">
     <div class="wrap">
       <div class="container">
-        <!-- LEFT -->
+     
         <div class="left">
           <h2>Cảnh báo & Thông báo</h2>
 
@@ -168,7 +203,7 @@
           </div>
         </div>
 
-        <!-- RIGHT -->
+      
         <div class="right">
           <div class="block">
             <div class="title">Bảo mật</div>
@@ -201,15 +236,113 @@
     </div>
   </main>
 
-  <!-- Pig -->
-  <div class="pig"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
+  <div id="chatbox" class="chatbox" aria-hidden="true">
+    <div class="chat-head">
+      <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
+    <div>
+      <div class="chat-title">Trợ lý thông minh</div>
+      <div class="chat-sub">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div>
+    </div>
+    </div>
+    <div id="chatBody" class="chat-body"></div>
+    <div class="chat-input">
+      <input id="chatInput" type="text" placeholder="Viết tin nhắn…">
+      <button id="sendBtn" title="Gửi">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12L20 4L12 20L11 13L4 12Z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+
+
+  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý">
+    <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
+  </button>
 
 <script>
-  // Demo handlers
+
   document.getElementById('toggleTheme').addEventListener('click', function(){
     this.textContent = this.textContent === 'Sáng' ? 'Tối' : 'Sáng';
     alert('Đổi chế độ (demo). Bạn có thể gắn logic thật ở đây.');
   });
+
+
+  const chatToggle = document.getElementById('chatToggle');
+  const chatbox = document.getElementById('chatbox');
+  const chatBody = document.getElementById('chatBody');
+  const chatInput = document.getElementById('chatInput');
+  const sendBtn  = document.getElementById('sendBtn');
+
+  let greeted = false;
+
+  function openChat() {
+    chatbox.classList.add('open');
+    chatbox.setAttribute('aria-hidden','false');
+    if (!greeted) {
+      botSay('Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi đổi cài đặt, bật/tắt thông báo hoặc hỏi mẹo sử dụng.');
+      greeted = true;
+    }
+    setTimeout(()=> chatInput.focus(), 100);
+  }
+  function closeChat() {
+    chatbox.classList.remove('open');
+    chatbox.setAttribute('aria-hidden','true');
+  }
+  chatToggle.addEventListener('click', ()=>{
+    if (chatbox.classList.contains('open')) closeChat(); else openChat();
+  });
+
+  function scrollBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
+
+  function addMsg(text, who='bot'){
+    const wrap = document.createElement('div');
+    wrap.className = `msg ${who}`;
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar-s';
+    avatar.textContent = who==='bot' ? '🐷' : '👤';
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.innerText = text;
+    if (who==='bot'){ wrap.append(avatar, bubble); } else { wrap.append(bubble, avatar); }
+    chatBody.appendChild(wrap);
+    scrollBottom();
+  }
+
+  function addTyping(){
+    const wrap = document.createElement('div');
+    wrap.className = 'msg bot';
+    wrap.dataset.typing = '1';
+    wrap.innerHTML = `<div class="avatar-s">🐷</div>
+      <div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;
+    chatBody.appendChild(wrap);
+    scrollBottom();
+    return wrap;
+  }
+
+  function botSay(text, delay=0){
+    const t = addTyping();
+    setTimeout(()=>{
+      t.remove();
+      addMsg(text,'bot');
+    }, Math.max(300, delay));
+  }
+
+  function handleSend(){
+    const txt = chatInput.value.trim();
+    if (!txt) return;
+    addMsg(txt,'user');
+    chatInput.value = '';
+    const say = txt.toLowerCase();
+    if (say.includes('bật') || say.includes('tắt')) {
+      botSay('Bạn muốn bật/tắt mục nào? Ví dụ: Ngân sách, Bất thường, OCR.');
+    } else if (say.includes('ngưỡng') || say.includes('cảnh báo')) {
+      botSay('Ngưỡng cảnh báo hiện tại là 95%. Bạn muốn đổi sang 30% hay 100%?');
+    } else {
+      botSay('Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?');
+    }
+  }
+
+  sendBtn.addEventListener('click', handleSend);
+  chatInput.addEventListener('keydown', (e)=>{ if (e.key==='Enter') handleSend(); });
 </script>
 </body>
 </html>

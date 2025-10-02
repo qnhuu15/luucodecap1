@@ -7,55 +7,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#eaf3f9;
-    --card:#ffffff;
-    --text:#0f172a;
-    --muted:#64748b;
-    --border:#e5e7eb;
-    --blue:#2563eb;
-    --blue-600:#1f4fd1;
-    --green:#0ea5a0;
-    --red:#ef4444;
-    --radius:14px;
-    --shadow:0 10px 26px rgba(15,23,42,.06);
+    --bg:#eaf3f9; --card:#ffffff; --text:#0f172a; --muted:#64748b;
+    --border:#e5e7eb; --blue:#2563eb; --blue-600:#1f4fd1;
+    --green:#0ea5a0; --red:#ef4444;
+    --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
-    margin:0;
-    background:var(--bg);
-    color:var(--text);
+    margin:0;background:var(--bg);color:var(--text);
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-    display:grid;
-    grid-template-columns:260px 1fr;
-    min-height:100vh;
+    display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
-
-  /* ===== Sidebar ===== */
   .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
-  .brand{display:flex;align-items:center;gap:10px;padding:8px 10px 16px}
-  .brand .pig{width:40px;height:40px;border-radius:12px;background:#ffe8e0;display:grid;place-items:center;font-size:22px;box-shadow:var(--shadow)}
-  .brand b{font-size:18px;letter-spacing:.2px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
+  .brand .logo img{width:100%;height:100%;object-fit:cover}
+  .brand b{font-size:18px}
+  .nav{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;font-weight:700;color:#111827;text-decoration:none}
+  .nav a .i{width:18px;text-align:center}
+  .nav a.active{background:var(--blue);color:#fff}
 
-  .menu{margin-top:8px;display:flex;flex-direction:column;gap:6px}
-  .menu a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;text-decoration:none;color:#111827;font-weight:600}
-  .menu a .i{width:18px;text-align:center;color:#94a3b8}
-
-  /* ✅ ACTIVE: nền xanh, chữ & icon trắng */
-  .menu a.active{background:var(--blue);color:#fff}
-  .menu a.active .i{color:#fff}
-
-  .menu .sep{height:10px}
-
-  /* ===== Main ===== */
-  .main{padding:20px 24px 36px}
+  .main{padding:22px 24px 40px}
   .top{display:flex;align-items:center;gap:14px;margin:2px 0 14px}
   .top h1{margin:0;font-size:22px;font-weight:800}
   .search{margin-left:auto;display:flex;align-items:center;gap:12px}
   .search input{width:min(420px,40vw);height:40px;padding:0 16px;border:1px solid var(--border);border-radius:999px;background:#fff;outline:none}
   .avatar{width:40px;height:40px;border-radius:50%;background:#fde68a url('avatar.png') center/cover no-repeat;display:grid;place-items:center;font-weight:800;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.08)}
 
-  /* ===== Cards & grid ===== */
   .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
   .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
   .kpi h4{margin:0 0 8px;font-size:13px;color:#94a3b8;font-weight:800}
@@ -95,7 +75,7 @@
   .guide h4{margin:0 0 8px;font-size:14px}
   .guide p{margin:6px 0;font-size:13px;color:#475569}
 
-  /* ===== Pig & Chatbox ===== */
+
   .pig-float{position:fixed;right:32px;bottom:26px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);font-size:36px;z-index:20;cursor:pointer;border:0}
   .pig-float img{width:64px;height:64px}
 
@@ -127,7 +107,7 @@
 
   .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
   #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
-  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer}
+  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
 
   @media (max-width:1200px){
     body{grid-template-columns:230px 1fr}
@@ -144,16 +124,15 @@
 </style>
 </head>
 <body>
-  <!-- Sidebar -->
+
   <aside class="sidebar">
     <div class="brand">
-      <div class="pig">
-        <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="SmartExpense" style="width:100%;height:auto;border-radius:12px">
+      <div class="logo">
+        <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
       </div>
       <b>SmartExpense</b>
     </div>
-
-    <nav class="menu">
+    <nav class="nav">
       <a href="trangchu.html" class="active"><span class="i">🏠</span> Tổng quan</a>
       <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
       <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
@@ -162,12 +141,10 @@
       <a href="baocao.html"><span class="i">📊</span> Báo cáo</a>
       <a href="hoso.html"><span class="i">👤</span> Hồ sơ</a>
       <a href="caidat.html"><span class="i">⚙️</span> Cài đặt</a>
-      <div class="sep"></div>
       <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
     </nav>
   </aside>
 
-  <!-- Main -->
   <main class="main">
     <div class="top">
       <h1>Tổng quan</h1>
@@ -177,7 +154,6 @@
       </div>
     </div>
 
-    <!-- KPI -->
     <section class="kpi">
       <div class="card">
         <h4>Số dư</h4>
@@ -204,7 +180,6 @@
       </div>
     </section>
 
-    <!-- Content 3 cột -->
     <section class="content">
       <div class="card chart">
         <div class="head">
@@ -269,7 +244,7 @@
     </section>
   </main>
 
-  <!-- Chatbox -->
+
   <div id="chatbox" class="chatbox" aria-hidden="true">
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
@@ -287,21 +262,22 @@
     </div>
   </div>
 
-  <!-- Floating pig toggle -->
   <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý">
     <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
   </button>
 
 <script>
-  // Lọc nhanh bảng
+
   const filter = document.querySelector('.table .right input');
   const rows = [...document.querySelectorAll('tbody tr')];
-  filter.addEventListener('input', e=>{
-    const q = e.target.value.toLowerCase();
-    rows.forEach(r=> r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none');
-  });
+  if (filter) {
+    filter.addEventListener('input', e=>{
+      const q = e.target.value.toLowerCase();
+      rows.forEach(r=> r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none');
+    });
+  }
 
-  // Chatbox
+  // ===== Chatbox logic (giống trangchu gốc)
   const chatToggle = document.getElementById('chatToggle');
   const chatbox = document.getElementById('chatbox');
   const chatBody = document.getElementById('chatBody');

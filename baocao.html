@@ -20,7 +20,7 @@
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
 
-  /* ===== Sidebar ===== */
+ 
   .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
@@ -31,18 +31,17 @@
   .nav a .i{width:18px;text-align:center}
   .nav a.active{background:var(--blue);color:#fff}
 
-  /* ===== Main ===== */
+
   .main{padding:22px 24px 40px}
   .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
   .top h1{margin:0;font-size:22px;font-weight:800}
   .top .sp{flex:1}
   .btn{height:38px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:800;padding:0 14px;cursor:pointer}
 
-  /* ===== Cards / Grid ===== */
+
   .grid{display:grid;grid-template-columns:1.25fr .9fr;gap:16px}
   .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:14px}
 
-  /* Daily list */
   .daily .row{display:grid;grid-template-columns:20px 1fr 200px 80px;align-items:center;gap:10px;padding:10px 6px;border-bottom:1px dashed #eef2f7}
   .daily .row:last-child{border-bottom:0}
   .arrow{color:#94a3b8}
@@ -52,32 +51,69 @@
   .bar>i.green{background:var(--green)}
   .amount{text-align:right;color:#111827;font-weight:700}
 
-  /* Chart mock */
+ 
   .chart{display:flex;flex-direction:column;gap:12px}
   .chart .panel{background:#0b1220;border-radius:12px;padding:10px;height:180px;display:grid;place-items:center}
   .chart svg{width:100%;height:100%}
 
-  /* Monthly */
+  
   .month .row{display:grid;grid-template-columns:80px 1fr 110px;align-items:center;gap:10px;padding:10px 6px}
   .mbar{height:10px;background:#e5e7eb;border-radius:999px;overflow:hidden}
   .mbar>i{display:block;height:100%;background:var(--green)}
   .mamount{text-align:right;font-weight:700}
 
-  /* Floating pig + FAB */
-  .pig{position:fixed;right:24px;bottom:24px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12);z-index:10}
-  .pig img{width:64px;height:64px}
-  .fab{position:fixed;right:26px;bottom:112px;width:46px;height:46px;border-radius:999px;background:#f43f5e;color:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 6px 14px rgba(244,63,94,.35);cursor:pointer}
+  .pig-float{
+    position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;
+    background:#ffe8e0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12);
+    z-index:30;border:0;cursor:pointer
+  }
+  .pig-float img{width:64px;height:64px}
+
+  .chatbox{
+    position:fixed;right:26px;bottom:112px;width:340px;
+    background:#fff;border:1px solid var(--border);border-radius:14px;
+    box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;
+    grid-template-rows:56px 1fr 60px;
+  }
+  .chatbox.open{display:grid}
+  .chat-head{
+    background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;
+    padding:10px 12px;font-weight:800;
+  }
+  .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
+  .chat-title{line-height:1.2}
+  .chat-sub{font-weight:600;opacity:.95}
+  .chat-body{background:#f4fbff;overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
+  .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
+  .msg.user{justify-content:flex-end}
+  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px;line-height:1.35}
+  .msg.bot .bubble{border-radius:14px 14px 14px 4px}
+  .msg.user .bubble{border-radius:14px 14px 4px 14px;background:var(--blue);border:none;color:#fff}
+  .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
+  .typing{display:inline-block;min-width:34px}
+  .typing span{display:inline-block;width:6px;height:6px;background:#9ca3af;border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
+  .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+  @keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
+  .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
+  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
+  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
+
+
+  .fab{position:fixed;right:26px;bottom:112px;width:46px;height:46px;border-radius:999px;background:#f43f5e;color:#fff;display:grid;place-items:center;font-size:22px;box-shadow:0 6px 14px rgba(244,63,94,.35);cursor:pointer;z-index:20}
 
   @media (max-width:1100px){
     body{grid-template-columns:1fr}
     .sidebar{position:sticky;top:0;z-index:20}
     .grid{grid-template-columns:1fr}
+    .chatbox{right:16px;bottom:96px;width:min(92vw,360px)}
+    .pig-float{right:16px;bottom:20px}
+    .fab{right:16px;bottom:96px}
   }
 </style>
 </head>
 <body>
 
-  <!-- Sidebar -->
+
   <aside class="sidebar">
     <div class="brand">
       <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
@@ -91,13 +127,12 @@
       <a href="loaichitieu.html"><span class="i">🏷️</span> Loại chi tiêu</a>
       <a href="baocao.html" class="active"><span class="i">📊</span> Báo cáo</a>
       <a href="hoso.html"><span class="i">👤</span> Hồ sơ</a>
-      <!-- ✅ THÊM CÀI ĐẶT Ở ĐÂY -->
       <a href="caidat.html"><span class="i">⚙️</span> Cài đặt</a>
       <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
     </nav>
   </aside>
 
-  <!-- Main -->
+
   <main class="main">
     <div class="top">
       <h1>Báo cáo</h1>
@@ -106,16 +141,16 @@
     </div>
 
     <section class="grid">
-      <!-- Left: Daily list -->
+    
       <div class="card daily">
         <b>Chi tiêu theo ngày</b>
         <div id="daily"></div>
         <button class="btn" style="margin-top:10px">Xem thêm</button>
       </div>
 
-      <!-- Right column -->
+      
       <div style="display:grid;gap:16px">
-        <!-- Chart mock -->
+       
         <div class="card chart">
           <div class="panel">
             <svg viewBox="0 0 600 260" preserveAspectRatio="none">
@@ -136,7 +171,7 @@
           </div>
         </div>
 
-        <!-- Monthly -->
+
         <div class="card month">
           <b>Chi tiêu theo tháng</b>
           <div id="month"></div>
@@ -146,12 +181,34 @@
     </section>
   </main>
 
-  <!-- Floating toys -->
+
+  <div id="chatbox" class="chatbox" aria-hidden="true">
+    <div class="chat-head">
+      <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
+      <div>
+        <div class="chat-title">Trợ lý thông minh</div>
+        <div class="chat-sub">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div>
+      </div>
+    </div>
+    <div id="chatBody" class="chat-body"></div>
+    <div class="chat-input">
+      <input id="chatInput" type="text" placeholder="Viết tin nhắn…">
+      <button id="sendBtn" title="Gửi">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12L20 4L12 20L11 13L4 12Z" fill="currentColor"/></svg>
+      </button>
+    </div>
+  </div>
+
+
+  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý">
+    <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
+  </button>
+
+
   <div class="fab" title="Lên đầu trang">↑</div>
-  <div class="pig"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
 
 <script>
-  // ===== Demo data =====
+
   const DAILY = [
     { label:'2025-09-24 Thứ Tư', amount:2015000 },
     { label:'2025-09-23 Thứ Ba', amount:0 },
@@ -176,7 +233,7 @@
 
   const fmt = n => (n||0).toLocaleString('vi-VN') + 'đ';
 
-  // ===== Render Daily =====
+
   (function renderDaily(){
     const wrap = document.getElementById('daily');
     const max = Math.max(...DAILY.map(d=>d.amount), 1);
@@ -194,7 +251,7 @@
     });
   })();
 
-  // ===== Render Monthly =====
+
   (function renderMonth(){
     const wrap = document.getElementById('month');
     const max = Math.max(...MONTHLY.map(m=>m.amount), 1);
@@ -211,9 +268,87 @@
     });
   })();
 
-  // ===== Interactions =====
+
   document.querySelector('.fab').onclick = ()=> window.scrollTo({top:0,behavior:'smooth'});
   document.getElementById('btnDetail').onclick = ()=> alert('Đi tới trang chi tiết báo cáo…');
+
+  
+  const chatToggle = document.getElementById('chatToggle');
+  const chatbox = document.getElementById('chatbox');
+  const chatBody = document.getElementById('chatBody');
+  const chatInput = document.getElementById('chatInput');
+  const sendBtn  = document.getElementById('sendBtn');
+
+  let greeted = false;
+
+  function openChat() {
+    chatbox.classList.add('open');
+    chatbox.setAttribute('aria-hidden','false');
+    if (!greeted) {
+      botSay('Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi tạo chi tiêu, xem báo cáo, hoặc hỏi mẹo sử dụng.');
+      greeted = true;
+    }
+    setTimeout(()=> chatInput.focus(), 100);
+  }
+  function closeChat() {
+    chatbox.classList.remove('open');
+    chatbox.setAttribute('aria-hidden','true');
+  }
+  chatToggle.addEventListener('click', ()=>{
+    if (chatbox.classList.contains('open')) closeChat(); else openChat();
+  });
+
+  function scrollBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
+
+  function addMsg(text, who='bot'){
+    const wrap = document.createElement('div');
+    wrap.className = `msg ${who}`;
+    const avatar = document.createElement('div');
+    avatar.className = 'avatar-s';
+    avatar.textContent = who==='bot' ? '🐷' : '👤';
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.innerText = text;
+    if (who==='bot'){ wrap.append(avatar, bubble); } else { wrap.append(bubble, avatar); }
+    chatBody.appendChild(wrap);
+    scrollBottom();
+  }
+
+  function addTyping(){
+    const wrap = document.createElement('div');
+    wrap.className = 'msg bot';
+    wrap.dataset.typing = '1';
+    wrap.innerHTML = `<div class="avatar-s">🐷</div>
+      <div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;
+    chatBody.appendChild(wrap);
+    scrollBottom();
+    return wrap;
+  }
+
+  function botSay(text, delay=0){
+    const t = addTyping();
+    setTimeout(()=>{
+      t.remove();
+      addMsg(text,'bot');
+    }, Math.max(300, delay));
+  }
+
+  function handleSend(){
+    const txt = chatInput.value.trim();
+    if (!txt) return;
+    addMsg(txt,'user');
+    chatInput.value = '';
+    const say = txt.toLowerCase();
+    if (say.includes('tạo') && (say.includes('tháng') || say.includes('thang'))) {
+      botSay('Đang tạo câu trả lời dựa theo yêu cầu…', 900);
+      setTimeout(()=> botSay('Tôi đã tạo thành công chi tiêu tiếp theo của tháng sau. Hãy kiểm tra ở mục Danh sách chi tiêu.', 1200), 1100);
+    } else {
+      botSay('Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?');
+    }
+  }
+
+  sendBtn.addEventListener('click', handleSend);
+  chatInput.addEventListener('keydown', (e)=>{ if (e.key==='Enter') handleSend(); });
 </script>
 </body>
 </html>
