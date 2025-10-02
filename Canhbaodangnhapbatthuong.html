@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SmartExpense — Cảnh báo đăng nhập bất thường</title>
+<title data-i18n="page.title">SmartExpense — Cảnh báo đăng nhập bất thường</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -13,6 +13,13 @@
     --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
     --h:44px;
   }
+  /* Dark theme */
+  html.dark{
+    --bg:#0b1220; --card:#0f172a; --text:#e5e7eb; --muted:#9aa4b2;
+    --border:#1f2a44; --blue:#3b82f6; --green:#22c55e;
+    --yellow:#f59e0b; --red:#ef4444;
+  }
+
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
@@ -21,65 +28,70 @@
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
 
-  /* Sidebar (đồng bộ các trang) */
-  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  /* Sidebar */
+  .sidebar{background:var(--card);border-right:1px solid var(--border);padding:18px 14px}
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border)}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
   .brand .logo img{width:100%;height:100%;object-fit:cover}
-  .brand b{font-size:18px}
+  .brand b{font-size:18px;color:var(--text)}
   .nav{display:flex;flex-direction:column;gap:6px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--text);font-weight:700;text-decoration:none}
   .nav a.active{background:var(--blue);color:#fff}
+  .nav a:hover{background:rgba(37,99,235,.12)}
 
-  /* Main layout */
+  /* Main */
   .main{padding:22px 24px 40px}
-  .wrap{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:18px 18px 12px;max-width:1200px}
+  .wrap{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:18px 18px 12px;max-width:1200px}
   .header{display:flex;align-items:center;gap:12px;justify-content:space-between;margin-bottom:8px}
-  .title{font-size:24px;font-weight:800;margin:0}
+  .title{font-size:24px;font-weight:800;margin:0;color:var(--text)}
   .tools{display:flex;gap:10px;flex-wrap:wrap}
-  .chip{height:34px;border-radius:999px;border:1px solid var(--border);background:#fff;font-weight:800;padding:0 12px;cursor:pointer}
+  .chip{height:34px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--text);font-weight:800;padding:0 12px;cursor:pointer}
   .chip.active{background:#0f172a;color:#fff;border-color:#0f172a}
+  html.dark .chip.active{background:#111827}
   .search{display:flex;gap:8px}
   .input{height:38px;border:1px solid var(--border);border-radius:999px;background:#f8fafc;display:flex;align-items:center;padding:0 12px}
-  .input input{border:0;outline:none;background:transparent;height:100%}
+  html.dark .input{background:#0b1220}
+  .input input{border:0;outline:none;background:transparent;height:100%;color:var(--text)}
 
   .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px;margin-top:8px}
+
   /* left list */
   .bar{display:flex;gap:10px;align-items:center;margin:8px 0}
   .btn{height:38px;border-radius:10px;padding:0 12px;font-weight:800;cursor:pointer}
-  .btn-ghost{background:#fff;border:1px solid var(--border)}
+  .btn-ghost{background:var(--card);border:1px solid var(--border);color:var(--text)}
   .btn-primary{background:var(--blue);color:#fff;border:0}
   .btn-primary:disabled{opacity:.6;cursor:not-allowed}
-  .btn-danger{background:#fff;border:1px solid #fecaca;color:#b91c1c}
+  .btn-danger{background:var(--card);border:1px solid #fecaca;color:#b91c1c}
   .btn-soft{background:#f1f5f9;border:1px solid #e2e8f0}
-  .count{color:#94a3b8;font-size:14px;margin-left:auto}
+  html.dark .btn-soft{background:#0b1220;border-color:var(--border);color:var(--text)}
+  .count{color:var(--muted);font-size:14px;margin-left:auto}
 
   .list{display:grid;gap:10px}
   .row{
     display:grid;grid-template-columns:28px 1fr 120px 84px 120px;gap:10px;
-    align-items:center;border:1px solid #e6ebf2;background:#fff;border-radius:12px;padding:10px;
+    align-items:center;border:1px solid var(--border);background:var(--card);border-radius:12px;padding:10px;
   }
   .row.active{outline:2px solid #9aa5b1}
   .sev{width:10px;height:10px;border-radius:50%}
   .sev.low{background:var(--green)} .sev.med{background:var(--yellow)} .sev.high{background:var(--red)}
   .dev{font-weight:800}
-  .sub{color:#6b7280}
-  .badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:2px 8px;font-size:12px}
+  .sub{color:var(--muted)}
+  .badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:2px 8px;font-size:12px;background:var(--card);color:var(--text)}
   .badge.trusted{background:#ecfdf5;border-color:#bbf7d0;color:#166534}
   .badge.new{background:#eff6ff;border-color:#bfdbfe;color:#1d4ed8}
   .badge.alert{background:#fff1f2;border-color:#fecdd3;color:#b91c1c}
-  .row .time{text-align:right;color:#6b7280}
+  .row .time{text-align:right;color:var(--muted)}
 
   /* right detail */
-  .panel{border-left:2px solid #e5e7eb;padding-left:12px}
+  .panel{border-left:2px solid var(--border);padding-left:12px}
   .panel h3{margin:4px 0 10px;font-size:18px;font-weight:800}
   .kv{display:grid;grid-template-columns:120px 1fr;gap:6px;font-size:14px;margin:6px 0}
-  .map{height:180px;border:1px dashed #d1d5db;border-radius:12px;background:
-      linear-gradient(135deg,#f3f4f6,#fff);display:grid;place-items:center;color:#6b7280;margin-top:8px}
+  .map{height:180px;border:1px dashed var(--border);border-radius:12px;background:
+      linear-gradient(135deg,#f3f4f6,var(--card));display:grid;place-items:center;color:var(--muted);margin-top:8px}
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-  .hint{color:#94a3b8;font-size:13px;margin-top:6px}
+  .hint{color:var(--muted);font-size:13px;margin-top:6px}
 
-  /* Chatbox (đồng bộ) */
+  /* Chatbox */
   .pig-float{
     position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;
     background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);
@@ -87,7 +99,7 @@
   }
   .pig-float img{width:64px;height:64px}
   .chatbox{
-    position:fixed;right:26px;bottom:112px;width:340px;background:#fff;border:1px solid var(--border);
+    position:fixed;right:26px;bottom:112px;width:340px;background:var(--card);border:1px solid var(--border);
     border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;grid-template-rows:56px 1fr 60px;
   }
   .chatbox.open{display:grid}
@@ -95,21 +107,24 @@
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
   .chat-title{line-height:1.2}
   .chat-body{background:#f4fbff;overflow:auto;padding:10px;max-height:380px}
+  html.dark .chat-body{background:#0b1220}
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
-  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px}
+  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px;color:#0f172a}
+  html.dark .bubble{background:var(--card);color:var(--text)}
   .msg.user{justify-content:flex-end}
-  .msg.user .bubble{background:#2563eb;border:none;color:#fff}
+  .msg.user .bubble{background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
-  .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
-  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;outline:none}
-  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
+  .chat-input{background:var(--card);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
+  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;outline:none;background:#fff;color:#0f172a}
+  html.dark #chatInput{background:transparent;color:var(--text)}
+  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer}
 
   @media (max-width:1100px){
     body{grid-template-columns:1fr}
     .sidebar{position:sticky;top:0;z-index:20}
     .wrap{max-width:none}
     .grid{grid-template-columns:1fr}
-    .panel{border-left:0;border-top:2px solid #e5e7eb;padding-left:0;padding-top:12px}
+    .panel{border-left:0;border-top:2px solid var(--border);padding-left:0;padding-top:12px}
     .chatbox{right:16px;bottom:96px;width:min(92vw,360px)}
     .pig-float{right:16px}
   }
@@ -124,15 +139,15 @@
       <b>SmartExpense</b>
     </div>
     <nav class="nav">
-      <a href="trangchu.html">🏠 Tổng quan</a>
-      <a href="danhsachchitieu.html">🧾 Danh sách chi tiêu</a>
-      <a href="lichsuchitieu.html">🕘 Lịch sử chi tiêu</a>
-      <a href="#">📅 Lên lịch chi tiêu</a>
-      <a href="loaichitieu.html">🏷️ Loại chi tiêu</a>
-      <a href="baocao.html">📊 Báo cáo</a>
-      <a href="hoso.html">👤 Hồ sơ</a>
-      <a href="caidat.html" class="active">⚙️ Cài đặt</a>
-      <a href="login.html">↪️ Đăng xuất</a>
+      <a href="trangchu.html">🏠 <span data-i18n="nav.overview">Tổng quan</span></a>
+      <a href="danhsachchitieu.html">🧾 <span data-i18n="nav.list">Danh sách chi tiêu</span></a>
+      <a href="lichsuchitieu.html">🕘 <span data-i18n="nav.history">Lịch sử chi tiêu</span></a>
+      <a href="#">📅 <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
+      <a href="loaichitieu.html">🏷️ <span data-i18n="nav.types">Loại chi tiêu</span></a>
+      <a href="baocao.html">📊 <span data-i18n="nav.report">Báo cáo</span></a>
+      <a href="hoso.html">👤 <span data-i18n="nav.profile">Hồ sơ</span></a>
+      <a href="caidat.html" class="active">⚙️ <span data-i18n="nav.settings">Cài đặt</span></a>
+      <a href="login.html">↪️ <span data-i18n="nav.logout">Đăng xuất</span></a>
     </nav>
   </aside>
 
@@ -140,78 +155,177 @@
   <main class="main">
     <div class="wrap">
       <div class="header">
-        <h1 class="title">Cảnh báo đăng nhập bất thường</h1>
+        <h1 class="title" data-i18n="page.h1">Cảnh báo đăng nhập bất thường</h1>
         <div class="tools">
-          <button class="chip active" data-filter="all">Tất cả</button>
-          <button class="chip" data-filter="anomaly">Bất thường</button>
-          <button class="chip" data-filter="ok">Bình thường</button>
+          <button class="chip active" data-filter="all" data-i18n="filter.all">Tất cả</button>
+          <button class="chip" data-filter="anomaly" data-i18n="filter.anomaly">Bất thường</button>
+          <button class="chip" data-filter="ok" data-i18n="filter.ok">Bình thường</button>
           <div class="search">
-            <div class="input"><input id="q" placeholder="Tìm theo IP, thiết bị, vị trí…"></div>
+            <div class="input">
+              <input id="q" data-i18n="ph.search" placeholder="Tìm theo IP, thiết bị, vị trí…">
+            </div>
           </div>
         </div>
       </div>
 
       <div class="grid">
-      
+        <!-- List -->
         <section>
           <div class="bar">
-            <button id="markReviewed" class="btn btn-ghost" disabled>Đánh dấu đã xem</button>
-            <button id="logoutSelected" class="btn btn-danger" disabled>Đăng xuất từ xa</button>
-            <button id="exportCsv" class="btn btn-soft">Xuất CSV</button>
-            <div class="count" id="countLabel"></div>
+            <button id="markReviewed" class="btn btn-ghost" disabled data-i18n="btn.reviewed">Đánh dấu đã xem</button>
+            <button id="logoutSelected" class="btn btn-danger" disabled data-i18n="btn.remoteLogout">Đăng xuất từ xa</button>
+            <button id="exportCsv" class="btn btn-soft" data-i18n="btn.exportCsv">Xuất CSV</button>
+            <div class="count" id="countLabel">0 phiên</div>
           </div>
-
           <div class="list" id="list"></div>
         </section>
 
-      
+        <!-- Detail -->
         <aside class="panel">
-          <h3>Chi tiết đăng nhập</h3>
+          <h3 data-i18n="detail.title">Chi tiết đăng nhập</h3>
           <div id="detail">
-            <div class="kv"><div>Trạng thái</div><div><span class="badge new">Mới</span></div></div>
-            <div class="kv"><div>Thiết bị</div><div class="dev">MacBook Pro — Chrome 126</div></div>
-            <div class="kv"><div>Vị trí</div><div>Hồ Chí Minh, VN (ước tính)</div></div>
-            <div class="kv"><div>IP</div><div class="mono">27.3.145.80</div></div>
-            <div class="kv"><div>Thời gian</div><div>Hôm nay, 08:15</div></div>
-            <div class="kv"><div>Nhận diện</div><div>Đăng nhập từ thiết bị lạ; chênh lệch vị trí lớn</div></div>
-
-            <div class="map">Bản đồ/ảnh máy chủ (placeholder)</div>
-
-            <div class="actions">
-              <button id="itsMe" class="btn btn-primary">Đó là tôi</button>
-              <button id="logout" class="btn btn-danger">Đăng xuất phiên này</button>
-              <button id="blockIp" class="btn btn-ghost">Chặn IP</button>
-              <button id="trustDevice" class="btn btn-soft">Tin cậy thiết bị</button>
-              <button id="forceChangePw" class="btn btn-soft">Yêu cầu đổi mật khẩu</button>
-            </div>
-            <div class="hint">Mẹo: Hãy bật 2FA để bảo vệ tài khoản tốt hơn.</div>
+            <!-- Filled by JS -->
           </div>
         </aside>
       </div>
     </div>
   </main>
 
-
+  <!-- Chatbox -->
   <div id="chatbox" class="chatbox" aria-hidden="true">
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
       <div>
-        <div class="chat-title">Trợ lý thông minh</div>
-        <div style="font-size:12px;opacity:.95">Cảnh báo đăng nhập & bảo mật</div>
+        <div class="chat-title" data-i18n="chat.title">Trợ lý thông minh</div>
+        <div class="chat-sub" data-i18n="chat.context">Cảnh báo đăng nhập & bảo mật</div>
       </div>
     </div>
     <div id="chatBody" class="chat-body"></div>
     <div class="chat-input">
-      <input id="chatInput" type="text" placeholder="Viết tin nhắn…">
-      <button id="sendBtn" title="Gửi">➤</button>
+      <input id="chatInput" type="text" data-i18n="ph.chat" placeholder="Viết tin nhắn…">
+      <button id="sendBtn" title="Gửi" aria-label="Gửi" data-i18n="send.title" data-i18n-attr="title,aria-label">➤</button>
     </div>
   </div>
-  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý">
+  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý" data-i18n="chat.open" data-i18n-attr="aria-label">
     <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
   </button>
 
 <script>
-  
+  /* ===== Theme from Settings ===== */
+  (function initTheme(){
+    const saved = localStorage.getItem('theme');
+    document.documentElement.classList.toggle('dark', saved === 'dark');
+  })();
+
+  /* ===== I18N ===== */
+  const I18N = {
+    vi: {
+      "page.title":"SmartExpense — Cảnh báo đăng nhập bất thường",
+      "page.h1":"Cảnh báo đăng nhập bất thường",
+
+      "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu",
+      "nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo",
+      "nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
+
+      "filter.all":"Tất cả","filter.anomaly":"Bất thường","filter.ok":"Bình thường",
+      "ph.search":"Tìm theo IP, thiết bị, vị trí…",
+
+      "btn.reviewed":"Đánh dấu đã xem",
+      "btn.remoteLogout":"Đăng xuất từ xa",
+      "btn.exportCsv":"Xuất CSV",
+
+      "count":"{n} phiên",
+
+      "detail.title":"Chi tiết đăng nhập",
+      "detail.status":"Trạng thái","detail.device":"Thiết bị","detail.loc":"Vị trí","detail.ip":"IP",
+      "detail.time":"Thời gian","detail.reason":"Nhận diện",
+      "detail.map":"Bản đồ/ảnh máy chủ (placeholder)",
+      "detail.hint":"Mẹo: Bật 2FA và hạn chế đăng nhập từ thiết bị công cộng.",
+
+      "badge.trusted":"Tin cậy","badge.alert":"Cảnh báo","badge.new":"Mới",
+
+      "act.itsMe":"Đó là tôi","act.logout":"Đăng xuất phiên này",
+      "act.blockIp":"Chặn IP","act.trust":"Tin cậy thiết bị","act.forcePw":"Yêu cầu đổi mật khẩu",
+
+      "chat.title":"Trợ lý thông minh","chat.context":"Cảnh báo đăng nhập & bảo mật",
+      "chat.open":"Mở trợ lý",
+      "chat.greet":"Chào bạn! Mình có thể giúp phân tích sự kiện đăng nhập, gợi ý hành động và xuất báo cáo.",
+      "ph.chat":"Viết tin nhắn…","send.title":"Gửi",
+
+      "chat.help.logout":"Bạn có thể chọn nhiều dòng rồi bấm “Đăng xuất từ xa” để kết thúc các phiên đáng ngờ.",
+      "chat.help.block":"Trong khung chi tiết, bấm “Chặn IP” để chặn IP đó (demo).",
+      "chat.help.trust":"Bấm “Tin cậy thiết bị” nếu xác nhận thiết bị là của bạn.",
+      "chat.help.csv":"Dùng nút “Xuất CSV” để tải toàn bộ sự kiện.",
+      "chat.help.generic":"Bạn muốn mình hướng dẫn thao tác nào?"
+    },
+    en: {
+      "page.title":"SmartExpense — Suspicious sign-in alerts",
+      "page.h1":"Suspicious sign-in alerts",
+
+      "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History",
+      "nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports",
+      "nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
+
+      "filter.all":"All","filter.anomaly":"Suspicious","filter.ok":"Normal",
+      "ph.search":"Search by IP, device, location…",
+
+      "btn.reviewed":"Mark reviewed",
+      "btn.remoteLogout":"Remote sign out",
+      "btn.exportCsv":"Export CSV",
+
+      "count":"{n} sessions",
+
+      "detail.title":"Sign-in details",
+      "detail.status":"Status","detail.device":"Device","detail.loc":"Location","detail.ip":"IP",
+      "detail.time":"Time","detail.reason":"Signals",
+      "detail.map":"Map/server image (placeholder)",
+      "detail.hint":"Tip: Enable 2FA and avoid public devices.",
+
+      "badge.trusted":"Trusted","badge.alert":"Alert","badge.new":"New",
+
+      "act.itsMe":"It’s me","act.logout":"Sign out this session",
+      "act.blockIp":"Block IP","act.trust":"Trust device","act.forcePw":"Force password change",
+
+      "chat.title":"Smart assistant","chat.context":"Sign-in alerts & security",
+      "chat.open":"Open assistant",
+      "chat.greet":"Hi! I can analyze sign-in events, suggest actions, and export reports.",
+      "ph.chat":"Type a message…","send.title":"Send",
+
+      "chat.help.logout":"Select multiple rows then click “Remote sign out” to end suspicious sessions.",
+      "chat.help.block":"In details panel, click “Block IP” to block that address (demo).",
+      "chat.help.trust":"Click “Trust device” if it’s yours.",
+      "chat.help.csv":"Use “Export CSV” to download all events.",
+      "chat.help.generic":"What would you like help with?"
+    }
+  };
+
+  function t(key){
+    const lang = localStorage.getItem('lang') || 'vi';
+    return (I18N[lang] && I18N[lang][key]) || key;
+  }
+  function tVar(key, vars={}){
+    let s = t(key);
+    Object.entries(vars).forEach(([k,v])=>{ s = s.replace(new RegExp(`\\{${k}\\}`,'g'), v); });
+    return s;
+  }
+  function translatePage(){
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      const val = t(key);
+      const attr = el.getAttribute('data-i18n-attr');
+      if(attr){
+        attr.split(',').forEach(a=>el.setAttribute(a.trim(), val));
+      }else if(el.tagName==='INPUT'){
+        el.placeholder = val;
+      }else{
+        el.textContent = val;
+      }
+    });
+    document.title = t('page.title');
+    document.documentElement.setAttribute('lang', localStorage.getItem('lang') || 'vi');
+  }
+
+  /* ===== Mock events ===== */
   const EVENTS = [
     {id:1, sev:'high', device:'iPhone 15 — Safari', city:'Hà Nội', country:'VN', ip:'113.23.40.17', time:'Hôm nay, 08:15', status:'new', reasons:['Thiết bị lạ','Chênh lệch vị trí lớn'], ok:false},
     {id:2, sev:'med',  device:'Windows — Edge',      city:'Đà Nẵng', country:'VN', ip:'14.162.6.201', time:'Hôm qua, 22:04', status:'new', reasons:['VPN/Proxy'], ok:false},
@@ -229,6 +343,9 @@
   let currentId = null;
   let filterType = 'all';
 
+  function badgeClass(e){ return e.ok ? 'trusted' : (e.sev==='high' ? 'alert' : 'new'); }
+  function badgeText(e){ return e.ok ? t('badge.trusted') : (e.sev==='high' ? t('badge.alert') : t('badge.new')); }
+
   function render(){
     const term = (qInput.value||'').toLowerCase();
     const rows = EVENTS.filter(e=>{
@@ -240,10 +357,10 @@
     list.innerHTML = '';
     rows.forEach(e=>{
       const row = document.createElement('div');
-      row.className = 'row' + (currentId===e.id ? ' active':'');
+      row.className = 'row' + (currentId===e.id ? ' active':'' );
       row.dataset.id = e.id;
       row.innerHTML = `
-        <input type="checkbox" aria-label="chọn">
+        <input type="checkbox" aria-label="select">
         <div>
           <div class="dev">${e.device}</div>
           <div class="sub">${e.city}, ${e.country} — IP ${e.ip}</div>
@@ -251,9 +368,7 @@
         <div>${e.reasons[0] || ''}</div>
         <div class="time">${e.time}</div>
         <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end">
-          <span class="badge ${e.ok ? 'trusted' : (e.sev==='high'?'alert':'new')}">
-            ${e.ok ? 'Tin cậy' : (e.sev==='high'?'Cảnh báo' : 'Mới')}
-          </span>
+          <span class="badge ${badgeClass(e)}">${badgeText(e)}</span>
           <span class="sev ${e.sev}" title="${e.sev}"></span>
         </div>
       `;
@@ -271,38 +386,38 @@
       list.appendChild(row);
     });
 
-    countLabel.textContent = `${rows.length} phiên`;
+    countLabel.textContent = tVar('count',{n: rows.length});
     updateBulkButtons();
     if(rows.length && !currentId){ currentId = rows[0].id; renderDetail(rows[0]); }
-    if(!rows.length){ document.getElementById('detail').innerHTML = '<div class="sub">Không có bản ghi.</div>'; }
+    if(!rows.length){ document.getElementById('detail').innerHTML = `<div class="sub">${t('count').replace('{n}','0')}</div>`; }
   }
 
   function renderDetail(e){
     document.getElementById('detail').innerHTML = `
-      <div class="kv"><div>Trạng thái</div><div>
-        <span class="badge ${e.ok ? 'trusted' : (e.sev==='high'?'alert':'new')}">${e.ok?'Tin cậy':(e.sev==='high'?'Cảnh báo':'Mới')}</span>
+      <div class="kv"><div>${t('detail.status')}</div><div>
+        <span class="badge ${badgeClass(e)}">${badgeText(e)}</span>
       </div></div>
-      <div class="kv"><div>Thiết bị</div><div class="dev">${e.device}</div></div>
-      <div class="kv"><div>Vị trí</div><div>${e.city}, ${e.country} (ước tính)</div></div>
-      <div class="kv"><div>IP</div><div class="mono">${e.ip}</div></div>
-      <div class="kv"><div>Thời gian</div><div>${e.time}</div></div>
-      <div class="kv"><div>Nhận diện</div><div>${e.reasons.join('; ')}</div></div>
-      <div class="map">Bản đồ/ảnh máy chủ (placeholder)</div>
+      <div class="kv"><div>${t('detail.device')}</div><div class="dev">${e.device}</div></div>
+      <div class="kv"><div>${t('detail.loc')}</div><div>${e.city}, ${e.country}</div></div>
+      <div class="kv"><div>${t('detail.ip')}</div><div class="mono">${e.ip}</div></div>
+      <div class="kv"><div>${t('detail.time')}</div><div>${e.time}</div></div>
+      <div class="kv"><div>${t('detail.reason')}</div><div>${(e.reasons||[]).join('; ')}</div></div>
+      <div class="map">${t('detail.map')}</div>
       <div class="actions">
-        <button class="btn btn-primary" id="itsMe">Đó là tôi</button>
-        <button class="btn btn-danger" id="logout">Đăng xuất phiên này</button>
-        <button class="btn btn-ghost" id="blockIp">Chặn IP</button>
-        <button class="btn btn-soft" id="trustDevice">Tin cậy thiết bị</button>
-        <button class="btn btn-soft" id="forceChangePw">Yêu cầu đổi mật khẩu</button>
+        <button class="btn btn-primary" id="itsMe">${t('act.itsMe')}</button>
+        <button class="btn btn-danger" id="logout">${t('act.logout')}</button>
+        <button class="btn btn-ghost" id="blockIp">${t('act.blockIp')}</button>
+        <button class="btn btn-soft" id="trustDevice">${t('act.trust')}</button>
+        <button class="btn btn-soft" id="forceChangePw">${t('act.forcePw')}</button>
       </div>
-      <div class="hint">Mẹo: Bật 2FA và hạn chế đăng nhập từ thiết bị công cộng.</div>
+      <div class="hint">${t('detail.hint')}</div>
     `;
 
-    document.getElementById('itsMe').onclick = ()=>{ e.ok=true; e.status='reviewed'; alert('Đã đánh dấu là bạn.'); render(); };
-    document.getElementById('logout').onclick = ()=>{ alert('Đã gửi yêu cầu đăng xuất phiên từ xa (demo).'); };
-    document.getElementById('blockIp').onclick = ()=>{ alert('Đã chặn IP '+e.ip+' (demo).'); };
-    document.getElementById('trustDevice').onclick = ()=>{ e.ok=true; e.trusted=true; alert('Đã thêm thiết bị tin cậy (demo).'); render(); };
-    document.getElementById('forceChangePw').onclick = ()=>{ alert('Đã yêu cầu đổi mật khẩu (demo).'); };
+    document.getElementById('itsMe').onclick = ()=>{ e.ok=true; e.status='reviewed'; alert(badgeText(e)); render(); };
+    document.getElementById('logout').onclick = ()=>{ alert(t('btn.remoteLogout')); };
+    document.getElementById('blockIp').onclick = ()=>{ alert(t('act.blockIp')+': '+e.ip); };
+    document.getElementById('trustDevice').onclick = ()=>{ e.ok=true; e.trusted=true; alert(t('badge.trusted')); render(); };
+    document.getElementById('forceChangePw').onclick = ()=>{ alert(t('act.forcePw')); };
   }
 
   function updateBulkButtons(){
@@ -311,43 +426,36 @@
     document.getElementById('logoutSelected').disabled = !any;
   }
 
-  
   document.getElementById('markReviewed').onclick = ()=>{
     EVENTS.forEach(e=>{ if(selected.has(e.id)) e.status='reviewed'; });
-    alert('Đã đánh dấu đã xem (demo).'); selected.clear(); render();
+    alert(t('btn.reviewed')); selected.clear(); render();
   };
   document.getElementById('logoutSelected').onclick = ()=>{
-    alert('Đã gửi yêu cầu đăng xuất '+selected.size+' phiên (demo).'); selected.clear(); render();
+    alert(t('btn.remoteLogout')); selected.clear(); render();
   };
 
-  
   document.getElementById('exportCsv').onclick = ()=>{
     const header = 'id,severity,device,city,country,ip,time,status,reasons\n';
     const lines = EVENTS.map(e=>[
-      e.id,e.sev,
-      `"${e.device}"`,e.city,e.country,e.ip,`"${e.time}"`,e.status,`"${(e.reasons||[]).join('|')}"`
-    ].join(','));
+      e.id,e.sev,`"${e.device}"`,e.city,e.country,e.ip,`"${e.time}"`,e.status,`"${(e.reasons||[]).join('|')}"`].join(','));
     const blob = new Blob([header+lines.join('\n')], {type:'text/csv'});
     const url = URL.createObjectURL(blob);
     const a=document.createElement('a'); a.href=url; a.download='login-events.csv'; a.click();
     URL.revokeObjectURL(url);
   };
 
-  
   filters.forEach(b=>{
     b.onclick = ()=>{
       filters.forEach(x=>x.classList.remove('active'));
       b.classList.add('active');
       filterType = b.dataset.filter;
+      selected.clear();
       currentId = null; render();
     };
   });
   qInput.oninput = ()=>{ currentId = null; render(); };
 
-  
-  render();
-
-  
+  /* ===== Chatbox ===== */
   const chatToggle=document.getElementById('chatToggle');
   const chatbox=document.getElementById('chatbox');
   const chatBody=document.getElementById('chatBody');
@@ -362,25 +470,39 @@
     if(who==='bot'){wrap.append(av,b);} else {wrap.append(b,av);}
     chatBody.appendChild(wrap); chatBody.scrollTop=chatBody.scrollHeight;
   }
-  function openChat(){ chatbox.classList.add('open'); chatbox.setAttribute('aria-hidden','false');
-    if(!greeted){ addMsg('Chào bạn! Mình có thể giúp phân tích sự kiện đăng nhập, gợi ý hành động và xuất báo cáo.'); greeted=true; }
+  function openChat(){
+    chatbox.classList.add('open'); chatbox.setAttribute('aria-hidden','false');
+    if(!greeted){ addMsg(t('chat.greet')); greeted=true; }
     setTimeout(()=>chatInput.focus(),100);
   }
   function closeChat(){ chatbox.classList.remove('open'); chatbox.setAttribute('aria-hidden','true'); }
   chatToggle.onclick = ()=> chatbox.classList.contains('open') ? closeChat() : openChat();
 
   function handleSend(){
-    const t=chatInput.value.trim(); if(!t) return;
-    addMsg(t,'user'); chatInput.value='';
-    const k=t.toLowerCase();
-    if(k.includes('đăng xuất')) addMsg('Bạn có thể chọn nhiều dòng rồi bấm “Đăng xuất từ xa” để kết thúc các phiên đáng ngờ.');
-    else if(k.includes('chặn ip')) addMsg('Trong khung chi tiết, bấm “Chặn IP” để chặn IP đó (demo).');
-    else if(k.includes('tin cậy')) addMsg('Bấm “Tin cậy thiết bị” nếu xác nhận thiết bị là của bạn.');
-    else if(k.includes('csv')||k.includes('xuất')) addMsg('Dùng nút “Xuất CSV” để tải toàn bộ sự kiện.');
-    else addMsg('Bạn muốn mình hướng dẫn thao tác nào?');
+    const txt=chatInput.value.trim(); if(!txt) return;
+    addMsg(txt,'user'); chatInput.value='';
+    const q = txt.toLowerCase();
+    const lang = localStorage.getItem('lang') || 'vi';
+    const hitLogout = (lang==='en') ? q.includes('logout') || q.includes('sign out') : q.includes('đăng xuất');
+    const hitBlock  = (lang==='en') ? q.includes('block') && q.includes('ip') : q.includes('chặn ip');
+    const hitTrust  = (lang==='en') ? q.includes('trust') : q.includes('tin cậy');
+    const hitCsv    = (lang==='en') ? q.includes('csv') || q.includes('export') : (q.includes('csv')||q.includes('xuất'));
+    if(hitLogout) addMsg(t('chat.help.logout'));
+    else if(hitBlock) addMsg(t('chat.help.block'));
+    else if(hitTrust) addMsg(t('chat.help.trust'));
+    else if(hitCsv) addMsg(t('chat.help.csv'));
+    else addMsg(t('chat.help.generic'));
   }
   sendBtn.onclick = handleSend;
   chatInput.onkeydown = e=>{ if(e.key==='Enter') handleSend(); };
+
+  /* ===== Init lang & render ===== */
+  (function init(){
+    const savedLang = localStorage.getItem('lang') || 'vi';
+    document.documentElement.setAttribute('lang', savedLang);
+    translatePage();
+    render();
+  })();
 </script>
 </body>
 </html>
