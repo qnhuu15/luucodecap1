@@ -1,147 +1,86 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SmartExpense Đăng nhập</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #e6f2ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SmartExpense Đăng nhập</title>
+<style>
+  :root{
+    --bg:#e6f2ff;
+    --blue:#0066ff;
+    --blue-700:#004ecc;
+    --border:#cfd8e3;
+    --h:44px;          /* chiều cao đồng bộ cho input + button */
+    --radius:10px;     /* bo góc đồng bộ */
+    --fs:16px;         /* cỡ chữ đồng bộ */
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:#111827;
+  }
+  .login-container{
+    width:100%;max-width:380px;background:#fff;padding:28px 24px;border-radius:12px;
+    box-shadow:0 8px 24px rgba(15,23,42,.08);text-align:center
+  }
+  .login-container img{width:80px;height:80px;margin-bottom:14px}
+  .login-container h2{font-size:22px;margin:0 0 18px}
+  form{display:flex;flex-direction:column;gap:10px}
 
-        .login-container {
-            background: #fff;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 360px;
-            text-align: center;
-        }
+  /* —— ĐỒNG BỘ Ô —— */
+  .login-container input,
+  .login-container button{
+    width:100%;height:var(--h);border-radius:var(--radius);font-size:var(--fs);
+    padding:0 14px;
+  }
+  .login-container input{
+    border:1px solid var(--border);background:#fff;
+  }
+  .login-container input:focus{
+    border-color:#3399ff;outline:none;box-shadow:0 0 0 3px rgba(51,153,255,.15);
+  }
+  .login-container button{
+    border:0;background:var(--blue);color:#fff;font-weight:700;cursor:pointer;
+    transition:background .2s ease;
+  }
+  .login-container button:hover{background:var(--blue-700)}
 
-        .login-container img {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 15px;
-        }
+  .forgot{display:flex;justify-content:flex-end;margin:-4px 0 6px}
+  .forgot a{font-size:13px;color:#3399ff;text-decoration:none}
+  .forgot a:hover{text-decoration:underline}
 
-        .login-container h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .login-container input {
-            width: 100%;
-            padding: 10px 12px;
-            margin: 8px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .login-container input:focus {
-            border-color: #3399ff;
-            outline: none;
-            box-shadow: 0 0 5px rgba(51, 153, 255, 0.5);
-        }
-
-        .forgot {
-            text-align: right;
-            margin: 5px 0 15px;
-        }
-
-        .forgot a {
-            font-size: 13px;
-            color: #3399ff;
-            text-decoration: none;
-        }
-
-        .forgot a:hover {
-            text-decoration: underline;
-        }
-
-        .login-container button {
-            width: 100%;
-            padding: 10px;
-            background: #0066ff;
-            border: none;
-            border-radius: 6px;
-            color: white;
-            font-weight: bold;
-            font-size: 15px;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-
-        .login-container button:hover {
-            background: #004ecc;
-        }
-
-        .signup {
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .signup a {
-            color: #3399ff;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .signup a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  .signup{margin-top:12px;font-size:14px}
+  .signup a{color:#3399ff;text-decoration:none;font-weight:700}
+  .signup a:hover{text-decoration:underline}
+</style>
 </head>
-
 <body>
-    <div class="login-container">
-        
-        <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw"
-            alt="logo">
 
-        <h2>SmartExpense Đăng nhập</h2>
+  <div class="login-container">
+    <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="logo">
+    <h2>SmartExpense Đăng nhập</h2>
 
-        <form id="loginForm">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Nhập mật khẩu" required>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Nhập mật khẩu" required />
+      <div class="forgot"><a href="quenmatkhau.html">Quên Mật khẩu</a></div>
+      <button type="submit">Đăng nhập</button>
+    </form>
 
-            <div class="forgot">
-                <a href="quenmatkhau.html">Quên Mật khẩu</a>
-            </div>
-
-            <button type="submit">Đăng nhập</button>
-        </form>
-
-        <div class="signup">
-            Chưa có tài khoản? <a href="dangki.html">Đăng kí ngay</a>
-        </div>
+    <div class="signup">
+      Chưa có tài khoản? <a href="dangki.html">Đăng kí ngay</a>
     </div>
+  </div>
 
-   <script>
-    const form = document.getElementById("loginForm");
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-        const email = document.getElementById("email").value;
-        const password = document.getElementById("password").value;
-
-        if (email && password) {
-            window.location.href = "trangchu.html";
-        } else {
-            alert("Vui lòng nhập đầy đủ thông tin!");
-        }
-    });
+<script>
+  const form=document.getElementById("loginForm");
+  form.addEventListener("submit",function(e){
+    e.preventDefault();
+    const email=document.getElementById("email").value.trim();
+    const password=document.getElementById("password").value.trim();
+    if(email && password){ window.location.href="trangchu.html"; }
+    else{ alert("Vui lòng nhập đầy đủ thông tin!"); }
+  });
 </script>
-
 </body>
-
 </html>

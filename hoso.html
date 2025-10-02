@@ -18,8 +18,6 @@
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
-
-
   .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
@@ -27,31 +25,18 @@
   .brand b{font-size:18px}
   .nav{display:flex;flex-direction:column;gap:6px}
   .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
-  .nav a .i{width:18px;text-align:center}
   .nav a.active{background:var(--blue);color:#fff}
 
-
   .main{padding:22px 24px 40px}
-  .top{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-  .pill{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:6px 12px;font-weight:700}
-  .search{flex:1;display:flex;justify-content:center}
-  .search input{width:min(520px,60vw);height:40px;border:1px solid var(--border);border-radius:999px;padding:0 14px;background:#fff;outline:none}
-  .user{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:999px;padding:4px 10px}
-  .user img{width:28px;height:28px;border-radius:50%}
-
   .grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:18px}
   .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
 
-  .profile-head{display:grid;grid-template-columns:96px 1fr 280px;gap:16px;align-items:center}
+  .profile-head{display:grid;grid-template-columns:96px 1fr;gap:16px;align-items:center}
   .avatar-big{width:96px;height:96px;border-radius:26px;background:#fff2e5;display:grid;place-items:center}
   .avatar-big .circle{width:76px;height:76px;border-radius:50%;background:var(--orange);display:grid;place-items:center;color:#fff;font-size:34px;font-weight:900}
   .profile-name{font-size:22px;font-weight:800;margin:0}
   .email{color:#6b7280;margin-top:2px}
   .oauth{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:999px;padding:8px 12px;background:#fff;font-weight:700}
-  .plan{background:linear-gradient(135deg,#1e3a8a,#2563eb);color:#fff;border-radius:14px;padding:14px}
-  .plan .t1{opacity:.9;margin-bottom:6px}
-  .plan .name{font-size:20px;font-weight:800}
-  .btn{height:38px;border:0;border-radius:10px;background:#fff;color:#0f172a;font-weight:800;padding:0 14px;cursor:pointer}
 
   .card h3{margin:0 0 10px;font-size:18px}
   table{width:100%;border-collapse:collapse}
@@ -72,29 +57,14 @@
   .switch input:checked + .slider{background:#22c55e}
   .switch input:checked + .slider:before{transform:translateX(20px)}
   .help{color:#94a3b8;margin-left:6px}
-
   .save-wrap{margin-top:12px;display:flex;justify-content:flex-end}
   .btn-primary{height:44px;border:0;border-radius:12px;background:var(--blue);color:#fff;font-weight:800;padding:0 18px;cursor:pointer}
 
- 
-  .pig-float{
-    position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;
-    background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);
-    z-index:30;border:0;cursor:pointer
-  }
+  .pig-float{position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);z-index:30;border:0;cursor:pointer}
   .pig-float img{width:64px;height:64px}
-
-  .chatbox{
-    position:fixed;right:26px;bottom:112px;width:340px;
-    background:#fff;border:1px solid var(--border);border-radius:14px;
-    box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;
-    grid-template-rows:56px 1fr 60px;
-  }
+  .chatbox{position:fixed;right:26px;bottom:112px;width:340px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;grid-template-rows:56px 1fr 60px}
   .chatbox.open{display:grid}
-  .chat-head{
-    background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;
-    padding:10px 12px;font-weight:800;
-  }
+  .chat-head{background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;font-weight:800}
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
   .chat-title{line-height:1.2}
   .chat-sub{font-weight:600;opacity:.95}
@@ -112,20 +82,9 @@
   .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
   #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
   #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
-
-  @media (max-width:1100px){
-    body{grid-template-columns:1fr}
-    .sidebar{position:sticky;top:0;z-index:20}
-    .grid{grid-template-columns:1fr}
-    .profile-head{grid-template-columns:86px 1fr}
-    .plan{margin-top:10px}
-    .chatbox{right:16px;bottom:96px;width:min(92vw,360px)}
-    .pig-float{right:16px}
-  }
 </style>
 </head>
 <body>
-
 
   <aside class="sidebar">
     <div class="brand">
@@ -145,17 +104,12 @@
     </nav>
   </aside>
 
-
   <main class="main">
-    <div class="top"></div>
-
     <section class="grid">
       <div style="display:grid;gap:16px">
         <div class="card">
           <div class="profile-head">
-            <div class="avatar-big">
-              <div class="circle">Q</div>
-            </div>
+            <div class="avatar-big"><div class="circle">Q</div></div>
             <div>
               <h2 class="profile-name">Quỳnh Như Nguyễn</h2>
               <div class="email">quynhnhu6280@gmail.com</div>
@@ -163,81 +117,29 @@
                 <span class="oauth">🔗 Đăng nhập qua Google</span>
               </div>
             </div>
-            <div class="plan">
-              <div class="t1">Gói của bạn</div>
-              <div class="name">Pro</div>
-              <div style="opacity:.9;margin:6px 0 10px">Hạn sử dụng: 2025-10-24</div>
-              <button class="btn">Xem thêm thông tin</button>
-            </div>
+          
           </div>
         </div>
 
         <div class="card">
           <h3>Hóa đơn</h3>
           <table>
-            <thead>
-              <tr><th style="width:160px">Ngày</th><th>Mô tả</th><th style="width:120px">credit</th></tr>
-            </thead>
-            <tbody>
-              <tr><td>2025-09-23</td><td></td><td>0</td></tr>
-            </tbody>
+            <thead><tr><th style="width:160px">Ngày</th><th>Mô tả</th><th style="width:120px">credit</th></tr></thead>
+            <tbody><tr><td>2025-09-23</td><td></td><td>0</td></tr></tbody>
           </table>
         </div>
       </div>
 
       <div class="card form">
-        <div class="row">
-          <div class="label">Quỳnh Như Nguyễn</div>
-          <input type="text" value="Quỳnh Như Nguyễn">
-        </div>
-
-        <div class="row">
-          <div class="label req">Giới tính</div>
-          <select>
-            <option>Nữ</option>
-            <option>Nam</option>
-            <option>Khác</option>
-          </select>
-        </div>
-
-        <div class="row">
-          <div class="label req">Đơn vị tiền tệ</div>
-          <select>
-            <option>Vietnam</option>
-            <option>United States</option>
-            <option>Japan</option>
-            <option>Euro</option>
-          </select>
-        </div>
-
-        <div class="row">
-          <div class="label req">Nhập số dư (tháng)</div>
-          <input type="number" value="0" min="0">
-        </div>
-
-        <div class="row">
-          <div class="label">Số điện thoại</div>
-          <input type="text" placeholder="">
-        </div>
-
-        <div class="row" style="display:flex;align-items:center;justify-content:space-between">
-          <div class="label">Bật loại trừ chi tiêu <span class="help">ⓘ</span></div>
-          <label class="switch"><input type="checkbox" id="sw1"><span class="slider"></span></label>
-        </div>
-
-        <div class="row" style="display:flex;align-items:center;justify-content:space-between">
-          <div class="label">Bật tự động chọn loại chi tiêu</div>
-          <label class="switch"><input type="checkbox" id="sw2" checked><span class="slider"></span></label>
-        </div>
-
-        <div class="row" style="display:flex;align-items:center;justify-content:space-between">
-          <div class="label">Báo cáo email hằng ngày <span class="help">ⓘ</span></div>
-          <label class="switch"><input type="checkbox" id="sw3"><span class="slider"></span></label>
-        </div>
-
-        <div class="save-wrap">
-          <button class="btn-primary" id="saveBtn">Lưu</button>
-        </div>
+        <div class="row"><div class="label">Quỳnh Như Nguyễn</div><input type="text" value="Quỳnh Như Nguyễn"></div>
+        <div class="row"><div class="label req">Giới tính</div><select><option>Nữ</option><option>Nam</option><option>Khác</option></select></div>
+        <div class="row"><div class="label req">Đơn vị tiền tệ</div><select><option>Vietnam</option><option>United States</option><option>Japan</option><option>Euro</option></select></div>
+        <div class="row"><div class="label req">Nhập số dư (tháng)</div><input type="number" value="0" min="0"></div>
+        <div class="row"><div class="label">Số điện thoại</div><input type="text"></div>
+        <div class="row" style="display:flex;align-items:center;justify-content:space-between"><div class="label">Bật loại trừ chi tiêu <span class="help">ⓘ</span></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="row" style="display:flex;align-items:center;justify-content:space-between"><div class="label">Bật tự động chọn loại chi tiêu</div><label class="switch"><input type="checkbox" checked><span class="slider"></span></label></div>
+        <div class="row" style="display:flex;align-items:center;justify-content:space-between"><div class="label">Báo cáo email hằng ngày <span class="help">ⓘ</span></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+        <div class="save-wrap"><button class="btn-primary" id="saveBtn">Lưu</button></div>
       </div>
     </section>
   </main>
@@ -245,109 +147,26 @@
   <div id="chatbox" class="chatbox" aria-hidden="true">
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
-      <div>
-        <div class="chat-title">Trợ lý thông minh</div>
-        <div class="chat-sub">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div>
-      </div>
+      <div><div class="chat-title">Trợ lý thông minh</div><div class="chat-sub">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div></div>
     </div>
     <div id="chatBody" class="chat-body"></div>
-    <div class="chat-input">
-      <input id="chatInput" type="text" placeholder="Viết tin nhắn…">
-      <button id="sendBtn" title="Gửi">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12L20 4L12 20L11 13L4 12Z" fill="currentColor"/></svg>
-      </button>
-    </div>
+    <div class="chat-input"><input id="chatInput" type="text" placeholder="Viết tin nhắn…"><button id="sendBtn" title="Gửi">➤</button></div>
   </div>
-
-
-  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý">
-    <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
-  </button>
+  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></button>
 
 <script>
-  
-  document.getElementById('saveBtn').addEventListener('click', ()=>{
-    alert('Đã lưu hồ sơ (demo). Bạn có thể nối API để gửi dữ liệu thật.');
-  });
+document.getElementById('saveBtn').addEventListener('click', ()=>alert('Đã lưu hồ sơ (demo).'));
 
- 
-  const chatToggle = document.getElementById('chatToggle');
-  const chatbox = document.getElementById('chatbox');
-  const chatBody = document.getElementById('chatBody');
-  const chatInput = document.getElementById('chatInput');
-  const sendBtn  = document.getElementById('sendBtn');
-
-  let greeted = false;
-
-  function openChat() {
-    chatbox.classList.add('open');
-    chatbox.setAttribute('aria-hidden','false');
-    if (!greeted) {
-      botSay('Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi cập nhật hồ sơ, đổi gói, hoặc hỏi mẹo sử dụng.');
-      greeted = true;
-    }
-    setTimeout(()=> chatInput.focus(), 100);
-  }
-  function closeChat() {
-    chatbox.classList.remove('open');
-    chatbox.setAttribute('aria-hidden','true');
-  }
-  chatToggle.addEventListener('click', ()=>{
-    if (chatbox.classList.contains('open')) closeChat(); else openChat();
-  });
-
-  function scrollBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
-
-  function addMsg(text, who='bot'){
-    const wrap = document.createElement('div');
-    wrap.className = `msg ${who}`;
-    const avatar = document.createElement('div');
-    avatar.className = 'avatar-s';
-    avatar.textContent = who==='bot' ? '🐷' : '👤';
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.innerText = text;
-    if (who==='bot'){ wrap.append(avatar, bubble); } else { wrap.append(bubble, avatar); }
-    chatBody.appendChild(wrap);
-    scrollBottom();
-  }
-
-  function addTyping(){
-    const wrap = document.createElement('div');
-    wrap.className = 'msg bot';
-    wrap.dataset.typing = '1';
-    wrap.innerHTML = `<div class="avatar-s">🐷</div>
-      <div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;
-    chatBody.appendChild(wrap);
-    scrollBottom();
-    return wrap;
-  }
-
-  function botSay(text, delay=0){
-    const t = addTyping();
-    setTimeout(()=>{
-      t.remove();
-      addMsg(text,'bot');
-    }, Math.max(300, delay));
-  }
-
-  function handleSend(){
-    const txt = chatInput.value.trim();
-    if (!txt) return;
-    addMsg(txt,'user');
-    chatInput.value = '';
-    const say = txt.toLowerCase();
-    if (say.includes('đổi gói') || say.includes('nâng cấp')) {
-      botSay('Bạn muốn nâng cấp lên gói nào? Hiện có: Basic, Pro, và Business.');
-    } else if (say.includes('đổi email')) {
-      botSay('Để đổi email đăng nhập, vui lòng xác thực lại qua Google trong mục Hồ sơ → Đăng nhập.');
-    } else {
-      botSay('Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?');
-    }
-  }
-
-  sendBtn.addEventListener('click', handleSend);
-  chatInput.addEventListener('keydown', (e)=>{ if (e.key==='Enter') handleSend(); });
+const chatToggle=document.getElementById('chatToggle');
+const chatbox=document.getElementById('chatbox');
+const chatBody=document.getElementById('chatBody');
+const chatInput=document.getElementById('chatInput');
+const sendBtn=document.getElementById('sendBtn');
+function addMsg(text,who='bot'){const wrap=document.createElement('div');wrap.className='msg '+who;const av=document.createElement('div');av.className='avatar-s';av.textContent=who==='bot'?'🐷':'👤';const b=document.createElement('div');b.className='bubble';b.textContent=text;if(who==='bot'){wrap.append(av,b);}else{wrap.append(b,av);}chatBody.appendChild(wrap);chatBody.scrollTop=chatBody.scrollHeight;}
+function handleSend(){const t=chatInput.value.trim();if(!t)return;addMsg(t,'user');chatInput.value='';setTimeout(()=>addMsg('Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?'),500);}
+chatToggle.onclick=()=>chatbox.classList.toggle('open');
+sendBtn.onclick=handleSend;
+chatInput.onkeydown=e=>{if(e.key==='Enter')handleSend();};
 </script>
 </body>
 </html>
