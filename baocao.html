@@ -26,35 +26,44 @@
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
 
-  /* ===== Sidebar (giữ giống trangchu) ===== */
-  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
+  /* ===== Sidebar (đồng bộ với caidat) ===== */
+  .sidebar{
+    background:var(--card);
+    border-right:1px solid var(--border);
+    padding:18px 14px;
+    color:var(--text);
+    transition:background .3s,color .3s;
+  }
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
   .brand .logo img{width:100%;height:100%;object-fit:cover}
-  .brand b{font-size:18px}
+  .brand b{font-size:18px;font-weight:700;color:var(--text)}
+
   .nav{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;font-weight:700;color:#111827;text-decoration:none}
+  .nav a{
+    display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;
+    font-weight:700;color:var(--text);text-decoration:none;
+    transition:background .2s,color .2s;
+  }
   .nav a .i{width:18px;text-align:center}
   .nav a:hover{background:rgba(37,99,235,.12)}
+  html.dark .nav a:hover{background:rgba(59,130,246,.15)}
   .nav a.active{background:var(--blue);color:#fff}
 
-  /* ===== Main: khoảng cách giống trangchu ===== */
+  /* ===== Main ===== */
   .main{padding:22px 24px 40px}
   .top{display:flex;align-items:center;gap:14px;margin:2px 0 14px}
   .top h1{margin:0;font-size:22px;font-weight:800}
   .top .sp{flex:1}
   .btn{height:40px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:800;padding:0 14px;cursor:pointer}
 
-  /* Khoảng cách giữa các khối */
-  .grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px} /* gap=16px như trangchu */
-  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px} /* padding 16px */
+  /* Grid layout */
+  .grid{display:grid;grid-template-columns:1.6fr 1fr;gap:16px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
 
-  /* Daily list: padding hàng = 12px để cảm giác như table ở trangchu */
+  /* Daily list */
   .daily b{display:block;margin-bottom:8px}
-  .daily .row{
-    display:grid;grid-template-columns:20px 1fr 200px 110px;align-items:center;
-    gap:10px;padding:12px 6px;border-bottom:1px dashed #eef2f7
-  }
+  .daily .row{display:grid;grid-template-columns:20px 1fr 200px 110px;align-items:center;gap:10px;padding:12px 6px;border-bottom:1px dashed #eef2f7}
   html.dark .daily .row{border-bottom:1px dashed #1f2a44}
   .daily .row:last-child{border-bottom:0}
   .arrow{color:#94a3b8}
@@ -65,12 +74,12 @@
   .bar>i.green{background:var(--green)}
   .amount{text-align:right;color:var(--text);font-weight:700}
 
-  /* Chart khớp kích cỡ card ở trangchu */
+  /* Chart */
   .chart{display:flex;flex-direction:column;gap:12px}
   .chart .panel{background:#0b1220;border-radius:12px;padding:10px;height:180px;display:grid;place-items:center;border:1px solid #162033}
   .chart svg{width:100%;height:100%}
 
-  /* Monthly: giống “list” bên trangchu */
+  /* Monthly */
   .month b{display:block;margin-bottom:8px}
   .month .row{display:grid;grid-template-columns:80px 1fr 120px;align-items:center;gap:10px;padding:12px 6px;border-bottom:1px dashed #eef2f7}
   .month .row:last-child{border-bottom:0}
@@ -79,7 +88,7 @@
   .mbar>i{display:block;height:100%;background:var(--green)}
   .mamount{text-align:right;font-weight:700;color:var(--text)}
 
-  /* FAB & Chat giữ nguyên như trangchu */
+  /* Chatbox đồng bộ với caidat */
   .pig-float{position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:0 4px 12px rgba(0,0,0,.12);z-index:30;border:0;cursor:pointer}
   .pig-float img{width:64px;height:64px}
   .chatbox{position:fixed;right:26px;bottom:112px;width:340px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;grid-template-rows:56px 1fr 60px}
@@ -94,9 +103,25 @@
   .msg.bot .bubble{border-radius:14px 14px 14px 4px}
   .msg.user .bubble{border-radius:14px 14px 4px 14px;background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
-  .chat-input{background:var(--card);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
-  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
-  html.dark #chatInput{background:transparent;color:var(--text)}
+
+  /* ===== Chat input & Send button (đồng bộ với caidat) ===== */
+  .chat-input{
+    background:var(--card);
+    border-top:1px solid var(--border);
+    display:flex;align-items:center;gap:10px;padding:10px;
+  }
+  #chatInput{
+    flex:1;min-width:0;height:44px;border:1px solid var(--border);border-radius:999px;
+    padding:0 14px;background:var(--card);color:var(--text);outline:none;
+    font:inherit;-webkit-appearance:none;appearance:none;
+  }
+  #chatInput::placeholder{color:var(--muted)}
+  #sendBtn{
+    width:44px;height:44px;flex:0 0 44px;border-radius:999px;border:0;
+    background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer;
+  }
+  #sendBtn svg{display:block}
+  #sendBtn:active{transform:translateY(1px)}
 
   @media (max-width:1100px){
     body{grid-template-columns:1fr}
@@ -107,23 +132,24 @@
   }
 </style>
 </head>
-<body>
 
+<body>
+  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand">
       <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
       <b>SmartExpense</b>
     </div>
     <nav class="nav">
-      <a href="trangchu.html"><span class="i">🏠</span> Tổng quan</a>
-      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
-      <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
-      <a href="#"><span class="i">📅</span> Lên lịch chi tiêu</a>
-      <a href="loaichitieu.html"><span class="i">🏷️</span> Loại chi tiêu</a>
-      <a href="baocao.html" class="active"><span class="i">📊</span> Báo cáo</a>
-      <a href="hoso.html"><span class="i">👤</span> Hồ sơ</a>
-      <a href="caidat.html"><span class="i">⚙️</span> Cài đặt</a>
-      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
+      <a href="trangchu.html"><span class="i">🏠</span> <span data-i18n="nav.overview">Tổng quan</span></a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> <span data-i18n="nav.list">Danh sách chi tiêu</span></a>
+      <a href="lichsuchitieu.html"><span class="i">🕘</span> <span data-i18n="nav.history">Lịch sử chi tiêu</span></a>
+      <a href="#"><span class="i">📅</span> <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
+      <a href="loaichitieu.html"><span class="i">🏷️</span> <span data-i18n="nav.category">Loại chi tiêu</span></a>
+      <a href="baocao.html" class="active"><span class="i">📊</span> <span data-i18n="nav.report">Báo cáo</span></a>
+      <a href="hoso.html"><span class="i">👤</span> <span data-i18n="nav.profile">Hồ sơ</span></a>
+      <a href="caidat.html"><span class="i">⚙️</span> <span data-i18n="nav.settings">Cài đặt</span></a>
+      <a href="login.html"><span class="i">↪️</span> <span data-i18n="nav.logout">Đăng xuất</span></a>
     </nav>
   </aside>
 
@@ -198,13 +224,72 @@
   <div class="fab" title="Lên đầu trang" data-i18n="fab.top" data-i18n-attr="title">↑</div>
 
 <script>
-  /* i18n/theme + render demo giống file trước của bạn */
+  /* i18n/theme + render */
   function getLang(){let lang=localStorage.getItem('lang');if(!lang){lang=(navigator.language||'vi').toLowerCase().startsWith('vi')?'vi':'en';localStorage.setItem('lang',lang);}return lang;}
   function applyLangToDOM(lang){document.documentElement.setAttribute('lang',lang);}
   function getTheme(){return localStorage.getItem('theme')||'light'}
   function applyThemeToDOM(theme){document.documentElement.classList.toggle('dark',theme==='dark');}
 
-  const I18N={vi:{"page.title":"SmartExpense — Báo cáo","report.title":"Báo cáo","report.viewDetail":"Xem chi tiết báo cáo","daily.title":"Chi tiêu theo ngày","monthly.title":"Chi tiêu theo tháng","btn.more":"Xem thêm","fab.top":"Lên đầu trang","chat.title":"Trợ lý thông minh","chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn","chat.greet":"Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi tạo chi tiêu, xem báo cáo, hoặc hỏi mẹo sử dụng.","chat.open":"Mở trợ lý","ph.chat":"Viết tin nhắn…","send.title":"Gửi","msg.create.wait":"Đang tạo câu trả lời dựa theo yêu cầu…","msg.create.done":"Tôi đã tạo thành công chi tiêu tiếp theo của tháng sau. Hãy kiểm tra ở mục Danh sách chi tiêu.","msg.next":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?"},en:{"page.title":"SmartExpense — Reports","report.title":"Reports","report.viewDetail":"View detailed report","daily.title":"Daily spending","monthly.title":"Monthly spending","btn.more":"See more","fab.top":"Back to top","chat.title":"Smart assistant","chat.sub":"Hello! 👋 Happy to help","chat.greet":"I'm the SmartExpense assistant. I can create expenses, show reports, or share tips.","chat.open":"Open assistant","ph.chat":"Type a message…","send.title":"Send","msg.create.wait":"Generating a response based on your request…","msg.create.done":"I've created next month's recurring expense. Please check the Expense list.","msg.next":"Got it. What would you like me to do next?"}};
+  const I18N={
+    vi:{
+      "page.title":"SmartExpense — Báo cáo",
+      "report.title":"Báo cáo",
+      "report.viewDetail":"Xem chi tiết báo cáo",
+      "daily.title":"Chi tiêu theo ngày",
+      "monthly.title":"Chi tiêu theo tháng",
+      "btn.more":"Xem thêm",
+      "fab.top":"Lên đầu trang",
+      /* MENU */
+      "nav.overview":"Tổng quan",
+      "nav.list":"Danh sách chi tiêu",
+      "nav.history":"Lịch sử chi tiêu",
+      "nav.schedule":"Lên lịch chi tiêu",
+      "nav.category":"Loại chi tiêu",
+      "nav.report":"Báo cáo",
+      "nav.profile":"Hồ sơ",
+      "nav.settings":"Cài đặt",
+      "nav.logout":"Đăng xuất",
+      /* Chat */
+      "chat.title":"Trợ lý thông minh",
+      "chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn",
+      "chat.greet":"Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi tạo chi tiêu, xem báo cáo, hoặc hỏi mẹo sử dụng.",
+      "chat.open":"Mở trợ lý",
+      "ph.chat":"Viết tin nhắn…",
+      "send.title":"Gửi",
+      "msg.create.wait":"Đang tạo câu trả lời dựa theo yêu cầu…",
+      "msg.create.done":"Tôi đã tạo thành công chi tiêu tiếp theo của tháng sau. Hãy kiểm tra ở mục Danh sách chi tiêu.",
+      "msg.next":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?"
+    },
+    en:{
+      "page.title":"SmartExpense — Reports",
+      "report.title":"Reports",
+      "report.viewDetail":"View detailed report",
+      "daily.title":"Daily spending",
+      "monthly.title":"Monthly spending",
+      "btn.more":"See more",
+      "fab.top":"Back to top",
+      /* MENU */
+      "nav.overview":"Overview",
+      "nav.list":"Expense list",
+      "nav.history":"History",
+      "nav.schedule":"Budget planner",
+      "nav.category":"Categories",
+      "nav.report":"Reports",
+      "nav.profile":"Profile",
+      "nav.settings":"Settings",
+      "nav.logout":"Log out",
+      /* Chat */
+      "chat.title":"Smart assistant",
+      "chat.sub":"Hello! 👋 Happy to help",
+      "chat.greet":"I'm the SmartExpense assistant. I can create expenses, show reports, or share tips.",
+      "chat.open":"Open assistant",
+      "ph.chat":"Type a message…",
+      "send.title":"Send",
+      "msg.create.wait":"Generating a response based on your request…",
+      "msg.create.done":"I've created next month's recurring expense. Please check the Expense list.",
+      "msg.next":"Got it. What would you like me to do next?"
+    }
+  };
 
   function t(key){const lang=getLang();return (I18N[lang]&&I18N[lang][key])||key;}
   function translatePage(){
