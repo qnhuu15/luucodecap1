@@ -12,7 +12,6 @@
     --green:#10b981; --red:#ef4444; --gray:#94a3b8;
     --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
   }
-  /* Dark theme */
   html.dark{
     --bg:#0b1220; --card:#0f172a; --text:#e5e7eb; --muted:#9aa4b2;
     --border:#1f2a44; --blue:#3b82f6; --blue-500:#3b82f6;
@@ -27,56 +26,38 @@
     display:grid; grid-template-columns:260px 1fr; min-height:100vh;
   }
 
-  /* Sidebar (theme-aware) */
+  /* ===== Sidebar: thống nhất với các trang khác ===== */
   .sidebar{background:var(--card);border-right:1px solid var(--border);padding:18px 14px;color:var(--text)}
-  .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
-  .brand .logo{
-    width:40px;height:40px;border-radius:10px;overflow:hidden;
-    background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)
-  }
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
   .brand .logo img{width:100%;height:100%;object-fit:cover}
-  .brand b{font-size:18px;color:var(--text)}
+  .brand b{font-size:18px}
   .nav{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-  .nav a{
-    display:flex;align-items:center;gap:12px;
-    padding:10px 12px;border-radius:10px;
-    font-weight:700;color:var(--text);text-decoration:none
-  }
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;font-weight:700;color:var(--text);text-decoration:none}
   .nav a .i{width:18px;text-align:center}
   .nav a:hover{background:rgba(37,99,235,.12)}
   .nav a.active{background:var(--blue);color:#fff}
 
+  /* ===== Main (padding/gap giống trangchu) ===== */
   .main{padding:22px 24px 40px}
-  .top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .top{display:flex;align-items:center;gap:14px;margin:2px 0 14px}
   .top h1{margin:0;font-size:22px;font-weight:800;color:var(--text)}
 
-  .box{
-    background:rgba(59,130,246,.08);
-    border:1px solid rgba(59,130,246,.2);
-    border-radius:12px;
-    padding:14px;
-  }
-  html.dark .box{ background:rgba(59,130,246,.06); border-color:#1f2a44; }
+  /* Card khung lịch sử */
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
 
-  .history{
-    background:var(--card);
-    border:2px solid var(--blue-500);
-    border-radius:12px;
-    box-shadow:var(--shadow);
-    padding:10px 12px;
-  }
-  .group{padding:14px 6px}
-  .group+.group{border-top:1px solid var(--border)}
   .g-head{font-size:13px;font-weight:800;color:var(--muted);margin:0 0 10px}
+  .group + .group{border-top:1px solid var(--border);padding-top:14px;margin-top:8px}
 
   .row{
     display:grid;
     grid-template-columns:64px 10px 10px 1fr 120px;
-    align-items:center; gap:10px; padding:10px 0;
+    align-items:center; gap:10px; padding:12px 0;
     border-top:1px dashed #eef2f7;
   }
   .row:first-of-type{border-top:0}
   html.dark .row{ border-top:1px dashed var(--border); }
+
   .time{font-weight:700;color:var(--text)}
   .dot{width:16px;height:16px;border-radius:50%;border:2px solid #d1d5db;background:#fff}
   html.dark .dot{border-color:#334155;background:transparent}
@@ -87,30 +68,15 @@
   .bar.blue{background:#60a5fa}
   .name{font-weight:700;color:var(--blue)}
   .desc{font-size:12px;color:var(--muted);margin-top:2px}
-  .amount{color:var(--muted);text-align:right}
+  .amount{text-align:right;color:var(--muted);font-weight:700}
 
-  /* Chatbox */
-  .pig-float{
-    position:fixed;right:32px;bottom:26px;width:76px;height:76px;border-radius:18px;
-    background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);
-    font-size:36px;z-index:20;cursor:pointer;border:0
-  }
+  /* ===== Chatbox / FAB ===== */
+  .pig-float{position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);z-index:20;cursor:pointer;border:0}
   .pig-float img{width:64px;height:64px}
-
-  .chatbox{
-    position:fixed;right:26px;bottom:112px;width:340px;
-    background:var(--card);border:1px solid var(--border);border-radius:14px;
-    box-shadow:var(--shadow);overflow:hidden;display:none;z-index:30;
-    grid-template-rows:56px 1fr 60px;
-  }
+  .chatbox{position:fixed;right:26px;bottom:112px;width:340px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:30;grid-template-rows:56px 1fr 60px}
   .chatbox.open{display:grid}
-  .chat-head{
-    background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;
-    padding:10px 12px;font-weight:800;
-  }
+  .chat-head{background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;font-weight:800}
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
-  .chat-title{line-height:1.2}
-  .chat-sub{font-weight:600;opacity:.95}
   .chat-body{background:#f4fbff;overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
   html.dark .chat-body{background:#0b1220}
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
@@ -141,9 +107,7 @@
 
   <aside class="sidebar">
     <div class="brand">
-      <div class="logo">
-        <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="SmartExpense">
-      </div>
+      <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="SmartExpense"></div>
       <b>SmartExpense</b>
     </div>
     <nav class="nav">
@@ -162,61 +126,58 @@
   <main class="main">
     <div class="top"><h1 data-i18n="page.heading">Lịch sử chi tiêu</h1></div>
 
-    <section class="box">
-      <div class="history">
+    <section class="card" id="historyCard">
+      <!-- Group 1 -->
+      <div class="group">
+        <div class="g-head" data-date="2025-09-25">2025-09-25</div>
 
-        <!-- Group 1 -->
-        <div class="group">
-          <div class="g-head">2025-09-25</div>
-
-          <div class="row">
-            <div class="time">18:54</div>
-            <div class="dot"></div>
-            <div class="bar blue"></div>
-            <div>
-              <div class="name">Ăn uống</div>
-              <div class="desc">200,000đ</div>
-            </div>
-            <div class="amount"></div>
+        <div class="row">
+          <div class="time">18:54</div>
+          <div class="dot"></div>
+          <div class="bar blue"></div>
+          <div>
+            <div class="name" data-i18n="cat.food">Ăn uống</div>
+            <div class="desc" data-amt="200000">200,000đ</div>
           </div>
-
-          <div class="row">
-            <div class="time">18:52</div>
-            <div class="dot"></div>
-            <div class="bar red"></div>
-            <div>
-              <div class="name">Tiền xăng</div>
-              <div class="desc">80,000đ</div>
-            </div>
-            <div class="amount"></div>
-          </div>
+          <div class="amount"></div>
         </div>
 
-        <!-- Group 2 -->
-        <div class="group">
-          <div class="g-head">2025-09-24</div>
-
-          <div class="row">
-            <div class="time">16:29</div>
-            <div class="dot"></div>
-            <div class="bar green"></div>
-            <div>
-              <div class="name">Mua sắm cho vợ</div>
-              <div class="desc">2,000,000đ</div>
-            </div>
-            <div class="amount"></div>
+        <div class="row">
+          <div class="time">18:52</div>
+          <div class="dot"></div>
+          <div class="bar red"></div>
+          <div>
+            <div class="name" data-i18n="cat.fuel">Tiền xăng</div>
+            <div class="desc" data-amt="80000">80,000đ</div>
           </div>
+          <div class="amount"></div>
+        </div>
+      </div>
 
-          <div class="row">
-            <div class="time">16:29</div>
-            <div class="dot"></div>
-            <div class="bar red"></div>
-            <div>
-              <div class="name">Cà phê</div>
-              <div class="desc">15,000đ</div>
-            </div>
-            <div class="amount"></div>
+      <!-- Group 2 -->
+      <div class="group">
+        <div class="g-head" data-date="2025-09-24">2025-09-24</div>
+
+        <div class="row">
+          <div class="time">16:29</div>
+          <div class="dot"></div>
+          <div class="bar green"></div>
+          <div>
+            <div class="name" data-i18n="cat.giftwife">Mua sắm cho vợ</div>
+            <div class="desc" data-amt="2000000">2,000,000đ</div>
           </div>
+          <div class="amount"></div>
+        </div>
+
+        <div class="row">
+          <div class="time">16:29</div>
+          <div class="dot"></div>
+          <div class="bar red"></div>
+          <div>
+            <div class="name" data-i18n="cat.coffee">Cà phê</div>
+            <div class="desc" data-amt="15000">15,000đ</div>
+          </div>
+          <div class="amount"></div>
         </div>
       </div>
     </section>
@@ -245,137 +206,104 @@
   </button>
 
 <script>
-  /* ===== Theme from Settings ===== */
-  (function initTheme(){
-    const saved = localStorage.getItem('theme'); // 'light' | 'dark'
-    document.documentElement.classList.toggle('dark', saved === 'dark');
-  })();
+  /* ===== Core: Theme + Language sync ===== */
+  function getLang(){let lang=localStorage.getItem('lang');if(!lang){lang=(navigator.language||'vi').toLowerCase().startsWith('vi')?'vi':'en';localStorage.setItem('lang',lang);}return lang;}
+  function setLang(lang){localStorage.setItem('lang',lang);applyLangToDOM(lang);translatePage();formatAmounts();formatDates();}
+  function applyLangToDOM(lang){document.documentElement.setAttribute('lang',lang);}
+  function getTheme(){return localStorage.getItem('theme')||'light'}
+  function setTheme(theme){localStorage.setItem('theme',theme);applyThemeToDOM(theme);}
+  function applyThemeToDOM(theme){document.documentElement.classList.toggle('dark',theme==='dark');}
 
-  /* ===== i18n ===== */
-  const I18N = {
-    vi:{
-      "page.title":"SmartExpense — Lịch sử chi tiêu",
-      "page.heading":"Lịch sử chi tiêu",
-      "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu",
-      "nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo",
-      "nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
-
-      "chat.title":"Trợ lý thông minh","chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn",
-      "chat.open":"Mở trợ lý","ph.chat":"Viết tin nhắn…","send.title":"Gửi",
-      "chat.greet":"Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi tạo chi tiêu, xem báo cáo hoặc hỏi mẹo sử dụng.",
-      "chat.thinking":"Đang tạo câu trả lời dựa theo yêu cầu…",
-      "chat.nextExpense":"Tôi đã tạo thành công chi tiêu tiếp theo của tháng sau. Bạn hãy kiểm tra ở mục Danh sách chi tiêu.",
-      "chat.ok":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?"
-    },
-    en:{
-      "page.title":"SmartExpense — Expense history",
-      "page.heading":"Expense history",
-      "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History",
-      "nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports",
-      "nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
-
-      "chat.title":"Smart assistant","chat.sub":"Hi! 👋 Glad to help",
-      "chat.open":"Open assistant","ph.chat":"Type a message…","send.title":"Send",
-      "chat.greet":"I'm your SmartExpense assistant. I can add expenses, show reports, or share tips.",
-      "chat.thinking":"Generating a response based on your request…",
-      "chat.nextExpense":"I created next month's follow-up expense. Check it in Expense list.",
-      "chat.ok":"Got it. What would you like me to do next?"
-    }
+  const I18N={
+    vi:{"page.title":"SmartExpense — Lịch sử chi tiêu","page.heading":"Lịch sử chi tiêu",
+        "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu",
+        "nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo",
+        "nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
+        "chat.title":"Trợ lý thông minh","chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn",
+        "chat.open":"Mở trợ lý","ph.chat":"Viết tin nhắn…","send.title":"Gửi",
+        "chat.greet":"Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi tạo chi tiêu, xem báo cáo hoặc hỏi mẹo sử dụng.",
+        "chat.thinking":"Đang tạo câu trả lời dựa theo yêu cầu…",
+        "chat.nextExpense":"Tôi đã tạo thành công chi tiêu tiếp theo của tháng sau. Bạn hãy kiểm tra ở mục Danh sách chi tiêu.",
+        "chat.ok":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?",
+        "cat.food":"Ăn uống","cat.fuel":"Tiền xăng","cat.giftwife":"Mua sắm cho vợ","cat.coffee":"Cà phê"},
+    en:{"page.title":"SmartExpense — Expense history","page.heading":"Expense history",
+        "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History",
+        "nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports",
+        "nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
+        "chat.title":"Smart assistant","chat.sub":"Hi! 👋 Glad to help",
+        "chat.open":"Open assistant","ph.chat":"Type a message…","send.title":"Send",
+        "chat.greet":"I'm your SmartExpense assistant. I can add expenses, show reports, or share tips.",
+        "chat.thinking":"Generating a response based on your request…",
+        "chat.nextExpense":"I created next month's follow-up expense. Check it in Expense list.",
+        "chat.ok":"Got it. What would you like me to do next?",
+        "cat.food":"Food & Dining","cat.fuel":"Fuel","cat.giftwife":"Shopping for spouse","cat.coffee":"Coffee"}
   };
 
-  function t(key){
-    const lang = localStorage.getItem('lang') || 'vi';
-    return (I18N[lang] && I18N[lang][key]) || key;
-  }
+  function t(key){const lang=getLang();return (I18N[lang]&&I18N[lang][key])||key;}
   function translatePage(){
     document.querySelectorAll('[data-i18n]').forEach(el=>{
-      const key = el.getAttribute('data-i18n');
-      const val = t(key);
-      const attr = el.getAttribute('data-i18n-attr');
-      if(attr){
-        attr.split(',').forEach(a=>el.setAttribute(a.trim(), val));
-      }else if(el.tagName==='INPUT'){
-        el.placeholder = val;
-      }else{
-        el.textContent = val;
-      }
+      const key=el.getAttribute('data-i18n');const val=t(key);
+      const attrs=el.getAttribute('data-i18n-attr');
+      if(attrs){attrs.split(',').forEach(a=>el.setAttribute(a.trim(),val));}
+      else if(el.tagName==='INPUT'){el.placeholder=val;} else {el.textContent=val;}
     });
-    document.title = t('page.title');
-    document.documentElement.setAttribute('lang', localStorage.getItem('lang') || 'vi');
+    document.title=t('page.title');
   }
-  translatePage();
+
+  /* ===== Định dạng tiền theo locale ===== */
+  function formatCurrency(n){
+    return (n||0).toLocaleString(getLang()==='en'?'en-US':'vi-VN')+'đ';
+  }
+  function formatAmounts(){
+    document.querySelectorAll('.desc[data-amt]').forEach(el=>{
+      const n=Number(el.getAttribute('data-amt')||0);
+      el.textContent=formatCurrency(n);
+    });
+  }
+
+  /* ===== Định dạng ngày heading theo locale ===== */
+  function formatDates(){
+    const lang=getLang();
+    document.querySelectorAll('.g-head[data-date]').forEach(el=>{
+      const iso=el.getAttribute('data-date');
+      const d=new Date(iso+'T00:00:00');
+      el.textContent = lang==='en'
+        ? d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})
+        : iso; // giữ nguyên yyyy-mm-dd khi VI
+    });
+  }
+
+  // Init
+  (function bootstrap(){applyThemeToDOM(getTheme());applyLangToDOM(getLang());translatePage();formatAmounts();formatDates();})();
+
+  // Sync realtime
+  window.addEventListener('storage',(e)=>{
+    if(e.key==='theme'&&e.newValue) applyThemeToDOM(e.newValue);
+    if(e.key==='lang' && e.newValue){applyLangToDOM(e.newValue);translatePage();formatAmounts();formatDates();}
+  });
 
   /* ===== Chatbox ===== */
-  const chatToggle = document.getElementById('chatToggle');
-  const chatbox = document.getElementById('chatbox');
-  const chatBody = document.getElementById('chatBody');
-  const chatInput = document.getElementById('chatInput');
-  const sendBtn  = document.getElementById('sendBtn');
-
-  let greeted = false;
-
-  function scrollBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
-
-  function addMsg(text, who='bot'){
-    const wrap = document.createElement('div');
-    wrap.className = `msg ${who}`;
-    const avatar = document.createElement('div');
-    avatar.className = 'avatar-s';
-    avatar.textContent = who==='bot' ? '🐷' : '👤';
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.innerText = text;
-    if (who==='bot'){ wrap.append(avatar, bubble); } else { wrap.append(bubble, avatar); }
-    chatBody.appendChild(wrap);
-    scrollBottom();
-  }
-
-  function addTyping(){
-    const wrap = document.createElement('div');
-    wrap.className = 'msg bot';
-    wrap.dataset.typing = '1';
-    wrap.innerHTML = `<div class="avatar-s">🐷</div>
-      <div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;
-    chatBody.appendChild(wrap);
-    scrollBottom();
-    return wrap;
-  }
-
-  function botSay(text, delay=0){
-    const tWrap = addTyping();
-    setTimeout(()=>{ tWrap.remove(); addMsg(text,'bot'); }, Math.max(300, delay));
-  }
-
-  function openChat() {
-    chatbox.classList.add('open');
-    chatbox.setAttribute('aria-hidden','false');
-    if (!greeted) {
-      addMsg(t('chat.greet'));
-      greeted = true;
-    }
-    setTimeout(()=> chatInput.focus(), 100);
-  }
-  function closeChat() {
-    chatbox.classList.remove('open');
-    chatbox.setAttribute('aria-hidden','true');
-  }
-  chatToggle.addEventListener('click', ()=> chatbox.classList.contains('open') ? closeChat() : openChat());
-
-  function handleSend(){
-    const txt = chatInput.value.trim();
-    if (!txt) return;
-    addMsg(txt,'user');
-    chatInput.value = '';
-    const say = txt.toLowerCase();
-    if (say.includes('tạo') && (say.includes('tháng') || say.includes('thang') || say.includes('month'))) {
-      botSay(t('chat.thinking'), 900);
-      setTimeout(()=> botSay(t('chat.nextExpense'), 1200), 1100);
-    } else {
-      botSay(t('chat.ok'));
-    }
-  }
-  sendBtn.addEventListener('click', handleSend);
-  chatInput.addEventListener('keydown', (e)=>{ if (e.key==='Enter') handleSend(); });
+  const chatToggle=document.getElementById('chatToggle');
+  const chatbox=document.getElementById('chatbox');
+  const chatBody=document.getElementById('chatBody');
+  const chatInput=document.getElementById('chatInput');
+  const sendBtn=document.getElementById('sendBtn');
+  let greeted=false;
+  function scrollBottom(){chatBody.scrollTop=chatBody.scrollHeight;}
+  function addMsg(text,who='bot'){const wrap=document.createElement('div');wrap.className=`msg ${who}`;
+    const avatar=document.createElement('div');avatar.className='avatar-s';avatar.textContent=who==='bot'?'🐷':'👤';
+    const bubble=document.createElement('div');bubble.className='bubble';bubble.innerText=text;
+    if(who==='bot'){wrap.append(avatar,bubble);}else{wrap.append(bubble,avatar);}chatBody.appendChild(wrap);scrollBottom();}
+  function addTyping(){const wrap=document.createElement('div');wrap.className='msg bot';wrap.dataset.typing='1';
+    wrap.innerHTML=`<div class="avatar-s">🐷</div><div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;
+    chatBody.appendChild(wrap);scrollBottom();return wrap;}
+  function botSay(text,delay=0){const tWrap=addTyping();setTimeout(()=>{tWrap.remove();addMsg(text,'bot');},Math.max(300,delay));}
+  function openChat(){chatbox.classList.add('open');chatbox.setAttribute('aria-hidden','false');if(!greeted){addMsg(t('chat.greet'));greeted=true;}setTimeout(()=>chatInput&&chatInput.focus(),100);}
+  function closeChat(){chatbox.classList.remove('open');chatbox.setAttribute('aria-hidden','true');}
+  chatToggle.addEventListener('click',()=> chatbox.classList.contains('open')?closeChat():openChat());
+  function handleSend(){const txt=chatInput.value.trim();if(!txt) return;addMsg(txt,'user');chatInput.value='';
+    const say=txt.toLowerCase(); if(say.includes('tạo')&&(say.includes('tháng')||say.includes('thang')||say.includes('month'))){botSay(t('chat.thinking'),900);setTimeout(()=>botSay(t('chat.nextExpense'),1200),1100);} else {botSay(t('chat.ok'));}}
+  sendBtn.addEventListener('click',handleSend);chatInput.addEventListener('keydown',(e)=>{if(e.key==='Enter') handleSend();});
 </script>
 </body>
 </html>

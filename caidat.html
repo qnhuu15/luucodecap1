@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SmartExpense — Cài đặt</title>
+<title data-i18n="page.title">SmartExpense — Cài đặt</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -24,27 +24,29 @@
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
 
-  /* Sidebar hỗ trợ dark */
+  /* ===== Sidebar (đồng bộ + hỗ trợ dark) ===== */
   .sidebar{
     background:var(--card);
     border-right:1px solid var(--border);
     padding:18px 14px;
     color:var(--text);
+    transition:background .3s,color .3s;
   }
-  .brand{
-    display:flex;align-items:center;gap:12px;margin-bottom:12px;
-    padding-bottom:6px;border-bottom:1px solid var(--border);position:relative;z-index:1;
+  .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+  .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
+  .brand .logo img{width:100%;height:100%;object-fit:cover}
+  .brand b{font-size:18px;font-weight:700;color:var(--text)}
+  .nav{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+  .nav a{
+    display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;
+    font-weight:700;color:var(--text);text-decoration:none;transition:background .2s,color .2s
   }
-  .brand .logo{width:44px;height:44px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
-  .brand .logo img{width:100%;height:100%;object-fit:cover;display:block}
-  .brand b{font-size:18px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .nav{display:flex;flex-direction:column;gap:6px;margin-top:8px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--text);font-weight:700;text-decoration:none}
   .nav a .i{width:18px;text-align:center}
   .nav a:hover{background:rgba(37,99,235,.12)}
+  html.dark .nav a:hover{background:rgba(59,130,246,.15)}
   .nav a.active{background:var(--blue);color:#fff}
 
-  /* Main */
+  /* ===== Main ===== */
   .main{padding:22px 24px 40px}
   .wrap{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:22px 24px;max-width:980px}
   .container{display:flex;gap:28px}
@@ -78,39 +80,67 @@
   .segmented button+button{border-left:1px solid var(--border)}
   .segmented button.active{background:var(--blue);color:#fff}
 
-  /* Chat */
+  /* ===== Chat (đÃ FIX: dark/light, layout, z-index) ===== */
   .pig-float{
     position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;
     background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);
-    z-index:30;border:0;cursor:pointer
+    z-index:40;border:0;cursor:pointer
   }
   .pig-float img{width:64px;height:64px}
+
   .chatbox{
     position:fixed;right:26px;bottom:112px;width:340px;
     background:var(--card);border:1px solid var(--border);border-radius:14px;
-    box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;
-    grid-template-rows:56px 1fr 60px;
+    box-shadow:var(--shadow);overflow:hidden;display:none;z-index:50;
+    grid-template-rows:56px 1fr 64px;
   }
   .chatbox.open{display:grid}
-  .chat-head{background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;font-weight:800}
+
+  .chat-head{
+    background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;
+    padding:10px 12px;font-weight:800
+  }
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
   .chat-title{line-height:1.2}
   .chat-sub{font-weight:600;opacity:.95}
-  .chat-body{background:#f4fbff;overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
+
+  .chat-body{
+    background:var(--bg);
+    overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px
+  }
+  html.dark .chat-body{background:#0b1220}
+
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
   .msg.user{justify-content:flex-end}
-  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px;line-height:1.35}
-  html.dark .bubble{background:var(--card);color:var(--text)}
+  .bubble{
+    max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);
+    background:var(--card);font-size:14px;line-height:1.35;color:var(--text)
+  }
   .msg.bot .bubble{border-radius:14px 14px 14px 4px}
   .msg.user .bubble{border-radius:14px 14px 4px 14px;background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
+
   .typing{display:inline-block;min-width:34px}
   .typing span{display:inline-block;width:6px;height:6px;background:#9ca3af;border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
   .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
   @keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
-  .chat-input{background:var(--card);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
-  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
-  html.dark #chatInput{background:transparent;color:var(--text)}
+
+  .chat-input{
+    background:var(--card);border-top:1px solid var(--border);
+    display:flex;align-items:center;gap:10px;padding:10px
+  }
+  #chatInput{
+    flex:1;min-width:0;height:44px;border:1px solid var(--border);border-radius:999px;
+    padding:0 14px;background:var(--card);color:var(--text);outline:none;
+    font:inherit;-webkit-appearance:none;appearance:none
+  }
+  #chatInput::placeholder{color:var(--muted)}
+  #sendBtn{
+    width:44px;height:44px;flex:0 0 44px;border-radius:999px;border:0;
+    background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer
+  }
+  #sendBtn svg{display:block}
+  #sendBtn:active{transform:translateY(1px)}
 
   @media (max-width:1060px){
     body{grid-template-columns:1fr}
@@ -158,26 +188,17 @@
 
           <div class="row">
             <div class="label" data-i18n="budget">Ngân sách</div>
-            <label class="switch">
-              <input type="checkbox" id="swBudget" checked>
-              <span class="slider"></span>
-            </label>
+            <label class="switch"><input type="checkbox" id="swBudget" checked><span class="slider"></span></label>
           </div>
 
           <div class="row">
             <div class="label" data-i18n="anomaly">Bất thường</div>
-            <label class="switch">
-              <input type="checkbox" id="swAnomaly" checked>
-              <span class="slider"></span>
-            </label>
+            <label class="switch"><input type="checkbox" id="swAnomaly" checked><span class="slider"></span></label>
           </div>
 
           <div class="row">
             <div class="label" data-i18n="ocr">OCR</div>
-            <label class="switch">
-              <input type="checkbox" id="swOCR" checked>
-              <span class="slider"></span>
-            </label>
+            <label class="switch"><input type="checkbox" id="swOCR" checked><span class="slider"></span></label>
           </div>
 
           <div class="section">
@@ -246,7 +267,7 @@
     </div>
   </main>
 
-  <!-- Chatbox (đã gắn data-i18n) -->
+  <!-- Chatbox -->
   <div id="chatbox" class="chatbox" aria-hidden="true">
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
@@ -269,199 +290,105 @@
   </button>
 
 <script>
-  /* ===== I18N ===== */
+  /* ===== i18n dict ===== */
   const I18N = {
-    vi: {
-      "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu",
-      "nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo",
-      "nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
-
-      "settings.title":"Cảnh báo & Thông báo",
-      "budget":"Ngân sách","anomaly":"Bất thường","ocr":"OCR",
-      "threshold":"Ngưỡng cảnh báo ngân sách","notify.method":"Phương thức thông báo",
-      "inapp":"In-app","email":"Email","sms":"SMS",
-      "appearance":"Giao diện & Ngôn ngữ","mode":"Chế độ","light":"Sáng","dark":"Tối","language":"Ngôn ngữ",
-      "security":"Bảo mật","mfa":"Xác thực hai lớp","login.alert":"Cảnh báo đăng nhập bất thường","devices":"Quản lý thiết bị",
-      "account":"Tài khoản","profile":"Hồ sơ","change.pass":"Đổi mật khẩu",
-      "privacy":"Dữ liệu & Quyền riêng tư","export":"Xuất dữ liệu","csvjson":"CSV/JSON",
-      "tip":"Tip: Đảm bảo chất lượng ảnh tốt khi chụp hóa đơn",
-
-      "chat.title":"Trợ lý thông minh",
-      "chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn",
-      "chat.greet":"Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi đổi cài đặt, bật/tắt thông báo hoặc hỏi mẹo sử dụng.",
-      "chat.open":"Mở trợ lý",
-      "ph.chat":"Viết tin nhắn…",
-      "send.title":"Gửi",
-
-      "msg.ask.toggle":"Bạn muốn bật/tắt mục nào? Ví dụ: Ngân sách, Bất thường, OCR.",
-      "msg.ask.threshold":"Ngưỡng cảnh báo hiện tại là 95%. Bạn muốn đổi sang 30% hay 100%?",
-      "msg.ask.next":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?"
-    },
-    en: {
-      "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History",
-      "nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports",
-      "nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
-
-      "settings.title":"Alerts & Notifications",
-      "budget":"Budget","anomaly":"Anomalies","ocr":"OCR",
-      "threshold":"Budget alert threshold","notify.method":"Notification methods",
-      "inapp":"In-app","email":"Email","sms":"SMS",
-      "appearance":"Appearance & Language","mode":"Mode","light":"Light","dark":"Dark","language":"Language",
-      "security":"Security","mfa":"Two-factor authentication","login.alert":"Suspicious sign-in alerts","devices":"Device management",
-      "account":"Account","profile":"Profile","change.pass":"Change password",
-      "privacy":"Data & Privacy","export":"Export data","csvjson":"CSV/JSON",
-      "tip":"Tip: Ensure good receipt photo quality",
-
-      "chat.title":"Smart assistant",
-      "chat.sub":"Hello! 👋 Happy to help",
-      "chat.greet":"I'm the SmartExpense assistant. I can change settings, toggle alerts, or share tips.",
-      "chat.open":"Open assistant",
-      "ph.chat":"Type a message…",
-      "send.title":"Send",
-
-      "msg.ask.toggle":"Which one would you like to toggle? e.g., Budget, Anomalies, OCR.",
-      "msg.ask.threshold":"Current budget threshold is 95%. Switch to 30% or 100%?",
-      "msg.ask.next":"Got it. What would you like me to do next?"
-    }
+    vi: { "page.title":"SmartExpense — Cài đặt",
+      "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu","nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo","nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
+      "settings.title":"Cảnh báo & Thông báo","budget":"Ngân sách","anomaly":"Bất thường","ocr":"OCR","threshold":"Ngưỡng cảnh báo ngân sách","notify.method":"Phương thức thông báo","inapp":"In-app","email":"Email","sms":"SMS","appearance":"Giao diện & Ngôn ngữ","mode":"Chế độ","light":"Sáng","dark":"Tối","language":"Ngôn ngữ","security":"Bảo mật","mfa":"Xác thực hai lớp","login.alert":"Cảnh báo đăng nhập bất thường","devices":"Quản lý thiết bị","account":"Tài khoản","profile":"Hồ sơ","change.pass":"Đổi mật khẩu","privacy":"Dữ liệu & Quyền riêng tư","export":"Xuất dữ liệu","csvjson":"CSV/JSON","tip":"Tip: Đảm bảo chất lượng ảnh tốt khi chụp hóa đơn","chat.title":"Trợ lý thông minh","chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn","chat.greet":"Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi đổi cài đặt, bật/tắt thông báo hoặc hỏi mẹo sử dụng.","chat.open":"Mở trợ lý","ph.chat":"Viết tin nhắn…","send.title":"Gửi","msg.ask.toggle":"Bạn muốn bật/tắt mục nào? Ví dụ: Ngân sách, Bất thường, OCR.","msg.ask.threshold":"Ngưỡng cảnh báo hiện tại là 95%. Bạn muốn đổi sang 30% hay 100%?","msg.ask.next":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?" },
+    en: { "page.title":"SmartExpense — Settings",
+      "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History","nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports","nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
+      "settings.title":"Alerts & Notifications","budget":"Budget","anomaly":"Anomalies","ocr":"OCR","threshold":"Budget alert threshold","notify.method":"Notification methods","inapp":"In-app","email":"Email","sms":"SMS","appearance":"Appearance & Language","mode":"Mode","light":"Light","dark":"Dark","language":"Language","security":"Security","mfa":"Two-factor authentication","login.alert":"Suspicious sign-in alerts","devices":"Device management","account":"Account","profile":"Profile","change.pass":"Change password","privacy":"Data & Privacy","export":"Export data","csvjson":"CSV/JSON","tip":"Tip: Ensure good receipt photo quality","chat.title":"Smart assistant","chat.sub":"Hello! 👋 Happy to help","chat.greet":"I'm the SmartExpense assistant. I can change settings, toggle alerts, or share tips.","chat.open":"Open assistant","ph.chat":"Type a message…","send.title":"Send","msg.ask.toggle":"Which one would you like to toggle? e.g., Budget, Anomalies, OCR.","msg.ask.threshold":"Current budget threshold is 95%. Switch to 30% or 100%?","msg.ask.next":"Got it. What would you like me to do next?" }
   };
 
-  function t(key){
-    const lang = localStorage.getItem('lang') || 'vi';
-    return (I18N[lang] && I18N[lang][key]) || key;
-  }
+  /* Helpers */
+  const getLang = () => localStorage.getItem('lang') || 'vi';
+  const setLang  = (l) => { localStorage.setItem('lang', l); document.documentElement.setAttribute('lang', l); };
+  const setTheme = (t) => { localStorage.setItem('theme', t); document.documentElement.classList.toggle('dark', t==='dark'); };
 
-  /* Dịch text + thuộc tính */
+  function t(key){ const l=getLang(); return (I18N[l]&&I18N[l][key])||key; }
+
   function translatePage(){
     document.querySelectorAll('[data-i18n]').forEach(el=>{
-      const key = el.getAttribute('data-i18n');
-      const val = t(key);
-      const attrs = el.getAttribute('data-i18n-attr');
-
-      if (attrs) {
-        attrs.split(',').forEach(a => el.setAttribute(a.trim(), val));
-      } else if (el.tagName === 'INPUT') {
-        el.placeholder = val;
-      } else {
-        el.textContent = val;
-      }
+      const key=el.getAttribute('data-i18n'); const val=t(key);
+      const attrs=el.getAttribute('data-i18n-attr');
+      if (attrs){ attrs.split(',').forEach(a=>el.setAttribute(a.trim(), val)); }
+      else if (el.tagName==='INPUT'){ el.placeholder = val; }
+      else { el.textContent = val; }
     });
+    document.title = t('page.title');
   }
 
-  /* ===== Theme & Language ===== */
-  const themeSeg = document.getElementById('themeSeg');
-  const langSeg  = document.getElementById('langSeg');
-
-  function setActive(groupEl, selector){
-    if (!groupEl) return;
-    [...groupEl.querySelectorAll('button')].forEach(b=>{
-      const active = b.matches(selector);
-      b.classList.toggle('active', active);
-      b.setAttribute('aria-selected', active ? 'true' : 'false');
-    });
-  }
-  function applyTheme(theme){
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem('theme', theme);
-    setActive(themeSeg, `button[data-theme="${theme}"]`);
-  }
-  function applyLang(lang){
-    localStorage.setItem('lang', lang);
-    setActive(langSeg, `button[data-lang="${lang}"]`);
+  /* Init state */
+  (function bootstrap(){
+    setTheme(localStorage.getItem('theme')||'light');
+    setLang(getLang());
     translatePage();
-  }
-  themeSeg?.addEventListener('click', (e)=>{
-    const btn = e.target.closest('button[data-theme]'); if(!btn) return;
-    applyTheme(btn.dataset.theme);
+
+    const themeSeg=document.getElementById('themeSeg');
+    const langSeg=document.getElementById('langSeg');
+    const curTheme=localStorage.getItem('theme')||'light';
+    themeSeg.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b.dataset.theme===curTheme));
+    const curLang=getLang();
+    langSeg.querySelectorAll('button').forEach(b=>b.classList.toggle('active', b.dataset.lang===curLang));
+  })();
+
+  /* Segmented controls */
+  document.getElementById('themeSeg').addEventListener('click',e=>{
+    const btn=e.target.closest('button[data-theme]'); if(!btn) return;
+    setTheme(btn.dataset.theme);
+    btn.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('active', x===btn));
   });
-  langSeg?.addEventListener('click', (e)=>{
-    const btn = e.target.closest('button[data-lang]'); if(!btn) return;
-    applyLang(btn.dataset.lang);
+  document.getElementById('langSeg').addEventListener('click',e=>{
+    const btn=e.target.closest('button[data-lang]'); if(!btn) return;
+    setLang(btn.dataset.lang);
+    btn.parentElement.querySelectorAll('button').forEach(x=>x.classList.toggle('active', x===btn));
+    translatePage();
   });
 
-  /* ===== Chatbox ===== */
-  const chatToggle = document.getElementById('chatToggle');
-  const chatbox = document.getElementById('chatbox');
-  const chatBody = document.getElementById('chatBody');
-  const chatInput = document.getElementById('chatInput');
-  const sendBtn  = document.getElementById('sendBtn');
+  /* Sync giữa các tab/trang */
+  window.addEventListener('storage',(e)=>{
+    if(e.key==='theme' && e.newValue){ setTheme(e.newValue); }
+    if(e.key==='lang'  && e.newValue){ setLang(e.newValue); translatePage(); }
+  });
 
-  let greeted = false;
+  /* Chatbox */
+  const chatToggle=document.getElementById('chatToggle');
+  const chatbox=document.getElementById('chatbox');
+  const chatBody=document.getElementById('chatBody');
+  const chatInput=document.getElementById('chatInput');
+  const sendBtn=document.getElementById('sendBtn');
+  let greeted=false;
 
-  function openChat() {
-    chatbox.classList.add('open');
-    chatbox.setAttribute('aria-hidden','false');
-    if (!greeted) {
-      botSay(t('chat.greet'));
-      greeted = true;
-    }
-    setTimeout(()=> chatInput && chatInput.focus(), 100);
-  }
-  function closeChat() {
-    chatbox.classList.remove('open');
-    chatbox.setAttribute('aria-hidden','true');
-  }
-  chatToggle.addEventListener('click', ()=> chatbox.classList.contains('open') ? closeChat() : openChat());
-
-  function scrollBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
-  function addMsg(text, who='bot'){
-    const wrap = document.createElement('div');
-    wrap.className = `msg ${who}`;
-    const avatar = document.createElement('div');
-    avatar.className = 'avatar-s';
-    avatar.textContent = who==='bot' ? '🐷' : '👤';
-    const bubble = document.createElement('div');
-    bubble.className = 'bubble';
-    bubble.innerText = text;
-    if (who==='bot'){ wrap.append(avatar, bubble); } else { wrap.append(bubble, avatar); }
-    chatBody.appendChild(wrap);
-    scrollBottom();
+  const scrollBottom=()=> chatBody.scrollTop=chatBody.scrollHeight;
+  function addMsg(text,who='bot'){
+    const wrap=document.createElement('div'); wrap.className=`msg ${who}`;
+    const av=document.createElement('div'); av.className='avatar-s'; av.textContent=who==='bot'?'🐷':'👤';
+    const b=document.createElement('div'); b.className='bubble'; b.innerText=text;
+    if(who==='bot'){ wrap.append(av,b); } else { wrap.append(b,av); }
+    chatBody.appendChild(wrap); scrollBottom();
   }
   function addTyping(){
-    const wrap = document.createElement('div');
-    wrap.className = 'msg bot';
-    wrap.dataset.typing = '1';
-    wrap.innerHTML = `<div class="avatar-s">🐷</div>
-      <div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;
-    chatBody.appendChild(wrap);
-    scrollBottom();
-    return wrap;
+    const wrap=document.createElement('div'); wrap.className='msg bot'; wrap.dataset.typing='1';
+    wrap.innerHTML=`<div class="avatar-s">🐷</div><div class="bubble"><span class="typing"><span></span><span></span><span></span></span></div>`;
+    chatBody.appendChild(wrap); scrollBottom(); return wrap;
   }
-  function botSay(text, delay=0){
-    const tnode = addTyping();
-    setTimeout(()=>{ tnode.remove(); addMsg(text,'bot'); }, Math.max(300, delay));
-  }
+  function botSay(text,delay=0){ const tnode=addTyping(); setTimeout(()=>{ tnode.remove(); addMsg(text,'bot'); }, Math.max(300,delay)); }
+  function openChat(){ chatbox.classList.add('open'); chatbox.setAttribute('aria-hidden','false'); if(!greeted){ botSay(t('chat.greet')); greeted=true; } setTimeout(()=>chatInput&&chatInput.focus(),100); }
+  function closeChat(){ chatbox.classList.remove('open'); chatbox.setAttribute('aria-hidden','true'); }
+  chatToggle.addEventListener('click',()=> chatbox.classList.contains('open') ? closeChat() : openChat());
+
   function handleSend(){
-    const txt = chatInput.value.trim();
-    if (!txt) return;
-    addMsg(txt,'user');
-    chatInput.value = '';
-
-    const lang = localStorage.getItem('lang') || 'vi';
-    const say = txt.toLowerCase();
-
-    const hitToggle = (lang==='en')
-      ? (say.includes('toggle') || say.includes('on') || say.includes('off'))
-      : (say.includes('bật') || say.includes('tắt'));
-
-    const hitThreshold = (lang==='en')
-      ? (say.includes('threshold') || say.includes('alert'))
-      : (say.includes('ngưỡng') || say.includes('cảnh báo'));
-
-    if (hitToggle) {
-      botSay(t('msg.ask.toggle'));
-    } else if (hitThreshold) {
-      botSay(t('msg.ask.threshold'));
-    } else {
-      botSay(t('msg.ask.next'));
-    }
+    const txt=chatInput.value.trim(); if(!txt) return;
+    addMsg(txt,'user'); chatInput.value='';
+    const say=txt.toLowerCase(); const l=getLang();
+    const hitToggle=(l==='en') ? (say.includes('toggle')||say.includes('on')||say.includes('off')) : (say.includes('bật')||say.includes('tắt'));
+    const hitThreshold=(l==='en') ? (say.includes('threshold')||say.includes('alert')) : (say.includes('ngưỡng')||say.includes('cảnh báo'));
+    if(hitToggle){ botSay(t('msg.ask.toggle')); }
+    else if(hitThreshold){ botSay(t('msg.ask.threshold')); }
+    else { botSay(t('msg.ask.next')); }
   }
-  sendBtn.addEventListener('click', handleSend);
-  chatInput.addEventListener('keydown', (e)=>{ if (e.key==='Enter') handleSend(); });
-
-  /* Khởi tạo */
-  applyTheme(localStorage.getItem('theme') || 'light');
-  applyLang(localStorage.getItem('lang')  || 'vi');
-  document.addEventListener('DOMContentLoaded', translatePage);
+  sendBtn.addEventListener('click',handleSend);
+  chatInput.addEventListener('keydown',e=>{ if(e.key==='Enter') handleSend(); });
 </script>
 </body>
 </html>
