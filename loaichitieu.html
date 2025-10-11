@@ -11,12 +11,14 @@
     --border:#e5e7eb; --blue:#2563eb; --blue-500:#3b82f6;
     --green:#16a34a; --green-50:#d1fae5; --red:#ef4444;
     --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
+    /* chat */
+    --chat-bg:#f4fbff; --chat-dot:#9ca3af;
   }
-  /* Dark theme */
   html.dark{
     --bg:#0b1220; --card:#0f172a; --text:#e5e7eb; --muted:#9aa4b2;
     --border:#1f2a44; --blue:#3b82f6;
     --green:#22c55e; --green-50:#052e1a; --red:#f87171;
+    --chat-bg:#071520; --chat-dot:#9aa4b2;
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -38,10 +40,6 @@
   .nav a.active{background:var(--blue);color:#fff}
 
   .main{padding:22px 24px 40px}
-  .topbar{display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-bottom:10px}
-  .toggle{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border);border-radius:999px;padding:6px 10px;font-weight:700;color:var(--text)}
-  .toggle button{height:28px;padding:0 10px;border-radius:999px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:pointer}
-  .toggle button.active{background:var(--blue);color:#fff;border-color:var(--blue)}
   h1{margin:0 0 12px;font-size:22px;font-weight:800}
 
   .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
@@ -50,7 +48,6 @@
   .search input{width:min(420px,46%);height:40px;border:1px solid var(--border);border-radius:999px;padding:0 14px;background:#f8fafc;color:#0f172a;outline:none}
   html.dark .search input{background:transparent;color:var(--text)}
   .btn{height:40px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:800;padding:0 14px;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
-  .btn:active{transform:translateY(0.5px)}
 
   table{width:100%;border-collapse:collapse}
   th,td{padding:12px;border-bottom:1px solid #eef2f7;text-align:left}
@@ -89,8 +86,7 @@
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
   .chat-title{line-height:1.2}
   .chat-sub{font-weight:600;opacity:.95}
-  .chat-body{background:#f4fbff;overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
-  html.dark .chat-body{background:#071520}
+  .chat-body{background:var(--chat-bg);overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
   .msg.user{justify-content:flex-end}
   .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:14px;line-height:1.35}
@@ -98,9 +94,45 @@
   .msg.user .bubble{border-radius:14px 14px 4px 14px;background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
   .typing{display:inline-block;min-width:34px}
-  .typing span{display:inline-block;width:6px;height:6px;background:#9ca3af;border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
+  .typing span{display:inline-block;width:6px;height:6px;background:var(--chat-dot);border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
   .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
   @keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
+
+  /* ==== Chat input & send button (đồng bộ, KHÔNG viền xanh) ==== */
+  .chat-input{
+    background:var(--card);
+    border-top:1px solid var(--border);
+    display:flex; align-items:center; gap:8px; padding:8px;
+  }
+  .chat-input input,
+  .chat-input button{
+    appearance:none; -webkit-appearance:none; -moz-appearance:none;
+    outline:none; box-shadow:none;
+  }
+  #chatInput{
+    flex:1; height:40px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    padding:0 12px;
+    background:var(--card); color:var(--text);
+  }
+  #chatInput::placeholder{ color:var(--muted); }
+  /* tắt highlight xanh khi focus */
+  #chatInput:focus,
+  #chatInput:focus-visible{
+    border-color:var(--border);
+    box-shadow:none;
+    outline:none;
+  }
+  #sendBtn{
+    width:38px; height:38px;
+    border-radius:999px; border:0;
+    background:var(--blue); color:#fff;
+    display:grid; place-items:center; cursor:pointer;
+  }
+  #sendBtn:hover{ filter:brightness(.95); }
+  #sendBtn:active{ transform:translateY(.5px); }
+  #sendBtn:focus, #sendBtn:focus-visible{ outline:none; box-shadow:none; }
 
   @media (max-width:1024px){
     body{grid-template-columns:1fr}
@@ -123,7 +155,7 @@
       <a href="trangchu.html"><span class="i">🏠</span> <span data-i18n="nav.overview">Tổng quan</span></a>
       <a href="danhsachchitieu.html"><span class="i">🧾</span> <span data-i18n="nav.list">Danh sách chi tiêu</span></a>
       <a href="lichsuchitieu.html"><span class="i">🕘</span> <span data-i18n="nav.history">Lịch sử chi tiêu</span></a>
-      <a href="#"><span class="i">📅</span> <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
+      <a href="lenlichchitieu.html"><span class="i">📅</span> <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
       <a href="loaichitieu.html" class="active"><span class="i">🏷️</span> <span data-i18n="nav.types">Loại chi tiêu</span></a>
       <a href="baocao.html"><span class="i">📊</span> <span data-i18n="nav.report">Báo cáo</span></a>
       <a href="hoso.html"><span class="i">👤</span> <span data-i18n="nav.profile">Hồ sơ</span></a>
@@ -134,19 +166,6 @@
 
   <!-- MAIN -->
   <main class="main">
-    <div class="topbar">
-      <div class="toggle" aria-label="Theme">
-        <span data-i18n="theme.label">Giao diện</span>
-        <button id="btnLight" class="active" data-i18n="theme.light">Sáng</button>
-        <button id="btnDark" data-i18n="theme.dark">Tối</button>
-      </div>
-      <div class="toggle" aria-label="Language">
-        <span data-i18n="lang.label">Ngôn ngữ</span>
-        <button id="btnVi" class="active">VI</button>
-        <button id="btnEn">EN</button>
-      </div>
-    </div>
-
     <h1 data-i18n="page.h1">Loại chi tiêu</h1>
 
     <section class="card">
@@ -192,7 +211,7 @@
     <div id="chatBody" class="chat-body"></div>
     <div class="chat-input">
       <input id="chatInput" type="text" placeholder="Viết tin nhắn…" data-i18n="ph.chat" data-i18n-attr="placeholder">
-      <button id="sendBtn" title="Gửi" data-i18n="send.title" data-i18n-attr="title,aria-label" aria-label="Gửi">
+      <button id="sendBtn" type="button" title="Gửi" data-i18n="send.title" data-i18n-attr="title,aria-label" aria-label="Gửi">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12L20 4L12 20L11 13L4 12Z" fill="currentColor"/></svg>
       </button>
     </div>
@@ -203,7 +222,7 @@
   </button>
 
 <script>
-  /* ===== Theme & Language core ===== */
+  /* ===== Theme & Language core (không có nút) ===== */
   function getLang(){
     let lang = localStorage.getItem('lang');
     if(!lang){
@@ -212,68 +231,43 @@
     }
     return lang;
   }
-  function setLang(lang){
-    localStorage.setItem('lang', lang);
-    applyLangToDOM(lang);
-    translatePage();
-    render(); // re-render bảng để đổi BẬT/TẮT ⇄ ON/OFF & tooltips
-    syncLangButtons();
-  }
-  function applyLangToDOM(lang){ document.documentElement.setAttribute('lang', lang); }
-
   function getTheme(){ return localStorage.getItem('theme') || 'light'; }
-  function setTheme(theme){
-    localStorage.setItem('theme', theme);
-    applyThemeToDOM(theme);
-    syncThemeButtons();
-  }
+  function applyLangToDOM(lang){ document.documentElement.setAttribute('lang', lang); }
   function applyThemeToDOM(theme){ document.documentElement.classList.toggle('dark', theme==='dark'); }
 
   // I18N dictionary
   const I18N = {
-    vi:{
-      "page.title":"SmartExpense — Loại chi tiêu",
-      "page.h1":"Loại chi tiêu",
+    vi:{ "page.title":"SmartExpense — Loại chi tiêu","page.h1":"Loại chi tiêu",
       "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu",
       "nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo",
       "nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
-      "theme.label":"Giao diện","theme.light":"Sáng","theme.dark":"Tối",
-      "lang.label":"Ngôn ngữ",
-      "btn.create":"Tạo",
-      "th.name":"Tên","th.color":"Màu sắc","th.note":"Ghi chú","th.status":"Trạng thái","th.action":"Hành động",
-      "pager.prev":"Trước","pager.next":"Sau",
-      "status.on":"BẬT","status.off":"TẮT",
-      "ph.search":"Tìm kiếm…","ph.chat":"Viết tin nhắn…",
-      "send.title":"Gửi","chat.title":"Trợ lý thông minh","chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn",
-      "chat.open":"Mở trợ lý",
+      "btn.create":"Tạo","th.name":"Tên","th.color":"Màu sắc","th.note":"Ghi chú","th.status":"Trạng thái","th.action":"Hành động",
+      "pager.prev":"Trước","pager.next":"Sau","status.on":"BẬT","status.off":"TẮT",
+      "ph.search":"Tìm kiếm…","ph.chat":"Viết tin nhắn…","send.title":"Gửi",
+      "chat.title":"Trợ lý thông minh","chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn","chat.open":"Mở trợ lý",
       "prompt.create.name":"Tên loại chi tiêu:","prompt.create.color":"Màu (hex, ví dụ #3b82f6):",
       "prompt.edit.name":"Sửa tên:","prompt.edit.color":"Sửa màu (hex):","prompt.edit.note":"Ghi chú:",
       "confirm.delete":"Xoá loại chi tiêu này?",
       "msg.wait":"Đang tạo câu trả lời dựa theo yêu cầu…",
       "msg.done":"Tôi đã tạo thành công chi tiêu tiếp theo của tháng sau. Hãy kiểm tra ở mục Danh sách chi tiêu.",
-      "msg.next":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?"
+      "msg.next":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?",
+      "chat.greeting":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn"
     },
-    en:{
-      "page.title":"SmartExpense — Categories",
-      "page.h1":"Categories",
+    en:{ "page.title":"SmartExpense — Categories","page.h1":"Categories",
       "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History",
       "nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports",
       "nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
-      "theme.label":"Theme","theme.light":"Light","theme.dark":"Dark",
-      "lang.label":"Language",
-      "btn.create":"Create",
-      "th.name":"Name","th.color":"Color","th.note":"Note","th.status":"Status","th.action":"Actions",
-      "pager.prev":"Previous","pager.next":"Next",
-      "status.on":"ON","status.off":"OFF",
-      "ph.search":"Search…","ph.chat":"Type a message…",
-      "send.title":"Send","chat.title":"Smart assistant","chat.sub":"Hello! 👋 Happy to help",
-      "chat.open":"Open assistant",
+      "btn.create":"Create","th.name":"Name","th.color":"Color","th.note":"Note","th.status":"Status","th.action":"Actions",
+      "pager.prev":"Previous","pager.next":"Next","status.on":"ON","status.off":"OFF",
+      "ph.search":"Search…","ph.chat":"Type a message…","send.title":"Send",
+      "chat.title":"Smart assistant","chat.sub":"Hello! 👋 Happy to help","chat.open":"Open assistant",
       "prompt.create.name":"Category name:","prompt.create.color":"Color (hex, e.g. #3b82f6):",
       "prompt.edit.name":"Edit name:","prompt.edit.color":"Edit color (hex):","prompt.edit.note":"Note:",
       "confirm.delete":"Delete this category?",
       "msg.wait":"Generating a response based on your request…",
       "msg.done":"I've created next month's recurring expense. Please check the Expense list.",
-      "msg.next":"Got it. What would you like me to do next?"
+      "msg.next":"Got it. What would you like me to do next?",
+      "chat.greeting":"Hello! 👋 Happy to help"
     }
   };
 
@@ -299,7 +293,7 @@
     if(titleEl) titleEl.textContent = t('page.title');
   }
 
-  // ===== Demo data (names giữ nguyên theo ngôn ngữ người dùng nhập) =====
+  /* ===== Data & render ===== */
   let rows = [
     { name:'Ăn uống',    color:'#3b82f6', note:'',      on:true },
     { name:'Chơi',       color:'#fb923c', note:'',      on:true },
@@ -307,7 +301,6 @@
     { name:'Đầu tư',     color:'#10b981', note:'',      on:true },
     { name:'Chi phí khác', color:'#ef4444', note:'',    on:true },
   ];
-
   const tbody = document.querySelector('#tbl tbody');
 
   function render(list = rows){
@@ -371,7 +364,7 @@
     }
   });
 
-  // ===== Chatbox =====
+  /* ===== Chatbox (đồng bộ theme + ngôn ngữ) ===== */
   const chatToggle = document.getElementById('chatToggle');
   const chatbox = document.getElementById('chatbox');
   const chatBody = document.getElementById('chatBody');
@@ -379,16 +372,8 @@
   const sendBtn  = document.getElementById('sendBtn');
 
   let greeted = false;
-  function openChat() {
-    chatbox.classList.add('open');
-    chatbox.setAttribute('aria-hidden','false');
-    if (!greeted) { botSay(t('chat.sub')); greeted = true; }
-    setTimeout(()=> chatInput && chatInput.focus(), 100);
-  }
-  function closeChat() { chatbox.classList.remove('open'); chatbox.setAttribute('aria-hidden','true'); }
-  chatToggle.addEventListener('click', ()=> chatbox.classList.contains('open') ? closeChat() : openChat());
-
   function scrollBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
+
   function addMsg(text, who='bot'){
     const wrap = document.createElement('div');
     wrap.className = `msg ${who}`;
@@ -414,6 +399,36 @@
     const tnode = addTyping();
     setTimeout(()=>{ tnode.remove(); addMsg(text,'bot'); }, Math.max(300,delay));
   }
+
+  function greetBubbleText(){ return I18N[getLang()]["chat.greeting"]; }
+  function updateGreetingBubble(){
+    const g = document.querySelector('.bubble[data-greeting="1"]');
+    if (g) g.textContent = greetBubbleText();
+  }
+
+  function openChat() {
+    chatbox.classList.add('open');
+    chatbox.setAttribute('aria-hidden','false');
+    if (!greeted) {
+      const typing = addTyping();
+      setTimeout(()=>{
+        typing.remove();
+        const wrap = document.createElement('div');
+        wrap.className = 'msg bot';
+        const avatar = document.createElement('div'); avatar.className = 'avatar-s'; avatar.textContent = '🐷';
+        const bubble = document.createElement('div'); bubble.className = 'bubble'; bubble.setAttribute('data-greeting','1');
+        bubble.textContent = greetBubbleText();
+        wrap.append(avatar, bubble);
+        chatBody.appendChild(wrap);
+        scrollBottom();
+      }, 350);
+      greeted = true;
+    }
+    setTimeout(()=> chatInput && chatInput.focus(), 100);
+  }
+  function closeChat(){ chatbox.classList.remove('open'); chatbox.setAttribute('aria-hidden','true'); }
+  chatToggle.addEventListener('click', ()=> chatbox.classList.contains('open') ? closeChat() : openChat());
+
   function handleSend(){
     const txt = chatInput.value.trim();
     if (!txt) return;
@@ -433,41 +448,22 @@
   sendBtn.addEventListener('click', handleSend);
   chatInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter') handleSend(); });
 
-  // ===== Controls (topbar) =====
-  const btnLight = document.getElementById('btnLight');
-  const btnDark  = document.getElementById('btnDark');
-  const btnVi    = document.getElementById('btnVi');
-  const btnEn    = document.getElementById('btnEn');
-
-  btnLight.addEventListener('click', ()=> setTheme('light'));
-  btnDark .addEventListener('click', ()=> setTheme('dark'));
-  btnVi.addEventListener('click', ()=> setLang('vi'));
-  btnEn.addEventListener('click', ()=> setLang('en'));
-
-  function syncThemeButtons(){
-    const isDark = getTheme()==='dark';
-    btnDark.classList.toggle('active', isDark);
-    btnLight.classList.toggle('active', !isDark);
-  }
-  function syncLangButtons(){
-    const isEn = getLang()==='en';
-    btnEn.classList.toggle('active', isEn);
-    btnVi.classList.toggle('active', !isEn);
-  }
-
-  // ===== Init =====
+  /* ===== Init & realtime sync ===== */
   (function bootstrap(){
     applyThemeToDOM(getTheme());
     applyLangToDOM(getLang());
     translatePage();
-    syncThemeButtons(); syncLangButtons();
     render();
   })();
 
-  // Sync realtime cross-tab
   window.addEventListener('storage', (e)=>{
-    if(e.key==='theme' && e.newValue){ applyThemeToDOM(e.newValue); syncThemeButtons(); }
-    if(e.key==='lang'  && e.newValue){ applyLangToDOM(e.newValue); translatePage(); syncLangButtons(); render(); }
+    if(e.key==='theme' && e.newValue){ applyThemeToDOM(e.newValue); }
+    if(e.key==='lang'  && e.newValue){
+      applyLangToDOM(e.newValue);
+      translatePage();
+      render();
+      updateGreetingBubble();
+    }
   });
 </script>
 </body>

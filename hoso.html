@@ -27,29 +27,17 @@
   body::-webkit-scrollbar{width:0!important} body{scrollbar-width:none;-ms-overflow-style:none}
 
   /* Sidebar */
-  .sidebar{
-    background:var(--card);
-    border-right:1px solid var(--border);
-    padding:18px 14px;
-    color:var(--text);
-    transition:background .3s,color .3s;
-  }
+  .sidebar{background:var(--card);border-right:1px solid var(--border);padding:18px 14px;color:var(--text);transition:background .3s,color .3s}
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
   .brand .logo img{width:100%;height:100%;object-fit:cover}
   .brand b{font-size:18px;font-weight:700;color:var(--text)}
-
   .nav{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-  .nav a{
-    display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;
-    font-weight:700;color:var(--text);text-decoration:none;
-    transition:background .2s,color .2s;
-  }
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;font-weight:700;color:var(--text);text-decoration:none;transition:background .2s,color .2s}
   .nav a .i{width:18px;text-align:center}
   .nav a:hover{background:rgba(37,99,235,.12)}
   html.dark .nav a:hover{background:rgba(59,130,246,.15)}
   .nav a.active{background:var(--blue);color:#fff}
-
 
   /* Main */
   .main{padding:22px 24px 40px}
@@ -65,7 +53,8 @@
   .form .row{margin-bottom:12px}
   .label{font-weight:700;margin-bottom:6px}
   .req::after{content:" *";color:red;font-weight:800}
-  input,select{width:100%;height:42px;border:1px solid var(--border);border-radius:10px;padding:0 12px;background:#f8fafc;color:var(--text)} html.dark input,html.dark select{background:transparent;color:var(--text)}
+  input,select{width:100%;height:42px;border:1px solid var(--border);border-radius:10px;padding:0 12px;background:#f8fafc;color:var(--text)}
+  html.dark input,html.dark select{background:transparent;color:var(--text)}
 
   /* Switch */
   .switch{position:relative;display:inline-block;width:46px;height:26px}
@@ -84,15 +73,21 @@
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
   .chat-title{line-height:1.2}
   .chat-sub{font-weight:600;opacity:.95}
-  .chat-body{background:var(--bg);overflow:auto;padding:10px}
+  .chat-body{background:var(--bg);overflow:auto;padding:10px;scroll-behavior:smooth}
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
   .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:var(--card);font-size:14px;color:var(--text)}
   .msg.user{justify-content:flex-end}
   .msg.user .bubble{background:var(--blue);color:#fff;border:none}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px}
+
+  /* Chat input synced + NO blue outline */
   .chat-input{display:flex;align-items:center;gap:8px;padding:10px;background:var(--card);border-top:1px solid var(--border)}
-  #chatInput{flex:1;height:44px;border:1px solid var(--border);border-radius:999px;padding:0 14px;background:var(--card);color:var(--text)}
-  #sendBtn{width:44px;height:44px;border-radius:999px;background:var(--blue);color:#fff;border:none;display:grid;place-items:center;cursor:pointer}
+  #chatInput{flex:1;height:44px;border:1px solid var(--border);border-radius:999px;padding:0 14px;background:var(--card);color:var(--text);outline:none;box-shadow:none;appearance:none}
+  #chatInput::placeholder{color:var(--muted)}
+  #chatInput:focus,#chatInput:focus-visible{outline:none;border-color:var(--border);box-shadow:none}
+  #sendBtn{width:44px;height:44px;border-radius:999px;background:var(--blue);color:#fff;border:none;display:grid;place-items:center;cursor:pointer;outline:none;box-shadow:none}
+  #sendBtn:active{transform:translateY(1px)}
+  #sendBtn:focus,#sendBtn:focus-visible{outline:none;box-shadow:none}
 </style>
 </head>
 
@@ -107,7 +102,7 @@
       <a href="trangchu.html"><span class="i">🏠</span> <span data-i18n="nav.overview">Tổng quan</span></a>
       <a href="danhsachchitieu.html"><span class="i">🧾</span> <span data-i18n="nav.list">Danh sách chi tiêu</span></a>
       <a href="lichsuchitieu.html"><span class="i">🕘</span> <span data-i18n="nav.history">Lịch sử chi tiêu</span></a>
-      <a href="#"><span class="i">📅</span> <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
+      <a href="lenlichchitieu.html"><span class="i">📅</span> <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
       <a href="loaichitieu.html"><span class="i">🏷️</span> <span data-i18n="nav.types">Loại chi tiêu</span></a>
       <a href="baocao.html"><span class="i">📊</span> <span data-i18n="nav.report">Báo cáo</span></a>
       <a href="hoso.html" class="active"><span class="i">👤</span> <span data-i18n="nav.profile">Hồ sơ</span></a>
@@ -174,72 +169,81 @@
   </button>
 
 <script>
-  /* ===== Reuse the same i18n dict as settings page ===== */
+  /* ===== i18n ===== */
   const I18N = {
     vi:{ "page.title":"SmartExpense — Hồ sơ","nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu","nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo","nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất","profile.oauth":"Đăng nhập qua Google","invoices.title":"Hóa đơn","invoices.date":"Ngày","invoices.desc":"Mô tả","form.fullName":"Họ & Tên","form.gender":"Giới tính","form.currency":"Đơn vị tiền tệ","form.monthlyBalance":"Nhập số dư (tháng)","form.phone":"Số điện thoại","gender.female":"Nữ","gender.male":"Nam","gender.other":"Khác","toggles.exclude":"Bật loại trừ chi tiêu","toggles.autoCategory":"Bật tự động chọn loại chi tiêu","toggles.dailyReport":"Báo cáo email hằng ngày","btn.save":"Lưu","alert.saved":"Đã lưu hồ sơ (demo).","chat.title":"Trợ lý thông minh","chat.sub":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn","chat.open":"Mở trợ lý","ph.chat":"Viết tin nhắn…","send.title":"Gửi","chat.greet":"Mình có thể giúp cập nhật hồ sơ, đổi ngôn ngữ/giao diện và trả lời câu hỏi của bạn.","chat.ok":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?" },
     en:{ "page.title":"SmartExpense — Profile","nav.overview":"Overview","nav.list":"Expense list","nav.history":"History","nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports","nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out","profile.oauth":"Sign in with Google","invoices.title":"Invoices","invoices.date":"Date","invoices.desc":"Description","form.fullName":"Full name","form.gender":"Gender","form.currency":"Currency","form.monthlyBalance":"Monthly balance","form.phone":"Phone number","gender.female":"Female","gender.male":"Male","gender.other":"Other","toggles.exclude":"Enable expense exclusion","toggles.autoCategory":"Enable auto category","toggles.dailyReport":"Daily email report","btn.save":"Save","alert.saved":"Profile saved (demo).","chat.title":"Smart assistant","chat.sub":"Hi! 👋 Glad to help","chat.open":"Open assistant","ph.chat":"Type a message…","send.title":"Send","chat.greet":"I can help update your profile, switch language/theme, and answer questions.","chat.ok":"Got it. What would you like me to do next?" }
   };
 
-  /* ===== Helpers (same keys as settings page) ===== */
   const getLang = () => localStorage.getItem('lang') || 'vi';
-  const setLang  = l => { localStorage.setItem('lang', l); document.documentElement.setAttribute('lang', l); translatePage(); };
   const getTheme = () => localStorage.getItem('theme') || 'light';
-  const setTheme = t => { localStorage.setItem('theme', t); document.documentElement.classList.toggle('dark', t==='dark'); };
-
-  function t(key){ const l=getLang(); return (I18N[l]&&I18N[l][key])||key; }
+  function t(k){const l=getLang();return (I18N[l]&&I18N[l][k])||k;}
   function translatePage(){
     document.querySelectorAll('[data-i18n]').forEach(el=>{
       const key=el.getAttribute('data-i18n'); const val=t(key);
       const attrs=el.getAttribute('data-i18n-attr');
-      if(attrs){ attrs.split(',').forEach(a=>el.setAttribute(a.trim(), val)); }
-      else if(el.tagName==='INPUT'){ el.placeholder=val; }
-      else{ el.textContent=val; }
+      if(attrs){attrs.split(',').forEach(a=>el.setAttribute(a.trim(),val));}
+      else if(el.tagName==='INPUT'){el.placeholder=val;} else {el.textContent=val;}
     });
-    // options
-    document.querySelectorAll('option[data-i18n]').forEach(op=>{
-      op.textContent=t(op.getAttribute('data-i18n'));
-    });
+    document.querySelectorAll('option[data-i18n]').forEach(op=> op.textContent=t(op.getAttribute('data-i18n')));
     document.title=t('page.title');
   }
 
-  /* ===== Bootstrap: apply current theme/lang from localStorage ===== */
+  /* ===== Bootstrap ===== */
   (function init(){
     document.documentElement.classList.toggle('dark', getTheme()==='dark');
     document.documentElement.setAttribute('lang', getLang());
     translatePage();
   })();
 
-  /* ===== Sync across tabs/pages (listens to Settings page changes) ===== */
+  /* ===== Sync from Settings (theme + language) ===== */
   window.addEventListener('storage', (e)=>{
     if(e.key==='theme' && e.newValue){ document.documentElement.classList.toggle('dark', e.newValue==='dark'); }
-    if(e.key==='lang'  && e.newValue){ document.documentElement.setAttribute('lang', e.newValue); translatePage(); }
+    if(e.key==='lang'  && e.newValue){
+      document.documentElement.setAttribute('lang', e.newValue);
+      translatePage();
+      updateGreetingBubble(); // cập nhật lời chào trong chat khi đổi ngôn ngữ
+    }
   });
 
-  /* ===== Demo Save ===== */
+  /* ===== Save demo ===== */
   document.getElementById('saveBtn').addEventListener('click', ()=>{
     const name=document.getElementById('fullNameInput').value.trim();
     if(name) document.getElementById('fullNameValue').textContent=name;
     alert(t('alert.saved'));
   });
 
-  /* ===== Chat box ===== */
+  /* ===== Chat box (đồng bộ theme + ngôn ngữ, không viền xanh) ===== */
   const chatToggle=document.getElementById('chatToggle');
   const chatbox=document.getElementById('chatbox');
   const chatBody=document.getElementById('chatBody');
   const chatInput=document.getElementById('chatInput');
   const sendBtn=document.getElementById('sendBtn');
-  let greeted=false;
 
+  let greeted=false;
   function addMsg(text,who='bot'){
-    const wrap=document.createElement('div'); wrap.className='msg '+who;
-    const av=document.createElement('div'); av.className='avatar-s'; av.textContent=who==='bot'?'🐷':'👤';
-    const b=document.createElement('div'); b.className='bubble'; b.textContent=text;
+    const wrap=document.createElement('div');wrap.className='msg '+who;
+    const av=document.createElement('div');av.className='avatar-s';av.textContent=who==='bot'?'🐷':'👤';
+    const b=document.createElement('div');b.className='bubble';b.textContent=text;
     if(who==='bot'){wrap.append(av,b);}else{wrap.append(b,av);}
     chatBody.appendChild(wrap); chatBody.scrollTop=chatBody.scrollHeight;
   }
+  function greetText(){ return t('chat.greet'); }
+  function updateGreetingBubble(){
+    const g=document.querySelector('.bubble[data-greeting="1"]');
+    if(g) g.textContent=greetText();
+  }
+
   function openChat(){
     chatbox.classList.add('open'); chatbox.setAttribute('aria-hidden','false');
-    if(!greeted){ addMsg(t('chat.greet')); greeted=true; }
+    if(!greeted){
+      // tạo bubble chào có data-greeting để đổi live theo ngôn ngữ
+      const wrap=document.createElement('div');wrap.className='msg bot';
+      const av=document.createElement('div');av.className='avatar-s';av.textContent='🐷';
+      const b=document.createElement('div');b.className='bubble';b.setAttribute('data-greeting','1');b.textContent=greetText();
+      wrap.append(av,b); chatBody.appendChild(wrap); chatBody.scrollTop=chatBody.scrollHeight;
+      greeted=true;
+    }
     setTimeout(()=>chatInput.focus(),120);
   }
   function closeChat(){ chatbox.classList.remove('open'); chatbox.setAttribute('aria-hidden','true'); }
@@ -252,7 +256,6 @@
   }
   sendBtn.addEventListener('click', handleSend);
   chatInput.addEventListener('keydown', e=>{ if(e.key==='Enter') handleSend(); });
-
 </script>
 </body>
 </html>

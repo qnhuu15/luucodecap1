@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SmartExpense — Tổng quan</title>
+<title data-i18n="app.title">SmartExpense — Tổng quan</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
@@ -11,36 +11,59 @@
     --border:#e5e7eb; --blue:#2563eb; --blue-600:#1f4fd1;
     --green:#0ea5a0; --red:#ef4444;
     --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
+    --soft:#f8fafc; --soft-2:#eef2f7; --chip:#111827;
+    /* chat */
+    --chat-bg:#f4fbff; --chat-typing-dot:#9ca3af;
   }
+  html.dark{
+    --bg:#0b1220; --card:#0f172a; --text:#e5e7eb; --muted:#9aa4b2;
+    --border:#1f2937; --blue:#3b82f6; --green:#22c55e;
+    --soft:#0b1424; --soft-2:#172033; --chip:#e5e7eb;
+    /* chat (dark) */
+    --chat-bg:#0d1526; --chat-typing-dot:#9aa4b2;
+  }
+
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
     margin:0;background:var(--bg);color:var(--text);
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
+    transition:background .25s,color .25s;
   }
-  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
+  .sidebar{background:var(--card);border-right:1px solid var(--border);padding:18px 14px}
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:8px}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
   .brand .logo img{width:100%;height:100%;object-fit:cover}
   .brand b{font-size:18px}
   .nav{display:flex;flex-direction:column;gap:6px;margin-top:10px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;font-weight:700;color:#111827;text-decoration:none}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;font-weight:700;color:var(--text);text-decoration:none;transition:background .2s,color .2s}
   .nav a .i{width:18px;text-align:center}
+  .nav a:hover{background:rgba(37,99,235,.12)}
+  html.dark .nav a:hover{background:rgba(59,130,246,.18)}
   .nav a.active{background:var(--blue);color:#fff}
 
   .main{padding:22px 24px 40px}
   .top{display:flex;align-items:center;gap:14px;margin:2px 0 14px}
   .top h1{margin:0;font-size:22px;font-weight:800}
   .search{margin-left:auto;display:flex;align-items:center;gap:12px}
-  .search input{width:min(420px,40vw);height:40px;padding:0 16px;border:1px solid var(--border);border-radius:999px;background:#fff;outline:none}
-  .avatar{width:40px;height:40px;border-radius:50%;background:#fde68a url('avatar.png') center/cover no-repeat;display:grid;place-items:center;font-weight:800;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+  .search input{
+    width:min(420px,40vw);height:40px;padding:0 16px;border:1px solid var(--border);
+    border-radius:999px;background:var(--card);color:var(--text);outline:none
+  }
+  .icon{opacity:.8}
+  .avatar{
+    width:40px;height:40px;border-radius:50%;
+    background:#fde68a url('avatar.png') center/cover no-repeat;
+    display:grid;place-items:center;font-weight:800;border:2px solid var(--card);
+    box-shadow:0 2px 6px rgba(0,0,0,.08)
+  }
 
   .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:16px}
   .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px}
-  .kpi h4{margin:0 0 8px;font-size:13px;color:#94a3b8;font-weight:800}
+  .kpi h4{margin:0 0 8px;font-size:13px;color:var(--muted);font-weight:800}
   .kpi .val{font-size:26px;font-weight:800;margin-bottom:6px}
-  .kpi .sub{font-size:12px;color:#94a3b8}
+  .kpi .sub{font-size:12px;color:var(--muted)}
   .sub .up{color:#16a34a;font-weight:800}
   .sub .down{color:var(--red);font-weight:800}
 
@@ -48,40 +71,59 @@
 
   .chart .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
   .chart .head b{font-size:14px}
-  .chart select{height:32px;border:1px solid var(--border);border-radius:10px;padding:0 10px;background:#fff}
-  .bars{height:170px;border:1px solid var(--border);border-radius:12px;background:#fff;display:flex;align-items:flex-end;gap:14px;padding:12px 14px}
+  .chart select{
+    height:32px;border:1px solid var(--border);border-radius:10px;padding:0 10px;background:var(--card);color:var(--text)
+  }
+  .bars{
+    height:170px;border:1px solid var(--border);border-radius:12px;background:var(--card);
+    display:flex;align-items:flex-end;gap:14px;padding:12px 14px
+  }
   .bar{flex:1;background:#cfd8e3;border-radius:8px 8px 0 0;position:relative}
-  .bar::before{content:"";position:absolute;left:0;right:0;bottom:0;height:24%;background:#eef2f7;border-radius:8px 8px 0 0}
+  html.dark .bar{background:#22314a}
+  .bar::before{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:24%;
+    background:var(--soft-2);border-radius:8px 8px 0 0
+  }
 
   .cat ul{list-style:none;margin:0;padding:0}
-  .cat li{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed #eef2f7}
+  .cat li{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px dashed var(--soft-2)}
   .cat li:last-child{border-bottom:0}
   .cat .l{display:flex;align-items:center;gap:10px;color:#475569}
+  html.dark .cat .l{color:#c3c9d4}
   .cat .r{font-weight:800}
 
   .table .head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
   .table .right{display:flex;align-items:center;gap:10px}
-  .table .right input{width:220px;height:36px;border:1px solid var(--border);border-radius:8px;padding:0 10px;background:#f8fafc}
-  .table .add{height:36px;padding:0 12px;border:0;border-radius:10px;background:#111827;color:#fff;font-weight:800}
+  .table .right input{
+    width:220px;height:36px;border:1px solid var(--border);border-radius:8px;padding:0 10px;background:var(--soft);color:var(--text)
+  }
+  .table .add{height:36px;padding:0 12px;border:0;border-radius:10px;background:var(--chip);color:#fff;font-weight:800;cursor:pointer}
   table{width:100%;border-collapse:collapse}
-  th,td{padding:12px 6px;border-bottom:1px solid #eef2f7;text-align:left}
-  th{font-size:12px;color:#94a3b8;letter-spacing:.4px}
+  th,td{padding:12px 6px;border-bottom:1px solid var(--soft-2);text-align:left}
+  th{font-size:12px;color:var(--muted);letter-spacing:.4px}
 
   .panel .title{font-weight:800;margin-bottom:10px}
   .panel .row{display:flex;align-items:center;gap:10px;margin:8px 0}
   .panel .row span{width:170px;color:#6b7280}
-  .panel input{flex:1;height:40px;border:1px solid var(--border);border-radius:10px;padding:0 10px;background:#f8fafc}
-  .panel .row button{height:40px;border:0;border-radius:10px;background:#e5e7eb;padding:0 12px;font-weight:700}
+  html.dark .panel .row span{color:#a5adba}
+  .panel input{
+    flex:1;height:40px;border:1px solid var(--border);border-radius:10px;padding:0 10px;background:var(--soft);color:var(--text)
+  }
+  .panel .row button{height:40px;border:0;border-radius:10px;background:#e5e7eb;padding:0 12px;font-weight:700;cursor:pointer}
+  html.dark .panel .row button{background:#1f2937;color:#e5e7eb}
   .guide h4{margin:0 0 8px;font-size:14px}
   .guide p{margin:6px 0;font-size:13px;color:#475569}
+  html.dark .guide p{color:#c3c9d4}
 
-
-  .pig-float{position:fixed;right:32px;bottom:26px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);font-size:36px;z-index:20;cursor:pointer;border:0}
+  .pig-float{
+    position:fixed;right:32px;bottom:26px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;
+    display:grid;place-items:center;box-shadow:var(--shadow);font-size:36px;z-index:20;cursor:pointer;border:0
+  }
   .pig-float img{width:64px;height:64px}
 
   .chatbox{
     position:fixed;right:26px;bottom:112px;width:340px;
-    background:#fff;border:1px solid var(--border);border-radius:14px;
+    background:var(--card);border:1px solid var(--border);border-radius:14px;
     box-shadow:var(--shadow);overflow:hidden;display:none;z-index:30;
     grid-template-rows:56px 1fr 60px;
   }
@@ -93,21 +135,21 @@
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
   .chat-title{line-height:1.2}
   .chat-sub{font-weight:600;opacity:.95}
-  .chat-body{background:#f4fbff;overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
+  .chat-body{background:var(--chat-bg);overflow:auto;padding:10px;scroll-behavior:smooth;max-height:380px}
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
   .msg.user{justify-content:flex-end}
-  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px;line-height:1.35}
+  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:var(--card);font-size:14px;line-height:1.35}
   .msg.bot .bubble{border-radius:14px 14px 14px 4px}
   .msg.user .bubble{border-radius:14px 14px 4px 14px;background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
   .typing{display:inline-block;min-width:34px}
-  .typing span{display:inline-block;width:6px;height:6px;background:#9ca3af;border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
+  .typing span{display:inline-block;width:6px;height:6px;background:var(--chat-typing-dot);border-radius:50%;margin:0 2px;animation:b 1s infinite ease-in-out}
   .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
   @keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
 
-  .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
-  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:#fff;outline:none}
-  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
+  .chat-input{background:var(--card);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
+  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;background:var(--card);color:var(--text);outline:none}
+  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer}
 
   @media (max-width:1200px){
     body{grid-template-columns:230px 1fr}
@@ -130,51 +172,51 @@
       <div class="logo">
         <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
       </div>
-      <b>SmartExpense</b>
+      <b data-i18n="brand.name">SmartExpense</b>
     </div>
     <nav class="nav">
-      <a href="trangchu.html" class="active"><span class="i">🏠</span> Tổng quan</a>
-      <a href="danhsachchitieu.html"><span class="i">🧾</span> Danh sách chi tiêu</a>
-      <a href="lichsuchitieu.html"><span class="i">🕘</span> Lịch sử chi tiêu</a>
-      <a href="#"><span class="i">📅</span> Lên lịch chi tiêu</a>
-      <a href="loaichitieu.html"><span class="i">🏷️</span> Loại chi tiêu</a>
-      <a href="baocao.html"><span class="i">📊</span> Báo cáo</a>
-      <a href="hoso.html"><span class="i">👤</span> Hồ sơ</a>
-      <a href="caidat.html"><span class="i">⚙️</span> Cài đặt</a>
-      <a href="login.html"><span class="i">↪️</span> Đăng xuất</a>
+      <a href="trangchu.html" class="active"><span class="i">🏠</span> <span data-i18n="nav.overview">Tổng quan</span></a>
+      <a href="danhsachchitieu.html"><span class="i">🧾</span> <span data-i18n="nav.list">Danh sách chi tiêu</span></a>
+      <a href="lichsuchitieu.html"><span class="i">🕘</span> <span data-i18n="nav.history">Lịch sử chi tiêu</span></a>
+      <a href="lenlichchitieu.html"><span class="i">📅</span> <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
+      <a href="loaichitieu.html"><span class="i">🏷️</span> <span data-i18n="nav.category">Loại chi tiêu</span></a>
+      <a href="baocao.html"><span class="i">📊</span> <span data-i18n="nav.report">Báo cáo</span></a>
+      <a href="hoso.html"><span class="i">👤</span> <span data-i18n="nav.profile">Hồ sơ</span></a>
+      <a href="caidat.html"><span class="i">⚙️</span> <span data-i18n="nav.settings">Cài đặt</span></a>
+      <a href="login.html"><span class="i">↪️</span> <span data-i18n="nav.logout">Đăng xuất</span></a>
     </nav>
   </aside>
 
   <main class="main">
     <div class="top">
-      <h1>Tổng quan</h1>
+      <h1 data-i18n="page.heading">Tổng quan</h1>
       <div class="search">
-        <input placeholder="Tìm giao dịch…">
+        <input data-i18n-placeholder="search.placeholder" placeholder="Tìm giao dịch…">
         <span class="icon">🔍</span>
       </div>
     </div>
 
     <section class="kpi">
       <div class="card">
-        <h4>Số dư</h4>
+        <h4 data-i18n="kpi.balance">Số dư</h4>
         <div class="val">36,450,000</div>
-        <div class="sub">Cập nhật hôm nay</div>
+        <div class="sub" data-i18n="kpi.updated_today">Cập nhật hôm nay</div>
       </div>
       <div class="card">
-        <h4>Chi tháng này</h4>
-        <div class="val" style="color:#ef4444">8,320,000</div>
-        <div class="sub"><span class="down">+12%</span> so với tháng trước</div>
+        <h4 data-i18n="kpi.expense_month">Chi tháng này</h4>
+        <div class="val" style="color:var(--red)">8,320,000</div>
+        <div class="sub"><span class="down">+12%</span> <span data-i18n="kpi.vs_last_month">so với tháng trước</span></div>
       </div>
       <div class="card">
-        <h4>Thu tháng này</h4>
-        <div class="val" style="color:#10b981">10,500,000</div>
-        <div class="sub"><span class="up">+4%</span> so với tháng trước</div>
+        <h4 data-i18n="kpi.income_month">Thu tháng này</h4>
+        <div class="val" style="color:var(--green)">10,500,000</div>
+        <div class="sub"><span class="up">+4%</span> <span data-i18n="kpi.vs_last_month">so với tháng trước</span></div>
       </div>
       <div class="card">
-        <h4>Mục tiêu tiết kiệm</h4>
+        <h4 data-i18n="kpi.saving_goal">Mục tiêu tiết kiệm</h4>
         <div class="val">50,000,000</div>
-        <div class="sub">28% hoàn thành</div>
-        <div style="height:8px;background:#eef2f7;border-radius:999px;margin-top:8px;overflow:hidden">
+        <div class="sub"><span data-i18n="kpi.progress">28% hoàn thành</span></div>
+        <div style="height:8px;background:var(--soft-2);border-radius:999px;margin-top:8px;overflow:hidden">
           <div style="width:28%;height:100%;background:#60a5fa"></div>
         </div>
       </div>
@@ -183,11 +225,11 @@
     <section class="content">
       <div class="card chart">
         <div class="head">
-          <b>Xu hướng chi tiêu</b>
-          <select>
-            <option>30 ngày</option>
-            <option>60 ngày</option>
-            <option>90 ngày</option>
+          <b data-i18n="chart.trend">Xu hướng chi tiêu</b>
+          <select data-i18n-select="chart.range">
+            <option value="30" data-i18n="chart.range.30">30 ngày</option>
+            <option value="60" data-i18n="chart.range.60">60 ngày</option>
+            <option value="90" data-i18n="chart.range.90">90 ngày</option>
           </select>
         </div>
         <div class="bars">
@@ -201,62 +243,61 @@
       </div>
 
       <div class="card cat">
-        <b>Theo hạng mục</b>
+        <b data-i18n="cat.by_category">Theo hạng mục</b>
         <ul>
-          <li><div class="l">🍽️ Ăn uống</div><div class="r">2,150,000</div></li>
-          <li><div class="l">🚗 Di chuyển</div><div class="r">1,120,000</div></li>
-          <li><div class="l">🏠 Nhà ở</div><div class="r">3,400,000</div></li>
+          <li><div class="l">🍽️ <span data-i18n="cat.food">Ăn uống</span></div><div class="r">2,150,000</div></li>
+          <li><div class="l">🚗 <span data-i18n="cat.transport">Di chuyển</span></div><div class="r">1,120,000</div></li>
+          <li><div class="l">🏠 <span data-i18n="cat.housing">Nhà ở</span></div><div class="r">3,400,000</div></li>
         </ul>
       </div>
 
       <div class="col-right">
         <div class="card panel">
-          <div class="title">🟠 Sổ chi tiêu của Quỳnh như …</div>
-          <div class="row"><span>Tổng chi tiêu tháng này:</span><input value="10,500,000đ" readonly></div>
-          <div class="row"><span>Tổng chi tiêu hôm nay:</span><input value="280,000đ" readonly></div>
-          <div class="row"><span>Số tiền còn lại:</span><input value="0đ" readonly></div>
-          <div class="row"><input placeholder="Nhập chi tiêu hôm nay" /><button>Thêm</button></div>
+          <div class="title" data-i18n="panel.title">🟠 Sổ chi tiêu của bạn</div>
+          <div class="row"><span data-i18n="panel.total_month">Tổng chi tiêu tháng này:</span><input value="10,500,000đ" readonly></div>
+          <div class="row"><span data-i18n="panel.total_today">Tổng chi tiêu hôm nay:</span><input value="280,000đ" readonly></div>
+          <div class="row"><span data-i18n="panel.remaining">Số tiền còn lại:</span><input value="0đ" readonly></div>
+          <div class="row"><input data-i18n-placeholder="panel.placeholder" placeholder="Nhập chi tiêu hôm nay" /><button data-i18n="panel.add">Thêm</button></div>
         </div>
         <div class="card guide" style="margin-top:16px">
-          <h4>Hướng dẫn:</h4>
-          <p><b>Cú pháp:</b> [chi tiêu] [số tiền]</p>
-          <p><b>Ví dụ:</b> “Cà phê 10000”</p>
+          <h4 data-i18n="guide.title">Hướng dẫn:</h4>
+          <p><b data-i18n="guide.syntax.title">Cú pháp:</b> <span data-i18n="guide.syntax.value">[chi tiêu] [số tiền]</span></p>
+          <p><b data-i18n="guide.example.title">Ví dụ:</b> <span data-i18n="guide.example.value">“Cà phê 10000”</span></p>
         </div>
       </div>
 
       <div class="card table" style="grid-column:1 / span 2">
         <div class="head">
-          <b>Giao dịch gần đây</b>
+          <b data-i18n="table.recent">Giao dịch gần đây</b>
           <div class="right">
-            <input placeholder="Lọc…">
-            <button class="add">Thêm</button>
+            <input data-i18n-placeholder="table.filter" placeholder="Lọc…">
+            <button class="add" data-i18n="table.add">Thêm</button>
           </div>
         </div>
         <table>
-          <thead><tr><th>HẠNG MỤC</th><th>MÔ TẢ</th><th></th></tr></thead>
+          <thead><tr><th data-i18n="table.col.category">HẠNG MỤC</th><th data-i18n="table.col.desc">MÔ TẢ</th><th></th></tr></thead>
           <tbody>
-            <tr><td>Ăn uống</td><td>Bữa trưa</td><td></td></tr>
-            <tr><td>Lương</td><td>Tháng 9</td><td></td></tr>
-            <tr><td>Di chuyển</td><td>Grab</td><td></td></tr>
+            <tr><td data-i18n="cat.food">Ăn uống</td><td data-i18n="table.sample.lunch">Bữa trưa</td><td></td></tr>
+            <tr><td data-i18n="table.sample.salary_cat">Lương</td><td data-i18n="table.sample.salary_desc">Tháng 9</td><td></td></tr>
+            <tr><td data-i18n="cat.transport">Di chuyển</td><td data-i18n="table.sample.grab">Grab</td><td></td></tr>
           </tbody>
         </table>
       </div>
     </section>
   </main>
 
-
   <div id="chatbox" class="chatbox" aria-hidden="true">
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
       <div>
-        <div class="chat-title">Trợ lý thông minh</div>
-        <div class="chat-sub">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div>
+        <div class="chat-title" data-i18n="chat.title">Trợ lý thông minh</div>
+        <div class="chat-sub" data-i18n="chat.subtitle">Xin chào! 👋 Rất vui khi được hỗ trợ bạn</div>
       </div>
     </div>
     <div id="chatBody" class="chat-body"></div>
     <div class="chat-input">
-      <input id="chatInput" type="text" placeholder="Viết tin nhắn…">
-      <button id="sendBtn" title="Gửi">
+      <input id="chatInput" type="text" data-i18n-placeholder="chat.placeholder" placeholder="Viết tin nhắn…">
+      <button id="sendBtn" title="Gửi" aria-label="Gửi">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12L20 4L12 20L11 13L4 12Z" fill="currentColor"/></svg>
       </button>
     </div>
@@ -267,7 +308,111 @@
   </button>
 
 <script>
+  /* ===================== THEME + I18N CORE ===================== */
+  const translations = {
+    vi: {
+      "app.title":"SmartExpense — Tổng quan",
+      "brand.name":"SmartExpense",
+      "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu",
+      "nav.schedule":"Lên lịch chi tiêu","nav.category":"Loại chi tiêu","nav.report":"Báo cáo",
+      "nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
+      "page.heading":"Tổng quan",
+      "search.placeholder":"Tìm giao dịch…",
+      "kpi.balance":"Số dư","kpi.updated_today":"Cập nhật hôm nay","kpi.expense_month":"Chi tháng này",
+      "kpi.income_month":"Thu tháng này","kpi.vs_last_month":"so với tháng trước",
+      "kpi.saving_goal":"Mục tiêu tiết kiệm","kpi.progress":"28% hoàn thành",
+      "chart.trend":"Xu hướng chi tiêu","chart.range.30":"30 ngày","chart.range.60":"60 ngày","chart.range.90":"90 ngày",
+      "cat.by_category":"Theo hạng mục","cat.food":"Ăn uống","cat.transport":"Di chuyển","cat.housing":"Nhà ở",
+      "panel.title":"🟠 Sổ chi tiêu của bạn","panel.total_month":"Tổng chi tiêu tháng này:","panel.total_today":"Tổng chi tiêu hôm nay:",
+      "panel.remaining":"Số tiền còn lại:","panel.placeholder":"Nhập chi tiêu hôm nay","panel.add":"Thêm",
+      "guide.title":"Hướng dẫn:","guide.syntax.title":"Cú pháp:","guide.syntax.value":"[chi tiêu] [số tiền]",
+      "guide.example.title":"Ví dụ:","guide.example.value":"“Cà phê 10000”",
+      "table.recent":"Giao dịch gần đây","table.filter":"Lọc…","table.add":"Thêm",
+      "table.col.category":"HẠNG MỤC","table.col.desc":"MÔ TẢ",
+      "table.sample.lunch":"Bữa trưa","table.sample.salary_cat":"Lương","table.sample.salary_desc":"Tháng 9","table.sample.grab":"Grab",
+      "chat.title":"Trợ lý thông minh","chat.subtitle":"Xin chào! 👋 Rất vui khi được hỗ trợ bạn","chat.placeholder":"Viết tin nhắn…",
+      /* chat dynamic */
+      "chat.greeting":"Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi tạo chi tiêu, xem báo cáo, hoặc hỏi mẹo sử dụng.",
+      "chat.ready":"Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?",
+      "chat.processing":"Đang tạo câu trả lời dựa theo yêu cầu…",
+      "chat.created_next":"Tôi đã tạo thành công chi tiêu tiếp theo của tháng sau. Bạn hãy kiểm tra ở mục Danh sách chi tiêu."
+    },
+    en: {
+      "app.title":"SmartExpense — Overview",
+      "brand.name":"SmartExpense",
+      "nav.overview":"Overview","nav.list":"Expense List","nav.history":"History",
+      "nav.schedule":"Budget planner","nav.category":"Categories","nav.report":"Reports",
+      "nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
+      "page.heading":"Overview",
+      "search.placeholder":"Search transactions…",
+      "kpi.balance":"Balance","kpi.updated_today":"Updated today","kpi.expense_month":"This month’s expenses",
+      "kpi.income_month":"This month’s income","kpi.vs_last_month":"vs last month",
+      "kpi.saving_goal":"Saving goal","kpi.progress":"28% completed",
+      "chart.trend":"Spending trend","chart.range.30":"30 days","chart.range.60":"60 days","chart.range.90":"90 days",
+      "cat.by_category":"By category","cat.food":"Food & drinks","cat.transport":"Transport","cat.housing":"Housing",
+      "panel.title":"🟠 Your expense book","panel.total_month":"Total this month:","panel.total_today":"Total today:",
+      "panel.remaining":"Remaining amount:","panel.placeholder":"Enter today’s expense","panel.add":"Add",
+      "guide.title":"Guide:","guide.syntax.title":"Syntax:","guide.syntax.value":"[item] [amount]",
+      "guide.example.title":"Example:","guide.example.value":"'Coffee 10000'",
+      "table.recent":"Recent transactions","table.filter":"Filter…","table.add":"Add",
+      "table.col.category":"CATEGORY","table.col.desc":"DESCRIPTION",
+      "table.sample.lunch":"Lunch","table.sample.salary_cat":"Salary","table.sample.salary_desc":"Sep","table.sample.grab":"Grab",
+      "chat.title":"Smart assistant","chat.subtitle":"Hi! 👋 Happy to help","chat.placeholder":"Type a message…",
+      /* chat dynamic */
+      "chat.greeting":"I am your SmartExpense assistant. Ask me to add expenses, show reports, or tips.",
+      "chat.ready":"Got it. What should I do next?",
+      "chat.processing":"Preparing an answer…",
+      "chat.created_next":"Created your next month expense entry. Check the Expense List."
+    }
+  };
 
+  function applyTheme(theme){
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }
+
+  function applyLanguage(lang){
+    const dict = translations[lang] || translations.vi;
+    document.querySelectorAll("[data-i18n]").forEach(el=>{
+      const k = el.dataset.i18n;
+      if (dict[k]) el.textContent = dict[k];
+    });
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+      const k = el.dataset.i18nPlaceholder;
+      if (dict[k]) el.placeholder = dict[k];
+    });
+    document.querySelectorAll("option[data-i18n]").forEach(opt=>{
+      const k = opt.dataset.i18n;
+      if (dict[k]) opt.textContent = dict[k];
+    });
+    document.title = dict["app.title"] || document.title;
+    document.documentElement.lang = lang;
+  }
+
+  function getGreeting(lang){
+    const dict = translations[lang] || translations.vi;
+    return dict["chat.greeting"];
+  }
+  function updateGreetingBubble(lang){
+    const g = document.querySelector('.bubble[data-greeting="1"]');
+    if (g) g.textContent = getGreeting(lang);
+  }
+
+  // Initial load from localStorage
+  const theme = localStorage.getItem('theme') || 'light';
+  const lang  = localStorage.getItem('lang')  || 'vi';
+  applyTheme(theme);
+  applyLanguage(lang);
+
+  // Sync from other pages (e.g., caidat.html)
+  window.addEventListener('storage', (e)=>{
+    if (e.key === 'theme' && e.newValue) applyTheme(e.newValue);
+    if (e.key === 'lang'  && e.newValue){
+      applyLanguage(e.newValue);
+      updateGreetingBubble(e.newValue);
+    }
+  });
+
+  /* ===================== SEARCH FILTER + CHATBOX ===================== */
   const filter = document.querySelector('.table .right input');
   const rows = [...document.querySelectorAll('tbody tr')];
   if (filter) {
@@ -277,7 +422,6 @@
     });
   }
 
-  // ===== Chatbox logic (giống trangchu gốc)
   const chatToggle = document.getElementById('chatToggle');
   const chatbox = document.getElementById('chatbox');
   const chatBody = document.getElementById('chatBody');
@@ -285,23 +429,6 @@
   const sendBtn  = document.getElementById('sendBtn');
 
   let greeted = false;
-
-  function openChat() {
-    chatbox.classList.add('open');
-    chatbox.setAttribute('aria-hidden','false');
-    if (!greeted) {
-      botSay('Tôi là trợ lý SmartExpense. Bạn có thể nhờ tôi tạo chi tiêu, xem báo cáo, hoặc hỏi mẹo sử dụng.');
-      greeted = true;
-    }
-    setTimeout(()=> chatInput.focus(), 100);
-  }
-  function closeChat() {
-    chatbox.classList.remove('open');
-    chatbox.setAttribute('aria-hidden','true');
-  }
-  chatToggle.addEventListener('click', ()=>{
-    if (chatbox.classList.contains('open')) closeChat(); else openChat();
-  });
 
   function scrollBottom(){ chatBody.scrollTop = chatBody.scrollHeight; }
 
@@ -332,28 +459,168 @@
 
   function botSay(text, delay=0){
     const t = addTyping();
-    setTimeout(()=>{
-      t.remove();
-      addMsg(text,'bot');
-    }, Math.max(300, delay));
+    setTimeout(()=>{ t.remove(); addMsg(text,'bot'); }, Math.max(300, delay));
   }
+
+  function openChat() {
+    chatbox.classList.add('open');
+    chatbox.setAttribute('aria-hidden','false');
+    if (!greeted) {
+      // greeting bubble that can live-update on language change
+      const typing = addTyping();
+      setTimeout(()=>{
+        typing.remove();
+        const wrap = document.createElement('div');
+        wrap.className = 'msg bot';
+        const avatar = document.createElement('div');
+        avatar.className = 'avatar-s';
+        avatar.textContent = '🐷';
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble';
+        bubble.setAttribute('data-greeting','1');
+        bubble.textContent = getGreeting(localStorage.getItem('lang') || 'vi');
+        wrap.append(avatar, bubble);
+        chatBody.appendChild(wrap);
+        scrollBottom();
+      }, 350);
+      greeted = true;
+    }
+    setTimeout(()=> chatInput.focus(), 100);
+  }
+  function closeChat() {
+    chatbox.classList.remove('open');
+    chatbox.setAttribute('aria-hidden','true');
+  }
+  chatToggle.addEventListener('click', ()=> chatbox.classList.contains('open') ? closeChat() : openChat());
 
   function handleSend(){
     const txt = chatInput.value.trim();
     if (!txt) return;
     addMsg(txt,'user');
     chatInput.value = '';
+
+    const langNow = localStorage.getItem('lang') || 'vi';
+    const dict = translations[langNow] || translations.vi;
     const say = txt.toLowerCase();
-    if (say.includes('tạo') && (say.includes('tháng') || say.includes('thang'))) {
-      botSay('Đang tạo câu trả lời dựa theo yêu cầu…', 900);
-      setTimeout(()=> botSay('Tôi đã tạo thành công chi tiêu tiếp theo của tháng sau. Bạn hãy kiểm tra ở mục Danh sách chi tiêu.', 1200), 1100);
+
+    const isCreateNextMonth =
+      (langNow==='vi' && (say.includes('tạo') && (say.includes('tháng') || say.includes('thang')))) ||
+      (langNow==='en' && (say.includes('create') || say.includes('next month')));
+
+    if (isCreateNextMonth) {
+      botSay(dict["chat.processing"], 900);
+      setTimeout(()=> botSay(dict["chat.created_next"], 1200), 1100);
     } else {
-      botSay('Mình đã nhận được yêu cầu. Bạn muốn mình làm gì tiếp theo?');
+      botSay(dict["chat.ready"]);
     }
   }
-
   sendBtn.addEventListener('click', handleSend);
   chatInput.addEventListener('keydown', (e)=>{ if (e.key==='Enter') handleSend(); });
+  
 </script>
+<script>
+/* ======= SCHEDULE WIDGET + BADGE for trangchu.html ======= */
+(function(){
+  const KEY = 'sp_schedules';
+
+  const load = () => {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); }
+    catch { return []; }
+  };
+  const fmt = n => (+n).toLocaleString('vi-VN') + 'đ';
+  const label = t => t==='daily'?'Hằng ngày':t==='weekly'?'Hằng tuần':t==='monthly'?'Hằng tháng':'Một lần';
+
+  /* ---------- Card ở cột phải ---------- */
+  function ensureScheduleCard() {
+    // tìm đúng cột phải như bố cục hiện tại
+    const rightCol = document.querySelector('.col-right') || document.querySelector('.content > .col-right');
+    if (!rightCol) return null;
+
+    let card = document.getElementById('scheduleCard');
+    if (!card) {
+      card = document.createElement('div');
+      card.className = 'card';
+      card.id = 'scheduleCard';
+      card.style.marginTop = '16px';
+      card.innerHTML = `
+        <div class="panel">
+          <div class="title">📅 Lịch chi tiêu đang bật</div>
+          <div id="sched-content" style="padding:8px 0;color:var(--muted)">Đang tải...</div>
+        </div>`;
+      rightCol.appendChild(card);
+    }
+    return card;
+  }
+
+  function renderScheduleCard() {
+    const card = ensureScheduleCard(); if (!card) return;
+    const el = card.querySelector('#sched-content');
+    const rows = load().filter(r => r.enabled);
+
+    if (!rows.length) {
+      el.innerHTML = `<p style="margin:0;color:var(--muted)">Chưa có lịch nào. Vào <b>Lên lịch chi tiêu</b> để tạo.</p>`;
+      return;
+    }
+
+    const total = rows.reduce((s,r) => s + (+r.amount||0), 0);
+    const items = rows.slice(0,5).map(r => `
+      <div style="display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--soft-2)">
+        <span style="display:flex;align-items:center;gap:6px;color:#475569">
+          🗓️ <b>${r.name}</b> <span style="font-size:12px;color:var(--muted)">(${label(r.type)})</span>
+        </span>
+        <span style="font-weight:800">${fmt(r.amount)}</span>
+      </div>
+    `).join('');
+
+    const more = rows.length>5 ? `<div style="font-size:12px;color:var(--muted);padding-top:6px">+${rows.length-5} lịch khác…</div>` : '';
+    const footer = `<div style="padding-top:8px;font-weight:800">Tổng: ${fmt(total)}</div>`;
+
+    el.innerHTML = items + more + footer;
+  }
+
+  /* ---------- Badge ở sidebar ---------- */
+  function ensureSidebarBadge() {
+    // link “Lên lịch chi tiêu” trong nav
+    const link = [...document.querySelectorAll('.nav a')].find(a =>
+      /Lên lịch chi tiêu|schedule/i.test(a.textContent) || (a.getAttribute('href')||'').includes('lenlich')
+    );
+    if (!link) return;
+
+    let badge = link.querySelector('.sched-badge');
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'sched-badge';
+      badge.style.cssText = `
+        margin-left:auto;min-width:22px;height:22px;border-radius:999px;padding:0 6px;
+        background:#efefef;color:#111;display:inline-grid;place-items:center;font-size:12px;font-weight:800
+      `;
+      // nếu item đang active có nền xanh, đổi badge cho nổi bật
+      if (link.classList.contains('active')) { badge.style.background = '#0b5bd7'; badge.style.color = '#fff'; }
+      link.appendChild(badge);
+    }
+    return badge;
+  }
+
+  function renderSidebarBadge() {
+    const count = load().filter(r => r.enabled).length;
+    const badge = ensureSidebarBadge();
+    if (!badge) return;
+    badge.textContent = count;
+    badge.style.display = count ? 'inline-grid' : 'none';
+  }
+
+  /* ---------- Render + sync ---------- */
+  function renderAll(){
+    renderScheduleCard();
+    renderSidebarBadge();
+  }
+
+  renderAll();
+  window.addEventListener('storage', e => {
+    if (e.key === KEY || e.key === KEY + '_ts') renderAll();
+  });
+})();
+</script>
+
 </body>
 </html>
