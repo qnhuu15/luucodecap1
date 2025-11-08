@@ -3,14 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SmartExpense — Đổi mật khẩu</title>
+<title data-i18n="page.title">SmartExpense — Đổi mật khẩu</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#eaf3f9; --card:#fff; --text:#0f172a; --muted:#64748b;
     --border:#e5e7eb; --blue:#2563eb; --blue-700:#1e49d6; --green:#22c55e; --red:#ef4444;
     --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06); --h:44px;
+    --soft:#f8fafc; --chat-bg:#f4fbff;
   }
+  html.dark{
+    --bg:#0b1220; --card:#0f172a; --text:#e5e7eb; --muted:#9aa4b2;
+    --border:#1f2a44; --blue:#3b82f6; --blue-700:#2762ea; --green:#22c55e; --red:#f87171;
+    --soft:#0e1928; --chat-bg:#071520;
+  }
+
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
@@ -18,69 +25,74 @@
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
+  input,button{font:inherit;color:inherit}
 
-  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
+  /* Sidebar */
+  .sidebar{background:var(--card);border-right:1px solid var(--border);padding:18px 14px}
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
   .brand .logo img{width:100%;height:100%;object-fit:cover}
   .brand b{font-size:18px}
   .nav{display:flex;flex-direction:column;gap:6px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--text);font-weight:700;text-decoration:none}
+  .nav a:hover{background:rgba(37,99,235,.12)}
+  html.dark .nav a:hover{background:rgba(59,130,246,.15)}
   .nav a.active{background:var(--blue);color:#fff}
 
+  /* Main */
   .main{padding:22px 24px 40px}
   .wrap{max-width:980px}
-  .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
   .title{font-size:22px;font-weight:800;margin:0 0 14px}
-  .desc{color:#6b7280;margin:0 0 18px}
+  .desc{color:var(--muted);margin:0 0 18px}
 
   .form{display:grid;gap:14px}
   .row{display:grid;gap:8px}
   label{font-weight:700}
   .req::after{content:" *";color:var(--red)}
-  .input{position:relative;height:var(--h);display:flex;align-items:center;border:1px solid var(--border);border-radius:12px;background:#fff;overflow:hidden}
-  .input input{flex:1;height:100%;border:0;outline:none;background:#fff;padding:0 42px 0 12px;font-size:16px}
-  .toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:8px;border:0;background:#f1f5f9;cursor:pointer}
+  .input{position:relative;height:var(--h);display:flex;align-items:center;border:1px solid var(--border);border-radius:12px;background:var(--card);overflow:hidden}
+  .input input{flex:1;height:100%;border:0;outline:none;background:var(--card);padding:0 84px 0 12px;font-size:16px;color:var(--text)}
+  .toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);width:32px;height:32px;border-radius:8px;border:0;background:var(--soft);cursor:pointer}
+  .copy-btn{position:absolute;right:44px;top:50%;transform:translateY(-50%);height:32px;border-radius:8px;border:0;background:var(--soft);cursor:pointer;padding:0 8px;font-weight:700}
 
   .strength{height:8px;background:#eef2f7;border:1px solid #dbe1ea;border-radius:999px;overflow:hidden}
+  html.dark .strength{background:#102036;border-color:#1f2a44}
   .strength i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#ef4444,#f59e0b,#22c55e)}
 
   .msg{font-size:14px;margin-top:-4px}
   .msg.error{color:var(--red)}
   .msg.ok{color:var(--green)}
+  .caps{font-size:13px;color:#f59e0b;display:none}
+
+  .inline-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .btn-mini{height:32px;border-radius:10px;padding:0 12px;font-weight:800;cursor:pointer;border:1px solid var(--border);background:var(--soft);color:var(--text)}
 
   .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:6px}
   .btn{height:44px;border-radius:12px;padding:0 16px;font-weight:800;cursor:pointer}
   .btn-primary{background:var(--blue);color:#fff;border:0}
-  .btn-primary:hover{background:var(--blue-700)}
-  .btn-ghost{background:#fff;border:1px solid var(--border)}
+  .btn-primary:hover{filter:brightness(.96)}
+  .btn-ghost{background:var(--card);border:1px solid var(--border);color:var(--text)}
 
-  .toast{position:fixed;right:24px;bottom:24px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow);padding:12px 14px;border-radius:12px;display:none;z-index:50}
+  .toast{position:fixed;right:24px;bottom:24px;background:var(--card);color:var(--text);border:1px solid var(--border);box-shadow:var(--shadow);padding:12px 14px;border-radius:12px;display:none;z-index:50}
 
-  .pig-float{
-    position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;
-    background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);
-    z-index:30;border:0;cursor:pointer
-  }
+  /* Chatbox */
+  .pig-float{position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);z-index:30;border:0;cursor:pointer}
   .pig-float img{width:64px;height:64px}
-  .chatbox{
-    position:fixed;right:26px;bottom:112px;width:340px;background:#fff;border:1px solid var(--border);
-    border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;grid-template-rows:56px 1fr 60px;
-  }
+  .chatbox{position:fixed;right:26px;bottom:112px;width:340px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;grid-template-rows:56px 1fr 60px}
   .chatbox.open{display:grid}
   .chat-head{background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;font-weight:800}
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
   .chat-title{line-height:1.2}
   .chat-sub{font-weight:600;opacity:.95}
-  .chat-body{background:#f4fbff;overflow:auto;padding:10px;max-height:380px}
+  .chat-body{background:var(--chat-bg);overflow:auto;padding:10px;max-height:380px}
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
-  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px}
+  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:var(--card);font-size:14px;color:var(--text)}
   .msg.user{justify-content:flex-end}
-  .msg.user .bubble{background:#2563eb;border:none;color:#fff}
+  .msg.user .bubble{background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
-  .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
-  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;outline:none}
-  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
+  .chat-input{background:var(--card);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
+  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;outline:none;background:var(--card);color:var(--text)}
+  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer}
 
   @media (max-width:1060px){
     body{grid-template-columns:1fr}
@@ -93,88 +105,167 @@
 </head>
 <body>
 
+  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="brand">
       <div class="logo"><img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt=""></div>
       <b>SmartExpense</b>
     </div>
     <nav class="nav">
-      <a href="trangchu.html">🏠 Tổng quan</a>
-      <a href="danhsachchitieu.html">🧾 Danh sách chi tiêu</a>
-      <a href="lichsuchitieu.html">🕘 Lịch sử chi tiêu</a>
-      <a href="#">📅 Lên lịch chi tiêu</a>
-      <a href="loaichitieu.html">🏷️ Loại chi tiêu</a>
-      <a href="baocao.html">📊 Báo cáo</a>
-      <a href="hoso.html">👤 Hồ sơ</a>
-      <a href="caidat.html" class="active">⚙️ Cài đặt</a>
-      <a href="login.html">↪️ Đăng xuất</a>
+      <a href="trangchu.html">🏠 <span data-i18n="nav.overview">Tổng quan</span></a>
+      <a href="danhsachchitieu.html">🧾 <span data-i18n="nav.list">Danh sách chi tiêu</span></a>
+      <a href="lichsuchitieu.html">🕘 <span data-i18n="nav.history">Lịch sử chi tiêu</span></a>
+      <a href="#">📅 <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
+      <a href="loaichitieu.html">🏷️ <span data-i18n="nav.types">Loại chi tiêu</span></a>
+      <a href="baocao.html">📊 <span data-i18n="nav.report">Báo cáo</span></a>
+      <a href="hoso.html">👤 <span data-i18n="nav.profile">Hồ sơ</span></a>
+      <a href="caidat.html" class="active">⚙️ <span data-i18n="nav.settings">Cài đặt</span></a>
+      <a href="login.html">↪️ <span data-i18n="nav.logout">Đăng xuất</span></a>
     </nav>
   </aside>
 
+  <!-- Main -->
   <main class="main">
     <div class="wrap">
       <div class="card">
-        <h1 class="title">Đổi mật khẩu</h1>
-        <p class="desc">Vì an toàn, hãy tạo mật khẩu mạnh (tối thiểu 8 ký tự, gồm chữ hoa, chữ thường và số).</p>
+        <h1 class="title" data-i18n="page.h1">Đổi mật khẩu</h1>
+        <p class="desc" data-i18n="page.desc">Vì an toàn, hãy tạo mật khẩu mạnh (tối thiểu 8 ký tự, gồm chữ hoa, chữ thường và số).</p>
 
         <form id="pwForm" class="form" novalidate>
           <div class="row">
-            <label class="req" for="oldPw">Mật khẩu hiện tại</label>
+            <label class="req" for="oldPw" data-i18n="form.current">Mật khẩu hiện tại</label>
             <div class="input">
-              <input id="oldPw" type="password" autocomplete="current-password" required>
-              <button type="button" class="toggle" data-target="oldPw">👁️</button>
+              <input id="oldPw" type="password" autocomplete="current-password" required placeholder="" data-i18n="ph.current">
+              <button type="button" class="toggle" data-target="oldPw" title="Hiện/ẩn">👁️</button>
             </div>
+            <div id="capsOld" class="caps" aria-live="polite"></div>
           </div>
 
           <div class="row">
-            <label class="req" for="newPw">Mật khẩu mới</label>
+            <label class="req" for="newPw" data-i18n="form.new">Mật khẩu mới</label>
             <div class="input">
-              <input id="newPw" type="password" autocomplete="new-password" required>
-              <button type="button" class="toggle" data-target="newPw">👁️</button>
+              <input id="newPw" type="password" autocomplete="new-password" required placeholder="" data-i18n="ph.new">
+              <button type="button" class="copy-btn" id="copyNewBtn" data-i18n="btn.copyPw">Sao chép</button>
+              <button type="button" class="toggle" data-target="newPw" title="Hiện/ẩn">👁️</button>
+            </div>
+            <div class="inline-actions">
+              <button type="button" class="btn-mini" id="genBtn" data-i18n="btn.generate">Tạo mật khẩu mạnh</button>
             </div>
             <div class="strength"><i id="bar"></i></div>
             <div id="ruleMsg" class="msg"></div>
+            <div id="capsNew" class="caps" aria-live="polite"></div>
           </div>
 
           <div class="row">
-            <label class="req" for="confirmPw">Nhập lại mật khẩu mới</label>
+            <label class="req" for="confirmPw" data-i18n="form.confirm">Nhập lại mật khẩu mới</label>
             <div class="input">
-              <input id="confirmPw" type="password" autocomplete="new-password" required>
-              <button type="button" class="toggle" data-target="confirmPw">👁️</button>
+              <input id="confirmPw" type="password" autocomplete="new-password" required placeholder="" data-i18n="ph.confirm">
+              <button type="button" class="toggle" data-target="confirmPw" title="Hiện/ẩn">👁️</button>
             </div>
             <div id="matchMsg" class="msg"></div>
+            <div id="capsConfirm" class="caps" aria-live="polite"></div>
           </div>
 
           <div class="actions">
-            <a class="btn btn-ghost" href="caidat.html">Hủy</a>
-            <button class="btn btn-primary" type="submit">Lưu mật khẩu</button>
+            <a class="btn btn-ghost" href="caidat.html" data-i18n="btn.cancel">Hủy</a>
+            <button class="btn btn-primary" type="submit" data-i18n="btn.save">Lưu mật khẩu</button>
           </div>
         </form>
       </div>
     </div>
   </main>
 
-  <div id="toast" class="toast">✅ Đổi mật khẩu thành công!</div>
+  <div id="toast" class="toast">✅ <span data-i18n="toast.ok">Đổi mật khẩu thành công!</span></div>
 
+  <!-- Chatbox -->
   <div id="chatbox" class="chatbox" aria-hidden="true">
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
       <div>
-        <div class="chat-title">Trợ lý thông minh</div>
-        <div class="chat-sub">Hỗ trợ đổi mật khẩu</div>
+        <div class="chat-title" data-i18n="chat.title">Trợ lý thông minh</div>
+        <div class="chat-sub" data-i18n="chat.sub">Hỗ trợ đổi mật khẩu</div>
       </div>
     </div>
     <div id="chatBody" class="chat-body"></div>
     <div class="chat-input">
-      <input id="chatInput" type="text" placeholder="Viết tin nhắn…">
-      <button id="sendBtn" title="Gửi">➤</button>
+      <input id="chatInput" type="text" placeholder="Viết tin nhắn…" data-i18n="ph.chat">
+      <button id="sendBtn" title="Gửi" aria-label="Gửi" data-i18n="send.title" data-i18n-attr="title,aria-label">➤</button>
     </div>
   </div>
-  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý">
+  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý" data-i18n="chat.open" data-i18n-attr="aria-label">
     <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
   </button>
 
 <script>
+  /* ===== Theme & Language ===== */
+  function getLang(){let l=localStorage.getItem('lang');if(!l){l=(navigator.language||'vi').toLowerCase().startsWith('vi')?'vi':'en';localStorage.setItem('lang',l);}return l;}
+  function setLang(l){localStorage.setItem('lang',l);document.documentElement.setAttribute('lang',l);translatePage();}
+  function getTheme(){return localStorage.getItem('theme')||'light'}
+  function setTheme(t){localStorage.setItem('theme',t);document.documentElement.classList.toggle('dark',t==='dark');}
+
+  const I18N={
+    vi:{ "page.title":"SmartExpense — Đổi mật khẩu","page.h1":"Đổi mật khẩu","page.desc":"Vì an toàn, hãy tạo mật khẩu mạnh (tối thiểu 8 ký tự, gồm chữ hoa, chữ thường và số).",
+      "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu","nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo","nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
+      "form.current":"Mật khẩu hiện tại","form.new":"Mật khẩu mới","form.confirm":"Nhập lại mật khẩu mới",
+      "ph.current":"Nhập mật khẩu hiện tại","ph.new":"Nhập mật khẩu mới","ph.confirm":"Nhập lại mật khẩu mới",
+      "btn.cancel":"Hủy","btn.save":"Lưu mật khẩu",
+      "btn.generate":"Tạo mật khẩu mạnh","btn.copyPw":"Sao chép",
+      "rules":"Yêu cầu: ≥ 8 ký tự, có chữ hoa, chữ thường và số.","match.ok":"Khớp mật khẩu mới.","match.err":"Mật khẩu nhập lại chưa khớp.",
+      "alert.fill":"Vui lòng nhập đủ thông tin.","alert.weak":"Mật khẩu mới chưa đủ mạnh.","alert.mismatch":"Mật khẩu nhập lại chưa khớp.",
+      "toast.ok":"Đổi mật khẩu thành công!","toast.copied":"Đã sao chép mật khẩu mới.","toast.generated":"Đã tạo mật khẩu mạnh & điền vào ô.",
+      "caps.on":"Caps Lock đang bật",
+      "chat.title":"Trợ lý thông minh","chat.sub":"Hỗ trợ đổi mật khẩu","chat.open":"Mở trợ lý",
+      "chat.greet":"Mình có thể hướng dẫn bạn tạo mật khẩu mạnh và lưu thay đổi. Hãy hỏi mình nếu cần!",
+      "ph.chat":"Viết tin nhắn…","send.title":"Gửi",
+      "chat.help.strong":"Mật khẩu mạnh nên có ≥ 12 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt.",
+      "chat.help.match":"Hãy nhập cùng một mật khẩu ở 2 ô “Mật khẩu mới” và “Nhập lại mật khẩu mới”.",
+      "chat.help.ask":"Mình đã nhận được. Bạn muốn mình giúp gì trong bước đổi mật khẩu?" },
+    en:{ "page.title":"SmartExpense — Change password","page.h1":"Change password","page.desc":"For security, use a strong password (min 8 chars, include uppercase, lowercase and numbers).",
+      "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History","nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports","nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
+      "form.current":"Current password","form.new":"New password","form.confirm":"Confirm new password",
+      "ph.current":"Enter current password","ph.new":"Enter new password","ph.confirm":"Re-enter new password",
+      "btn.cancel":"Cancel","btn.save":"Save password",
+      "btn.generate":"Generate strong password","btn.copyPw":"Copy",
+      "rules":"Requirements: ≥ 8 characters, include uppercase, lowercase and numbers.","match.ok":"New passwords match.","match.err":"Passwords do not match.",
+      "alert.fill":"Please fill in all fields.","alert.weak":"New password is not strong enough.","alert.mismatch":"Passwords do not match.",
+      "toast.ok":"Password changed successfully!","toast.copied":"New password copied.","toast.generated":"Strong password generated & filled.",
+      "caps.on":"Caps Lock is on",
+      "chat.title":"Smart assistant","chat.sub":"Password change helper","chat.open":"Open assistant",
+      "chat.greet":"I can help you create a strong password and save the change. Ask me anything!",
+      "ph.chat":"Type a message…","send.title":"Send",
+      "chat.help.strong":"A strong password is ≥ 12 chars with upper/lowercase, numbers, and special characters.",
+      "chat.help.match":"Enter the same password in both “New password” and “Confirm new password”.",
+      "chat.help.ask":"Got it. How can I help with changing your password?" }
+  };
+
+  function t(key){const l=getLang();return (I18N[l]&&I18N[l][key])||key;}
+
+  /* ===== i18n apply (chỉ gọi SAU khi form/chat đã khai báo) ===== */
+  function translatePage(){
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key=el.getAttribute('data-i18n'); const val=t(key);
+      if(el.hasAttribute('data-i18n-attr')){
+        el.getAttribute('data-i18n-attr').split(',').forEach(a=>el.setAttribute(a.trim(), val));
+      }else if(el.tagName==='INPUT' || el.tagName==='TEXTAREA'){
+        if(el.placeholder!==undefined) el.placeholder = val;
+      }else if(el.children.length===0){
+        el.textContent = val;
+      }
+    });
+    const titleEl=document.querySelector('title[data-i18n="page.title"], title');
+    if(titleEl) titleEl.textContent=t('page.title');
+    // Guard để không lỗi khi DOM chưa có
+    if(typeof renderStrength==='function') renderStrength();
+    if(typeof checkMatch==='function') checkMatch();
+  }
+
+  // Sync cross-tab
+  window.addEventListener('storage', (e)=>{
+    if(e.key==='theme' && e.newValue){ setTheme(e.newValue); }
+    if(e.key==='lang'  && e.newValue){ setLang(e.newValue); }
+  });
+
+  /* ===== Form logic ===== */
   document.querySelectorAll('.toggle').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const id = btn.getAttribute('data-target');
@@ -195,40 +286,79 @@
     if(/[a-z]/.test(pw)) s++;
     if(/[A-Z]/.test(pw)) s++;
     if(/\d/.test(pw)) s++;
-    if(/[^A-Za-z0-9]/.test(pw)) s++; 
+    if(/[^A-Za-z0-9]/.test(pw)) s++; // bonus
     return Math.min(s,4);
   }
   function renderStrength(){
-    const s = strength(newPw.value);
+    if(!newPw||!bar||!ruleMsg) return;
+    const s = strength(newPw.value || '');
     const pct = [0,25,50,75,100][s];
     bar.style.width = pct + '%';
-    ruleMsg.textContent = 'Yêu cầu: ≥ 8 ký tự, có chữ hoa, chữ thường và số.';
+    ruleMsg.textContent = t('rules');
     ruleMsg.className = 'msg ' + (s>=3 ? 'ok' : 'error');
   }
   function checkMatch(){
-    if(!confirmPw.value){ matchMsg.textContent=''; return; }
+    if(!confirmPw||!matchMsg) return;
+    if(!confirmPw.value){ matchMsg.textContent=''; matchMsg.className='msg'; return; }
     const same = newPw.value && (newPw.value === confirmPw.value);
-    matchMsg.textContent = same ? 'Khớp mật khẩu mới.' : 'Mật khẩu nhập lại chưa khớp.';
+    matchMsg.textContent = same ? t('match.ok') : t('match.err');
     matchMsg.className = 'msg ' + (same ? 'ok' : 'error');
   }
   newPw.addEventListener('input', ()=>{ renderStrength(); checkMatch(); });
   confirmPw.addEventListener('input', checkMatch);
 
+  function genStrongPassword(len=16){
+    const U='ABCDEFGHJKLMNPQRSTUVWXYZ', L='abcdefghijkmnopqrstuvwxyz', D='23456789', S='!@#$%^&*()-_=+[]{}';
+    function pick(str){ return str[Math.floor(Math.random()*str.length)]; }
+    let pwd = pick(U)+pick(L)+pick(D)+pick(S);
+    const ALL = U+L+D+S;
+    while(pwd.length<len){ pwd += pick(ALL); }
+    return pwd.split('').sort(()=>Math.random()-0.5).join('');
+  }
+  function showToast(msg){ const tEl=document.getElementById('toast'); tEl.textContent='✅ '+msg; tEl.style.display='block'; setTimeout(()=>tEl.style.display='none',1200); }
+
+  document.getElementById('genBtn').addEventListener('click', ()=>{
+    const p = genStrongPassword(16);
+    newPw.value = p;
+    renderStrength(); checkMatch();
+    confirmPw.focus();
+    showToast(t('toast.generated'));
+  });
+
+  document.getElementById('copyNewBtn').addEventListener('click', ()=>{
+    if(!newPw.value){ newPw.focus(); return; }
+    navigator.clipboard.writeText(newPw.value);
+    showToast(t('toast.copied'));
+  });
+
+  // Caps Lock hints
+  function capsHandler(el, hintEl){
+    el.addEventListener('keydown', e=>{
+      const on = e.getModifierState && e.getModifierState('CapsLock');
+      hintEl.textContent = on ? t('caps.on') : '';
+      hintEl.style.display = on ? 'block' : 'none';
+    });
+    el.addEventListener('blur', ()=>{ hintEl.style.display='none'; });
+  }
+  capsHandler(document.getElementById('oldPw'), document.getElementById('capsOld'));
+  capsHandler(newPw, document.getElementById('capsNew'));
+  capsHandler(confirmPw, document.getElementById('capsConfirm'));
 
   document.getElementById('pwForm').addEventListener('submit', (e)=>{
     e.preventDefault();
     const old = document.getElementById('oldPw').value.trim();
     const nw  = newPw.value.trim();
     const cf  = confirmPw.value.trim();
-    if(!old || !nw || !cf){ alert('Vui lòng nhập đủ thông tin.'); return; }
-    if(strength(nw) < 3){ alert('Mật khẩu mới chưa đủ mạnh.'); return; }
-    if(nw !== cf){ alert('Mật khẩu nhập lại chưa khớp.'); return; }
+    if(!old || !nw || !cf){ alert(t('alert.fill')); return; }
+    if(strength(nw) < 3){ alert(t('alert.weak')); return; }
+    if(nw !== cf){ alert(t('alert.mismatch')); return; }
     const toast = document.getElementById('toast');
+    toast.innerHTML = '✅ ' + t('toast.ok');
     toast.style.display = 'block';
     setTimeout(()=>{ toast.style.display='none'; window.location.href='caidat.html'; }, 1200);
   });
 
-  /* Chatbox */
+  /* ===== Chatbox (i18n + theme-sync) ===== */
   const chatToggle=document.getElementById('chatToggle');
   const chatbox=document.getElementById('chatbox');
   const chatBody=document.getElementById('chatBody');
@@ -243,24 +373,39 @@
     if(who==='bot'){wrap.append(av,b);} else {wrap.append(b,av);}
     chatBody.appendChild(wrap); chatBody.scrollTop=chatBody.scrollHeight;
   }
+  function greetText(){return t('chat.greet');}
   function openChat(){
     chatbox.classList.add('open'); chatbox.setAttribute('aria-hidden','false');
-    if(!greeted){ addMsg('Mình có thể hướng dẫn bạn tạo mật khẩu mạnh và lưu thay đổi. Hãy hỏi mình nếu cần!'); greeted=true; }
+    if(!greeted){ addMsg(greetText()); greeted=true; }
     setTimeout(()=>chatInput.focus(),100);
   }
   function closeChat(){ chatbox.classList.remove('open'); chatbox.setAttribute('aria-hidden','true'); }
   chatToggle.addEventListener('click', ()=> chatbox.classList.contains('open') ? closeChat() : openChat());
 
   function handleSend(){
-    const t=chatInput.value.trim(); if(!t) return;
-    addMsg(t,'user'); chatInput.value='';
-    const lower=t.toLowerCase();
-    if(lower.includes('mạnh')) addMsg('Mật khẩu mạnh nên có ≥ 12 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt.');
-    else if(lower.includes('khớp')) addMsg('Hãy nhập cùng một mật khẩu ở 2 ô “Mật khẩu mới” và “Nhập lại mật khẩu mới”.');
-    else addMsg('Mình đã nhận được. Bạn muốn mình giúp gì trong bước đổi mật khẩu?');
+    const txt=chatInput.value.trim(); if(!txt) return;
+    addMsg(txt,'user'); chatInput.value='';
+    const k=txt.toLowerCase();
+    if(k.includes('mạnh')||k.includes('strong')) addMsg(t('chat.help.strong'));
+    else if(k.includes('khớp')||k.includes('match')) addMsg(t('chat.help.match'));
+    else addMsg(t('chat.help.ask'));
   }
   sendBtn.addEventListener('click', handleSend);
   chatInput.addEventListener('keydown', e=>{ if(e.key==='Enter') handleSend(); });
+
+  // Cross-tab sync
+  window.addEventListener('storage', (e)=>{
+    if(e.key==='theme'&&e.newValue){ setTheme(e.newValue); }
+    if(e.key==='lang' &&e.newValue){ setLang(e.newValue); if(greeted){ addMsg(greetText()); } }
+  });
+
+  /* ===== BOOTSTRAP (ĐẶT Ở CUỐI SAU KHI KHAI BÁO HẾT) ===== */
+  (function bootstrap(){
+    setTheme(getTheme());
+    document.documentElement.setAttribute('lang', getLang());
+    translatePage();
+  })();
 </script>
+
 </body>
 </html>

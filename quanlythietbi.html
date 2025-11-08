@@ -3,15 +3,25 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SmartExpense — Quản lý thiết bị</title>
+<title data-i18n="page.title">SmartExpense — Quản lý thiết bị</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#eaf3f9; --card:#fff; --text:#0f172a; --muted:#64748b;
-    --border:#e5e7eb; --blue:#2563eb; --blue-700:#1e49d6; --green:#22c55e;
+    --border:#e5e7eb; --blue:#2563eb; --green:#22c55e;
     --yellow:#f59e0b; --red:#ef4444;
     --radius:14px; --shadow:0 10px 26px rgba(15,23,42,.06);
+    --soft:#f8fafc; --chip:#fff; --chip-hover:rgba(37,99,235,.08);
+    --chat-bg:#f4fbff;
   }
+  html.dark{
+    --bg:#0b1220; --card:#0f172a; --text:#e5e7eb; --muted:#9aa4b2;
+    --border:#1f2a44; --blue:#3b82f6; --green:#22c55e;
+    --yellow:#f59e0b; --red:#f87171;
+    --soft:#0e1928; --chip:#0f172a; --chip-hover:rgba(59,130,246,.15);
+    --chat-bg:#071520;
+  }
+
   *{box-sizing:border-box}
   html,body{height:100%}
   body{
@@ -19,49 +29,51 @@
     font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
     display:grid;grid-template-columns:260px 1fr;min-height:100vh;
   }
+  input,button{font:inherit;color:inherit}
 
-  /* ===== Sidebar (đồng bộ) ===== */
-  .sidebar{background:#fff;border-right:1px solid var(--border);padding:18px 14px}
+  /* ===== Sidebar ===== */
+  .sidebar{background:var(--card);border-right:1px solid var(--border);padding:18px 14px}
   .brand{display:flex;align-items:center;gap:12px;margin-bottom:10px}
   .brand .logo{width:40px;height:40px;border-radius:10px;overflow:hidden;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow)}
   .brand .logo img{width:100%;height:100%;object-fit:cover}
   .brand b{font-size:18px}
   .nav{display:flex;flex-direction:column;gap:6px}
-  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:#111827;font-weight:700;text-decoration:none}
+  .nav a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;color:var(--text);font-weight:700;text-decoration:none}
+  .nav a:hover{background:var(--chip-hover)}
   .nav a.active{background:var(--blue);color:#fff}
 
   /* ===== Main ===== */
   .main{padding:22px 24px 40px}
-  .wrap{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:18px;max-width:1200px}
+  .wrap{background:var(--card);border:1px solid var(--border);border-radius:18px;box-shadow:var(--shadow);padding:18px;max-width:1200px}
   .header{display:flex;align-items:center;gap:12px;justify-content:space-between}
   .title{font-size:24px;font-weight:800;margin:0}
-  .tools{display:flex;gap:10px;flex-wrap:wrap}
-  .chip{height:34px;border-radius:999px;border:1px solid var(--border);background:#fff;font-weight:800;padding:0 12px;cursor:pointer}
-  .chip.active{background:#0f172a;color:#fff;border-color:#0f172a}
+  .tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .chip{height:34px;border-radius:999px;border:1px solid var(--border);background:var(--chip);font-weight:800;padding:0 12px;cursor:pointer;color:var(--text)}
+  .chip.active{background:var(--text);color:var(--card);border-color:var(--text)}
   .search{display:flex;gap:8px}
-  .input{height:38px;border:1px solid var(--border);border-radius:999px;background:#f8fafc;display:flex;align-items:center;padding:0 12px}
-  .input input{border:0;outline:none;background:transparent;height:100%}
+  .input{height:38px;border:1px solid var(--border);border-radius:999px;background:var(--soft);display:flex;align-items:center;padding:0 12px}
+  .input input{border:0;outline:none;background:transparent;height:100%;color:var(--text)}
 
   .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px;margin-top:12px}
 
   /* List */
   .bar{display:flex;gap:10px;align-items:center;margin:6px 0}
   .btn{height:38px;border-radius:10px;padding:0 12px;font-weight:800;cursor:pointer}
-  .btn-ghost{background:#fff;border:1px solid var(--border)}
+  .btn-ghost{background:var(--card);border:1px solid var(--border);color:var(--text)}
   .btn-primary{background:var(--blue);color:#fff;border:0}
-  .btn-danger{background:#fff;border:1px solid #fecaca;color:#b91c1c}
-  .btn-soft{background:#f1f5f9;border:1px solid #e2e8f0}
-  .count{color:#94a3b8;font-size:14px;margin-left:auto}
+  .btn-danger{background:var(--card);border:1px solid #fecaca;color:#991b1b}
+  .btn-soft{background:var(--soft);border:1px solid var(--border);color:var(--text)}
+  .count{color:var(--muted);font-size:14px;margin-left:auto}
 
   .list{display:grid;gap:10px}
   .row{
     display:grid;grid-template-columns:28px 1fr 120px 80px 120px;gap:10px;
-    align-items:center;border:1px solid #e6ebf2;background:#fff;border-radius:12px;padding:10px;
+    align-items:center;border:1px solid var(--border);background:var(--card);border-radius:12px;padding:10px;
   }
   .row.active{outline:2px solid #9aa5b1}
   .dev{font-weight:800}
-  .sub{color:#6b7280}
-  .time{text-align:right;color:#6b7280}
+  .sub{color:var(--muted)}
+  .time{text-align:right;color:var(--muted)}
   .badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:999px;padding:2px 8px;font-size:12px}
   .badge.ok{background:#ecfdf5;border-color:#bbf7d0;color:#166534}
   .badge.blocked{background:#fff1f2;border-color:#fecdd3;color:#b91c1c}
@@ -69,48 +81,42 @@
   .badge.this{background:#f5f3ff;border-color:#ddd6fe;color:#6d28d9}
 
   /* Detail panel */
-  .panel{border-left:2px solid #e5e7eb;padding-left:12px}
+  .panel{border-left:2px solid var(--border);padding-left:12px}
   .panel h3{margin:4px 0 10px;font-size:18px;font-weight:800}
   .device-head{display:grid;grid-template-columns:64px 1fr;gap:10px;align-items:center}
   .avatar{width:64px;height:64px;border-radius:16px;background:#fff2e5;display:grid;place-items:center;font-size:32px}
   .kv{display:grid;grid-template-columns:140px 1fr;gap:6px;font-size:14px;margin:6px 0}
   .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
-  .hint{color:#94a3b8;font-size:13px;margin-top:6px}
-  .sessions{margin-top:12px;border-top:1px solid #eef2f7;padding-top:10px}
-  .sessions .srow{display:grid;grid-template-columns:1fr 120px 120px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed #eef2f7}
+  .hint{color:var(--muted);font-size:13px;margin-top:6px}
+  .sessions{margin-top:12px;border-top:1px solid var(--border);padding-top:10px}
+  .sessions .srow{display:grid;grid-template-columns:1fr 120px 120px;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed var(--border)}
   .sessions .srow:last-child{border-bottom:0}
 
-  /* Chatbox (đồng bộ) */
-  .pig-float{
-    position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;
-    background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);
-    z-index:30;border:0;cursor:pointer
-  }
+  /* Chatbox */
+  .pig-float{position:fixed;right:26px;bottom:26px;width:76px;height:76px;border-radius:18px;background:#ffe8e0;display:grid;place-items:center;box-shadow:var(--shadow);z-index:30;border:0;cursor:pointer}
   .pig-float img{width:64px;height:64px}
-  .chatbox{
-    position:fixed;right:26px;bottom:112px;width:340px;background:#fff;border:1px solid var(--border);
-    border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;grid-template-rows:56px 1fr 60px;
-  }
+  .chatbox{position:fixed;right:26px;bottom:112px;width:340px;background:var(--card);border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;display:none;z-index:40;grid-template-rows:56px 1fr 60px}
   .chatbox.open{display:grid}
   .chat-head{background:#1da1c9;color:#fff;display:flex;align-items:center;gap:10px;padding:10px 12px;font-weight:800}
   .chat-head img{width:28px;height:28px;border-radius:6px;background:#ffe8e0}
   .chat-title{line-height:1.2}
-  .chat-body{background:#f4fbff;overflow:auto;padding:10px;max-height:380px}
+  .chat-body{background:var(--chat-bg);overflow:auto;padding:10px;max-height:380px}
   .msg{display:flex;align-items:flex-end;margin:8px 0;gap:8px}
-  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:#fff;font-size:14px}
+  .bubble{max-width:78%;padding:10px 12px;border-radius:14px;border:1px solid var(--border);background:var(--card);font-size:14px;color:var(--text)}
   .msg.user{justify-content:flex-end}
-  .msg.user .bubble{background:#2563eb;border:none;color:#fff}
+  .msg.user .bubble{background:var(--blue);border:none;color:#fff}
   .avatar-s{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ffe8e0;flex:0 0 26px;font-size:14px}
-  .chat-input{background:#fff;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
-  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;outline:none}
-  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:#2563eb;color:#fff;display:grid;place-items:center;cursor:pointer}
+  .chat-input{background:var(--card);border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;padding:8px}
+  #chatInput{flex:1;height:40px;border:1px solid var(--border);border-radius:999px;padding:0 12px;outline:none;background:var(--card);color:var(--text)}
+  #chatInput:focus{box-shadow:none;border-color:var(--border)}
+  #sendBtn{width:38px;height:38px;border-radius:999px;border:0;background:var(--blue);color:#fff;display:grid;place-items:center;cursor:pointer}
 
   @media (max-width:1100px){
     body{grid-template-columns:1fr}
     .sidebar{position:sticky;top:0;z-index:20}
     .wrap{max-width:none}
     .grid{grid-template-columns:1fr}
-    .panel{border-left:0;border-top:2px solid #e5e7eb;padding-left:0;padding-top:12px}
+    .panel{border-left:0;border-top:2px solid var(--border);padding-left:0;padding-top:12px}
     .chatbox{right:16px;bottom:96px;width:min(92vw,360px)}
     .pig-float{right:16px}
   }
@@ -125,15 +131,15 @@
       <b>SmartExpense</b>
     </div>
     <nav class="nav">
-      <a href="trangchu.html">🏠 Tổng quan</a>
-      <a href="danhsachchitieu.html">🧾 Danh sách chi tiêu</a>
-      <a href="lichsuchitieu.html">🕘 Lịch sử chi tiêu</a>
-      <a href="lenlichchitieu.html">📅 Lên lịch chi tiêu</a>
-      <a href="loaichitieu.html">🏷️ Loại chi tiêu</a>
-      <a href="baocao.html">📊 Báo cáo</a>
-      <a href="hoso.html">👤 Hồ sơ</a>
-      <a href="caidat.html" class="active">⚙️ Cài đặt</a>
-      <a href="login.html">↪️ Đăng xuất</a>
+      <a href="trangchu.html">🏠 <span data-i18n="nav.overview">Tổng quan</span></a>
+      <a href="danhsachchitieu.html">🧾 <span data-i18n="nav.list">Danh sách chi tiêu</span></a>
+      <a href="lichsuchitieu.html">🕘 <span data-i18n="nav.history">Lịch sử chi tiêu</span></a>
+      <a href="lenlichchitieu.html">📅 <span data-i18n="nav.schedule">Lên lịch chi tiêu</span></a>
+      <a href="loaichitieu.html">🏷️ <span data-i18n="nav.types">Loại chi tiêu</span></a>
+      <a href="baocao.html">📊 <span data-i18n="nav.report">Báo cáo</span></a>
+      <a href="hoso.html">👤 <span data-i18n="nav.profile">Hồ sơ</span></a>
+      <a href="caidat.html" class="active">⚙️ <span data-i18n="nav.settings">Cài đặt</span></a>
+      <a href="login.html">↪️ <span data-i18n="nav.logout">Đăng xuất</span></a>
     </nav>
   </aside>
 
@@ -141,14 +147,14 @@
   <main class="main">
     <div class="wrap">
       <div class="header">
-        <h1 class="title">Quản lý thiết bị</h1>
+        <h1 class="title" data-i18n="page.h1">Quản lý thiết bị</h1>
         <div class="tools">
-          <button class="chip active" data-filter="all">Tất cả</button>
-          <button class="chip" data-filter="trusted">Tin cậy</button>
-          <button class="chip" data-filter="active">Đang hoạt động</button>
-          <button class="chip" data-filter="blocked">Bị chặn</button>
+          <button class="chip active" data-filter="all" data-i18n="filter.all">Tất cả</button>
+          <button class="chip" data-filter="trusted" data-i18n="filter.trusted">Tin cậy</button>
+          <button class="chip" data-filter="active" data-i18n="filter.active">Đang hoạt động</button>
+          <button class="chip" data-filter="blocked" data-i18n="filter.blocked">Bị chặn</button>
           <div class="search">
-            <div class="input"><input id="q" placeholder="Tìm theo tên, hệ điều hành, IP…"></div>
+            <div class="input"><input id="q" placeholder="Tìm theo tên, hệ điều hành, IP…" data-i18n="ph.search"></div>
           </div>
         </div>
       </div>
@@ -157,10 +163,10 @@
         <!-- LEFT -->
         <section>
           <div class="bar">
-            <button id="logoutSelected" class="btn btn-danger" disabled>Đăng xuất khỏi thiết bị</button>
-            <button id="trustSelected" class="btn btn-soft" disabled>Đặt tin cậy</button>
-            <button id="blockSelected" class="btn btn-ghost" disabled>Chặn</button>
-            <button id="exportCsv" class="btn btn-soft">Xuất CSV</button>
+            <button id="logoutSelected" class="btn btn-danger" disabled data-i18n="bulk.logout">Đăng xuất khỏi thiết bị</button>
+            <button id="trustSelected" class="btn btn-soft" disabled data-i18n="bulk.trust">Đặt tin cậy</button>
+            <button id="blockSelected" class="btn btn-ghost" disabled data-i18n="bulk.block">Chặn</button>
+            <button id="exportCsv" class="btn btn-soft" data-i18n="bulk.export">Xuất CSV</button>
             <div class="count" id="countLabel"></div>
           </div>
 
@@ -169,9 +175,9 @@
 
         <!-- RIGHT -->
         <aside class="panel">
-          <h3>Chi tiết thiết bị</h3>
+          <h3 data-i18n="detail.title">Chi tiết thiết bị</h3>
           <div id="detail">
-            <div class="sub">Chọn một thiết bị ở danh sách bên trái để xem chi tiết.</div>
+            <div class="sub" data-i18n="detail.empty">Chọn một thiết bị ở danh sách bên trái để xem chi tiết.</div>
           </div>
         </aside>
       </div>
@@ -183,21 +189,115 @@
     <div class="chat-head">
       <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
       <div>
-        <div class="chat-title">Trợ lý thông minh</div>
-        <div style="font-size:12px;opacity:.95">Quản lý thiết bị & phiên đăng nhập</div>
+        <div class="chat-title" data-i18n="chat.title">Trợ lý thông minh</div>
+        <div style="font-size:12px;opacity:.95" data-i18n="chat.sub">Quản lý thiết bị & phiên đăng nhập</div>
       </div>
     </div>
     <div id="chatBody" class="chat-body"></div>
     <div class="chat-input">
-      <input id="chatInput" type="text" placeholder="Viết tin nhắn…">
-      <button id="sendBtn" title="Gửi">➤</button>
+      <input id="chatInput" type="text" placeholder="Viết tin nhắn…" data-i18n="ph.chat">
+      <button id="sendBtn" title="Gửi" aria-label="Gửi" data-i18n="send.title" data-i18n-attr="title,aria-label">➤</button>
     </div>
   </div>
-  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý">
+  <button id="chatToggle" class="pig-float" aria-label="Mở trợ lý" data-i18n="chat.open" data-i18n-attr="aria-label">
     <img src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="">
   </button>
 
 <script>
+  /* ===== Theme & Language ===== */
+  function getLang(){let l=localStorage.getItem('lang');if(!l){l=(navigator.language||'vi').toLowerCase().startsWith('vi')?'vi':'en';localStorage.setItem('lang',l);}return l;}
+  function setLang(l){localStorage.setItem('lang',l);document.documentElement.setAttribute('lang',l);translatePage();render(); if(currentId){renderDetail(DEVICES.find(x=>x.id===currentId));}}
+  function getTheme(){return localStorage.getItem('theme')||'light'}
+  function setTheme(t){localStorage.setItem('theme',t);document.documentElement.classList.toggle('dark',t==='dark');}
+
+  const I18N={
+    vi:{
+      "page.title":"SmartExpense — Quản lý thiết bị","page.h1":"Quản lý thiết bị",
+      "nav.overview":"Tổng quan","nav.list":"Danh sách chi tiêu","nav.history":"Lịch sử chi tiêu","nav.schedule":"Lên lịch chi tiêu","nav.types":"Loại chi tiêu","nav.report":"Báo cáo","nav.profile":"Hồ sơ","nav.settings":"Cài đặt","nav.logout":"Đăng xuất",
+      "filter.all":"Tất cả","filter.trusted":"Tin cậy","filter.active":"Đang hoạt động","filter.blocked":"Bị chặn",
+      "ph.search":"Tìm theo tên, hệ điều hành, IP…",
+      "bulk.logout":"Đăng xuất khỏi thiết bị","bulk.trust":"Đặt tin cậy","bulk.block":"Chặn","bulk.export":"Xuất CSV",
+      "detail.title":"Chi tiết thiết bị","detail.empty":"Chọn một thiết bị ở danh sách bên trái để xem chi tiết.",
+      "badge.sessions":"{n} phiên","badge.this":"Thiết bị này","badge.trusted":"Tin cậy","badge.blocked":"Bị chặn",
+      "kv.status":"Trạng thái","kv.fp":"Fingerprint","kv.loc":"Vị trí","kv.ip":"IP hiện tại","kv.last":"Hoạt động gần nhất",
+      "btn.logoutAll":"Đăng xuất mọi phiên","btn.block":"Chặn thiết bị","btn.unblock":"Bỏ chặn","btn.trust":"Đặt tin cậy","btn.untrust":"Bỏ tin cậy","btn.rename":"Đổi tên","btn.copyId":"Sao chép ID",
+      "sessions.title":"Phiên hoạt động","sessions.prev":"Trước đó",
+      "hint":"Mẹo: Hãy chặn thiết bị lạ, đặt tin cậy cho thiết bị cá nhân, và bật xác thực hai lớp.",
+      "count.devices":"{n} thiết bị",
+      "alert.logoutMany":"Đã gửi yêu cầu đăng xuất {n} thiết bị (demo).",
+      "alert.trustMany":"Đã đặt tin cậy (demo).","alert.blockMany":"Đã chặn thiết bị (demo).",
+      "alert.enterPhone":"Nhập số điện thoại trước.",
+      "prompt.rename":"Tên mới cho thiết bị",
+      "alert.copiedFp":"Đã sao chép Fingerprint",
+      "chat.title":"Trợ lý thông minh","chat.sub":"Quản lý thiết bị & phiên đăng nhập","chat.open":"Mở trợ lý",
+      "chat.greet":"Chào bạn! Mình có thể giúp chặn/đặt tin cậy thiết bị, đăng xuất phiên từ xa và xuất CSV.",
+      "ph.chat":"Viết tin nhắn…","send.title":"Gửi",
+      "chat.help.block":"Chọn thiết bị rồi bấm “Chặn” (hoặc trong chi tiết bấm “Chặn thiết bị”).",
+      "chat.help.trust":"Chọn thiết bị → “Đặt tin cậy”, hoặc bật trong khung chi tiết.",
+      "chat.help.logout":"Dùng “Đăng xuất khỏi thiết bị” để kết thúc các phiên đang mở.",
+      "chat.help.csv":"Bấm “Xuất CSV” ở thanh công cụ để tải danh sách thiết bị.",
+      "chat.help.ask":"Bạn muốn thao tác gì với thiết bị?"
+    },
+    en:{
+      "page.title":"SmartExpense — Device management","page.h1":"Device management",
+      "nav.overview":"Overview","nav.list":"Expense list","nav.history":"History","nav.schedule":"Budget planner","nav.types":"Categories","nav.report":"Reports","nav.profile":"Profile","nav.settings":"Settings","nav.logout":"Log out",
+      "filter.all":"All","filter.trusted":"Trusted","filter.active":"Active","filter.blocked":"Blocked",
+      "ph.search":"Search by name, OS, IP…",
+      "bulk.logout":"Log out from devices","bulk.trust":"Mark trusted","bulk.block":"Block","bulk.export":"Export CSV",
+      "detail.title":"Device details","detail.empty":"Select a device from the list to view details.",
+      "badge.sessions":"{n} sessions","badge.this":"This device","badge.trusted":"Trusted","badge.blocked":"Blocked",
+      "kv.status":"Status","kv.fp":"Fingerprint","kv.loc":"Location","kv.ip":"Current IP","kv.last":"Last activity",
+      "btn.logoutAll":"Log out all sessions","btn.block":"Block device","btn.unblock":"Unblock","btn.trust":"Mark trusted","btn.untrust":"Untrust","btn.rename":"Rename","btn.copyId":"Copy ID",
+      "sessions.title":"Active sessions","sessions.prev":"Previous",
+      "hint":"Tip: Block unfamiliar devices, mark your own devices as trusted, and enable 2FA.",
+      "count.devices":"{n} devices",
+      "alert.logoutMany":"Requested logout for {n} device(s) (demo).",
+      "alert.trustMany":"Trusted set (demo).","alert.blockMany":"Device(s) blocked (demo).",
+      "alert.enterPhone":"Enter phone first.",
+      "prompt.rename":"New device name",
+      "alert.copiedFp":"Fingerprint copied",
+      "chat.title":"Smart assistant","chat.sub":"Device & session helper","chat.open":"Open assistant",
+      "chat.greet":"Hi! I can help block/trust devices, log out sessions remotely, and export CSV.",
+      "ph.chat":"Type a message…","send.title":"Send",
+      "chat.help.block":"Select a device then click “Block” (or “Block device” in the details panel).",
+      "chat.help.trust":"Select a device → “Mark trusted”, or toggle in the details panel.",
+      "chat.help.logout":"Use “Log out from devices” to terminate active sessions.",
+      "chat.help.csv":"Click “Export CSV” in the toolbar to download the list.",
+      "chat.help.ask":"What would you like to do with a device?"
+    }
+  };
+
+  function t(key, vars={}){
+    const l=getLang();
+    let s=(I18N[l]&&I18N[l][key])||key;
+    Object.entries(vars).forEach(([k,v])=>{ s=s.replace(new RegExp(`\\{${k}\\}`,'g'), v); });
+    return s;
+  }
+
+  // Chỉ dịch thuộc tính nếu có data-i18n-attr, không ghi đè icon/ảnh
+  function translatePage(){
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key=el.getAttribute('data-i18n');
+      const val=t(key);
+      if(el.hasAttribute('data-i18n-attr')){
+        el.getAttribute('data-i18n-attr').split(',').forEach(a=>el.setAttribute(a.trim(), val));
+      }else if(el.tagName==='INPUT' || el.tagName==='TEXTAREA'){
+        el.placeholder = val;
+      }else if(el.children.length===0){
+        el.textContent = val;
+      }
+    });
+    const titleEl=document.querySelector('title[data-i18n="page.title"], title');
+    if(titleEl) titleEl.textContent=t('page.title');
+  }
+
+  // Bootstrap + lắng nghe cross-tab
+  (function(){ setTheme(getTheme()); document.documentElement.setAttribute('lang',getLang()); translatePage(); })();
+  window.addEventListener('storage', (e)=>{
+    if(e.key==='theme' && e.newValue){ setTheme(e.newValue); }
+    if(e.key==='lang'  && e.newValue){ setLang(e.newValue); }
+  });
+
   /* ===== Demo data ===== */
   const DEVICES = [
     {id:1, name:'iPhone 15',         platform:'iOS',      browser:'Safari',  city:'Hà Nội',       country:'VN', ip:'113.23.40.17', last:'Hôm nay, 09:10', sessions:2, trusted:false, blocked:false, current:false, emoji:'📱', fp:'DF-AB12-9C31'},
@@ -234,17 +334,17 @@
       row.className='row'+(currentId===d.id?' active':'');
       row.dataset.id=d.id;
       row.innerHTML=`
-        <input type="checkbox">
+        <input type="checkbox" aria-label="${d.name}">
         <div>
           <div class="dev">${d.emoji} ${d.name} — ${d.platform} · ${d.browser}</div>
           <div class="sub">${d.city}, ${d.country} — IP ${d.ip}</div>
         </div>
-        <div><span class="badge ${d.sessions>0?'active':''}">${d.sessions} phiên</span></div>
+        <div><span class="badge ${d.sessions>0?'active':''}">${t('badge.sessions',{n:d.sessions})}</span></div>
         <div class="time">${d.last}</div>
         <div style="display:flex;gap:6px;justify-content:flex-end">
-          ${d.current?'<span class="badge this">Thiết bị này</span>':''}
-          ${d.trusted?'<span class="badge ok">Tin cậy</span>':''}
-          ${d.blocked?'<span class="badge blocked">Bị chặn</span>':''}
+          ${d.current?`<span class="badge this">${t('badge.this')}</span>`:''}
+          ${d.trusted?`<span class="badge ok">${t('badge.trusted')}</span>`:''}
+          ${d.blocked?`<span class="badge blocked">${t('badge.blocked')}</span>`:''}
         </div>
       `;
       const cb=row.querySelector('input[type=checkbox]');
@@ -254,11 +354,11 @@
       list.appendChild(row);
     });
 
-    countLabel.textContent=`${rows.length} thiết bị`;
+    countLabel.textContent=t('count.devices',{n:rows.length});
     updateBulk();
 
     if(rows.length && !currentId){ currentId=rows[0].id; renderDetail(rows[0]); }
-    if(!rows.length){ document.getElementById('detail').innerHTML='<div class="sub">Không có thiết bị.</div>'; }
+    if(!rows.length){ document.getElementById('detail').innerHTML=`<div class="sub">${t('detail.empty')}</div>`; }
   }
 
   function renderDetail(d){
@@ -271,45 +371,45 @@
         </div>
       </div>
 
-      <div class="kv"><div>Trạng thái</div>
+      <div class="kv"><div>${t('kv.status')}</div>
         <div>
-          ${d.current?'<span class="badge this">Thiết bị này</span> ':''}
-          ${d.trusted?'<span class="badge ok">Tin cậy</span> ':''}
-          ${d.blocked?'<span class="badge blocked">Bị chặn</span>':''}
+          ${d.current?`<span class="badge this">${t('badge.this')}</span> `:''}
+          ${d.trusted?`<span class="badge ok">${t('badge.trusted')}</span> `:''}
+          ${d.blocked?`<span class="badge blocked">${t('badge.blocked')}</span>`:''}
         </div>
       </div>
-      <div class="kv"><div>Fingerprint</div><div class="mono">${d.fp}</div></div>
-      <div class="kv"><div>Vị trí</div><div>${d.city}, ${d.country} (ước tính)</div></div>
-      <div class="kv"><div>IP hiện tại</div><div>${d.ip}</div></div>
-      <div class="kv"><div>Hoạt động gần nhất</div><div>${d.last}</div></div>
+      <div class="kv"><div>${t('kv.fp')}</div><div class="mono">${d.fp}</div></div>
+      <div class="kv"><div>${t('kv.loc')}</div><div>${d.city}, ${d.country}</div></div>
+      <div class="kv"><div>${t('kv.ip')}</div><div>${d.ip}</div></div>
+      <div class="kv"><div>${t('kv.last')}</div><div>${d.last}</div></div>
 
       <div class="actions">
-        <button class="btn btn-primary" id="logoutAll">Đăng xuất mọi phiên</button>
-        <button class="btn ${d.blocked?'btn-soft':'btn-ghost'}" id="toggleBlock">${d.blocked?'Bỏ chặn':'Chặn thiết bị'}</button>
-        <button class="btn btn-soft" id="toggleTrust">${d.trusted?'Bỏ tin cậy':'Đặt tin cậy'}</button>
-        <button class="btn btn-ghost" id="renameDev">Đổi tên</button>
-        <button class="btn btn-soft" id="copyId">Sao chép ID</button>
+        <button class="btn btn-primary" id="logoutAll">${t('btn.logoutAll')}</button>
+        <button class="btn ${d.blocked?'btn-soft':'btn-ghost'}" id="toggleBlock">${d.blocked?t('btn.unblock'):t('btn.block')}</button>
+        <button class="btn btn-soft" id="toggleTrust">${d.trusted?t('btn.untrust'):t('btn.trust')}</button>
+        <button class="btn btn-ghost" id="renameDev">${t('btn.rename')}</button>
+        <button class="btn btn-soft" id="copyId">${t('btn.copyId')}</button>
       </div>
 
       <div class="sessions">
-        <div style="font-weight:800;margin-bottom:6px">Phiên hoạt động</div>
+        <div style="font-weight:800;margin-bottom:6px">${t('sessions.title')}</div>
         ${Array.from({length:Math.max(1,d.sessions)}).map((_,i)=>`
           <div class="srow">
             <div>${d.browser} · ${d.platform}</div>
             <div class="sub">${d.city}, ${d.country}</div>
-            <div class="time">${i===0?d.last:'Trước đó'}</div>
+            <div class="time">${i===0?d.last:t('sessions.prev')}</div>
           </div>
         `).join('')}
       </div>
 
-      <div class="hint">Mẹo: Hãy chặn thiết bị lạ, đặt tin cậy cho thiết bị cá nhân, và bật xác thực hai lớp.</div>
+      <div class="hint">${t('hint')}</div>
     `;
 
-    document.getElementById('logoutAll').onclick = ()=>{ alert('Đã gửi yêu cầu đăng xuất mọi phiên của thiết bị (demo).'); };
-    document.getElementById('toggleBlock').onclick = ()=>{ d.blocked=!d.blocked; alert((d.blocked?'Đã chặn: ':'Đã bỏ chặn: ')+d.name+' (demo)'); render(); };
-    document.getElementById('toggleTrust').onclick = ()=>{ d.trusted=!d.trusted; alert((d.trusted?'Đã đặt tin cậy: ':'Đã bỏ tin cậy: ')+d.name+' (demo)'); render(); };
-    document.getElementById('renameDev').onclick = ()=>{ const nn=prompt('Tên mới cho thiết bị', d.name)||d.name; d.name=nn; render(); };
-    document.getElementById('copyId').onclick = ()=>{ navigator.clipboard.writeText(d.fp); alert('Đã sao chép Fingerprint'); };
+    document.getElementById('logoutAll').onclick = ()=>{ alert(t('alert.logoutMany',{n:d.sessions||0})); };
+    document.getElementById('toggleBlock').onclick = ()=>{ d.blocked=!d.blocked; render(); };
+    document.getElementById('toggleTrust').onclick = ()=>{ d.trusted=!d.trusted; render(); };
+    document.getElementById('renameDev').onclick = ()=>{ const nn=prompt(t('prompt.rename'), d.name)||d.name; d.name=nn; render(); };
+    document.getElementById('copyId').onclick = ()=>{ navigator.clipboard.writeText(d.fp); alert(t('alert.copiedFp')); };
   }
 
   function updateBulk(){
@@ -320,9 +420,9 @@
   }
 
   // Bulk handlers
-  document.getElementById('logoutSelected').onclick = ()=>{ alert('Đã gửi yêu cầu đăng xuất '+selected.size+' thiết bị (demo).'); selected.clear(); render(); };
-  document.getElementById('trustSelected').onclick = ()=>{ DEVICES.forEach(d=>{ if(selected.has(d.id)) d.trusted=true; }); alert('Đã đặt tin cậy (demo).'); selected.clear(); render(); };
-  document.getElementById('blockSelected').onclick = ()=>{ DEVICES.forEach(d=>{ if(selected.has(d.id)) d.blocked=true; }); alert('Đã chặn thiết bị (demo).'); selected.clear(); render(); };
+  document.getElementById('logoutSelected').onclick = ()=>{ alert(t('alert.logoutMany',{n:selected.size})); selected.clear(); render(); };
+  document.getElementById('trustSelected').onclick = ()=>{ DEVICES.forEach(d=>{ if(selected.has(d.id)) d.trusted=true; }); alert(t('alert.trustMany')); selected.clear(); render(); };
+  document.getElementById('blockSelected').onclick = ()=>{ DEVICES.forEach(d=>{ if(selected.has(d.id)) d.blocked=true; }); alert(t('alert.blockMany')); selected.clear(); render(); };
 
   // Export CSV
   document.getElementById('exportCsv').onclick = ()=>{
@@ -333,15 +433,14 @@
   };
 
   // Filters & search
-  filters.forEach(b=>{
-    b.onclick=()=>{ filters.forEach(x=>x.classList.remove('active')); b.classList.add('active'); filterType=b.dataset.filter; currentId=null; render(); };
-  });
+  const filterClick=(b)=>{ filters.forEach(x=>x.classList.remove('active')); b.classList.add('active'); filterType=b.dataset.filter; currentId=null; render(); };
+  filters.forEach(b=>{ b.onclick=()=>filterClick(b); });
   q.oninput=()=>{ currentId=null; render(); };
 
   // First render
   render();
 
-  /* ===== Chatbox ===== */
+  /* ===== Chatbox (i18n) ===== */
   const chatToggle=document.getElementById('chatToggle');
   const chatbox=document.getElementById('chatbox');
   const chatBody=document.getElementById('chatBody');
@@ -356,22 +455,29 @@
     if(who==='bot'){wrap.append(av,b);} else {wrap.append(b,av);}
     chatBody.appendChild(wrap); chatBody.scrollTop=chatBody.scrollHeight;
   }
-  function openChat(){ chatbox.classList.add('open'); chatbox.setAttribute('aria-hidden','false'); if(!greeted){ addMsg('Chào bạn! Mình có thể giúp chặn/đặt tin cậy thiết bị, đăng xuất phiên từ xa và xuất CSV.'); greeted=true; } setTimeout(()=>chatInput.focus(),100); }
+  function greetText(){return t('chat.greet');}
+  function openChat(){ chatbox.classList.add('open'); chatbox.setAttribute('aria-hidden','false'); if(!greeted){ addMsg(greetText()); greeted=true; } setTimeout(()=>chatInput.focus(),100); }
   function closeChat(){ chatbox.classList.remove('open'); chatbox.setAttribute('aria-hidden','true'); }
   chatToggle.onclick=()=> chatbox.classList.contains('open') ? closeChat() : openChat();
 
   function handleSend(){
-    const t=chatInput.value.trim(); if(!t) return;
-    addMsg(t,'user'); chatInput.value='';
-    const k=t.toLowerCase();
-    if(k.includes('chặn')) addMsg('Chọn thiết bị rồi bấm **Chặn** (hoặc trong chi tiết bấm *Chặn thiết bị*).');
-    else if(k.includes('tin cậy')) addMsg('Chọn thiết bị → “Đặt tin cậy”, hoặc bật trong khung chi tiết.');
-    else if(k.includes('đăng xuất')) addMsg('Dùng “Đăng xuất khỏi thiết bị” để kết thúc các phiên đang mở.');
-    else if(k.includes('csv')) addMsg('Bấm “Xuất CSV” ở thanh công cụ để tải danh sách thiết bị.');
-    else addMsg('Bạn muốn thao tác gì với thiết bị?');
+    const txt=chatInput.value.trim(); if(!txt) return;
+    addMsg(txt,'user'); chatInput.value='';
+    const k=txt.toLowerCase();
+    if(k.includes('chặn')||k.includes('block')) addMsg(t('chat.help.block'));
+    else if(k.includes('tin cậy')||k.includes('trust')) addMsg(t('chat.help.trust'));
+    else if(k.includes('đăng xuất')||k.includes('logout')) addMsg(t('chat.help.logout'));
+    else if(k.includes('csv')) addMsg(t('chat.help.csv'));
+    else addMsg(t('chat.help.ask'));
   }
   sendBtn.onclick=handleSend;
   chatInput.onkeydown=e=>{ if(e.key==='Enter') handleSend(); };
+
+  // Lắng nghe thay đổi lang/theme từ trang khác
+  window.addEventListener('storage', (e)=>{
+    if(e.key==='theme'&&e.newValue){ setTheme(e.newValue); }
+    if(e.key==='lang' &&e.newValue){ setLang(e.newValue); if(greeted){ addMsg(greetText()); } }
+  });
 </script>
 </body>
 </html>
