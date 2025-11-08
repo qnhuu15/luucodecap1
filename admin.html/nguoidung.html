@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SmartExpense – Admin / Người dùng</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root{
       --bg:#ECF5FA; --panel:#FFFFFF; --text:#0F172A; --muted:#6B7280;
@@ -18,7 +18,22 @@
       --pill-radius:999px;
       --pill-grad:linear-gradient(180deg,#FFFFFF 0%,#F9FAFB 100%);
       --pill-shadow:inset 0 1px 0 #FFFFFF, 0 6px 16px rgba(15,23,42,.06);
+
+      /* Typography header (đồng bộ) */
+      --title-size:24px;
+      --title-weight:800;
+      --title-tracking:.2px;
+      --pill-font-size:15px;
     }
+
+    /* Tiêu đề header: áp dụng cho cả h2 và .page-title để an toàn */
+    header h2, header .page-title{
+      margin:0;
+      font: var(--title-weight) var(--title-size)/1.1 Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      letter-spacing:var(--title-tracking);
+      color:var(--text);
+    }
+
     header .search{position:relative; flex:1; max-width:720px}
     header .search input{
       width:100%; height:var(--control-h);
@@ -28,8 +43,10 @@
       background:var(--pill-grad);
       box-shadow:var(--pill-shadow);
       color:var(--text); outline:none;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      font-size:var(--pill-font-size); font-weight:600; line-height:1;
     }
-    header .search input::placeholder{color:var(--muted)}
+    header .search input::placeholder{color:var(--muted); font-weight:500}
     header .search .icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.6}
     header .btn, header .select{
       height:var(--control-h);
@@ -38,7 +55,10 @@
       padding:0 14px;
       background:var(--pill-grad);
       box-shadow:var(--pill-shadow);
-      font-weight:600; cursor:pointer;
+      cursor:pointer;
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      font-size:var(--pill-font-size); font-weight:600; line-height:1;
+      color:var(--text);
     }
     header .btn:hover, header .select:hover, header .search input:hover{ background:#F7FAFF; }
     header .btn[disabled]{opacity:.5;cursor:not-allowed}
@@ -65,8 +85,12 @@
     .nav a.active .ic{filter:brightness(.85)}
 
     main{display:flex;flex-direction:column;min-width:0}
-    header{display:flex;align-items:center;gap:16px;justify-content:space-between;padding:16px 20px;background:var(--panel);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
-    .toolbar{display:flex;align-items:center;gap:12px;flex:1}
+    header{
+      display:flex;align-items:center;gap:16px;justify-content:space-between;
+      padding:16px 20px;background:var(--panel);border-bottom:1px solid var(--border);
+      position:sticky;top:0;z-index:10
+    }
+    .toolbar{display:flex;align-items:center;gap:12px;flex:1;justify-content:center}
     .search{position:relative;flex:1;max-width:640px} /* (header đã override) */
     .btn{all:unset;cursor:pointer;background:#F3F4F6;border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-weight:600}
     .btn:hover{background:#EDF2F7}
@@ -119,7 +143,7 @@
       .app{grid-template-columns:1fr}
       aside{position:fixed;inset:0 40% 0 0;transform:translateX(-100%)}
       th:nth-child(4), td:nth-child(4),
-      th:nth-child(5), td:nth-child(5){display:none} /* ẩn Ngày tạo & Số giao dịch trên màn nhỏ */
+      th:nth-child(5), td:nth-child(5){display:none}
     }
   </style>
 </head>
@@ -136,9 +160,9 @@
       <nav class="nav" style="margin-top:14px">
         <a href="tongquan.html"><span class="ic">🏠</span> Tổng quan</a>
         <a class="active" href="nguoidung.html"><span class="ic">👥</span> Người dùng</a>
-        <a href="#"><span class="ic">💳</span> Giao dịch</a>
-        <a href="#"><span class="ic">🤖</span> AI Insights</a>
-        <a href="#"><span class="ic">📊</span> Báo cáo</a>
+        <a href="giaodich.html"><span class="ic">💳</span> Giao dịch</a>
+        <a href="AI_Insights.html"><span class="ic">🤖</span> AI Insights</a>
+        <a href="baocao.html"><span class="ic">📊</span> Báo cáo</a>
         <a href="#"><span class="ic">⚙️</span> Cài đặt</a>
         <a href="#"><span class="ic">🚪</span> Đăng xuất</a>
       </nav>
@@ -147,7 +171,7 @@
     <!-- MAIN -->
     <main>
       <header>
-        <h2 style="margin:0">Người dùng</h2>
+        <h2 class="page-title">Người dùng</h2>
         <div class="toolbar">
           <div class="search">
             <span class="icon">🔎</span>
@@ -266,11 +290,7 @@
     ];
 
     // ===== State =====
-    let state = {
-      q:'', status:'', role:'', quick:'',
-      page:1, pageSize:6,
-      selected:new Set()
-    };
+    let state = { q:'', status:'', role:'', quick:'', page:1, pageSize:6, selected:new Set() };
 
     // ===== Elements =====
     const el = id=>document.getElementById(id);
@@ -317,12 +337,8 @@
         const since = Date.now() - 7*24*3600*1000;
         data = data.filter(u => new Date(u.joined).getTime() >= since);
       }
-      if(state.quick==='active'){
-        data = data.filter(u => u.tx >= 200);
-      }
-      if(state.quick==='risk'){
-        data = data.filter(u => (u.tags||[]).includes('risk'));
-      }
+      if(state.quick==='active'){ data = data.filter(u => u.tx >= 200); }
+      if(state.quick==='risk'){   data = data.filter(u => (u.tags||[]).includes('risk')); }
 
       // search
       if(state.q){
@@ -381,7 +397,6 @@
 
     // ===== Events: search & filters =====
     el('q').addEventListener('input', e => {state.q=e.target.value.trim(); state.page=1; applyFilters();});
-    // Ctrl/Cmd+K focus search + Esc đóng drawer
     window.addEventListener('keydown', (e)=>{
       if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); el('q').focus(); }
       if(e.key==='Escape'){ closeDrawer(); }
@@ -438,7 +453,6 @@
         applyFilters();
       }
     });
-    // Double click mở drawer
     tbody.addEventListener('dblclick', e=>{
       const tr = e.target.closest('tr'); if(!tr) return;
       openDrawer(tr.dataset.id);

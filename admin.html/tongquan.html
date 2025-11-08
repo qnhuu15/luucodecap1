@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SmartExpense – Admin / Tổng quan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     /* ===== Design tokens ===== */
     :root{
@@ -19,7 +19,25 @@
       --pill-radius:999px;
       --pill-grad:linear-gradient(180deg,#FFFFFF 0%,#F9FAFB 100%);
       --pill-shadow:inset 0 1px 0 #FFFFFF, 0 6px 16px rgba(15,23,42,.06);
+
+      /* Typography header (đồng bộ với trang Người dùng) */
+      --title-size:24px;
+      --title-weight:800;
+      --title-tracking:.2px;
+
+      /* Cỡ chữ BÊN TRONG khung trắng (search/btn/select) */
+      --pill-font-size:15px;
     }
+
+    /* Tiêu đề header (đồng bộ) */
+    header h2, header .page-title{
+      margin:0;
+      font: var(--title-weight) var(--title-size)/1.1 Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+      letter-spacing:var(--title-tracking);
+      color:var(--text);
+    }
+
+    /* Khung trắng: Search + Button + Select (đồng bộ) */
     header .search{position:relative; flex:1; max-width:720px}
     header .search input{
       width:100%;
@@ -30,19 +48,34 @@
       background:var(--pill-grad);
       box-shadow:var(--pill-shadow);
       color:var(--text); outline:none;
+
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      font-size:var(--pill-font-size);
+      font-weight:600;
+      line-height:1;
     }
-    header .search input::placeholder{color:var(--muted)}
+    header .search input::placeholder{color:var(--muted); font-weight:500}
     header .search .icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.6}
-    header .btn, header .select{
+
+    header .btn,
+    header .select{
       height:var(--control-h);
       border-radius:var(--pill-radius);
       border:1px solid var(--border);
       padding:0 14px;
       background:var(--pill-grad);
       box-shadow:var(--pill-shadow);
-      font-weight:600; cursor:pointer;
+      cursor:pointer;
+
+      font-family:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      font-size:var(--pill-font-size);
+      font-weight:600;
+      line-height:1;
+      color:var(--text);
     }
-    header .btn:hover, header .select:hover, header .search input:hover{ background:#F7FAFF; }
+    header .btn:hover,
+    header .select:hover,
+    header .search input:hover{ background:#F7FAFF; }
     header .btn[disabled]{opacity:.5;cursor:not-allowed}
     header .select{
       appearance:none; -webkit-appearance:none; -moz-appearance:none;
@@ -71,7 +104,7 @@
     header{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 16px;background:var(--panel);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
     .toolbar{display:flex;align-items:center;gap:12px;flex:1;justify-content:center}
     .menu-btn{display:none}
-    /* (giữ .search/.btn gốc cho nơi khác; header đã override ở trên) */
+    /* giữ .search/.btn gốc cho nơi khác; header đã override ở trên */
     .search{position:relative;flex:1;max-width:720px}
     .btn{all:unset;cursor:pointer;background:#F3F4F6;border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-weight:600}
     .btn:hover{background:#EDF2F7}
@@ -127,7 +160,7 @@
       aside{position:fixed;inset:0 40% 0 0;transform:translateX(-100%);transition:.2s;z-index:100}
       aside.show{transform:none}
       .menu-btn{display:inline-flex}
-      th:nth-child(3),td:nth-child(3){display:none} /* ẩn cột Type ở bảng gần nhất */
+      th:nth-child(3),td:nth-child(3){display:none}
     }
   </style>
 
@@ -147,9 +180,9 @@
       <nav class="nav">
         <a class="active" href="#"><span class="ic">🏠</span> Tổng quan</a>
         <a href="nguoidung.html"><span class="ic">👥</span> Người dùng</a>
-        <a href="#"><span class="ic">💳</span> Giao dịch</a>
-        <a href="#"><span class="ic">🤖</span> AI Insights</a>
-        <a href="#"><span class="ic">📊</span> Báo cáo</a>
+        <a href="giaodich.html"><span class="ic">💳</span> Giao dịch</a>
+        <a href="AI_Insights.html"><span class="ic">🤖</span> AI Insights</a>
+        <a href="baocao.html"><span class="ic">📊</span> Báo cáo</a>
         <a href="#"><span class="ic">⚙️</span> Cài đặt</a>
         <a href="#"><span class="ic">🚪</span> Đăng xuất</a>
       </nav>
@@ -159,7 +192,7 @@
     <main>
       <header>
         <button class="btn menu-btn" id="btnMenu">☰</button>
-        <h2 style="margin:0;font-size:20px;">Tổng quan</h2>
+        <h2 class="page-title">Tổng quan</h2>
 
         <div class="toolbar">
           <div class="search">
@@ -252,28 +285,28 @@
     const alerts = [
       {type:"AI",       text:"Chi tiêu bất thường (3x) của user minh.vo", time:"5 phút trước"},
       {type:"Payment",  text:"Kết nối Vietcombank khôi phục",             time:"22 phút trước"},
-      {type:"Security", text:"Admin login từ IP mới 113.23.*",           time:"1 giờ trước"},
+      {type:"Security", text:"Admin login từ IP mới 113.23.*",            time:"1 giờ trước"},
     ];
     const categories = [
       {name:"Ăn uống",   value:2150000, icon:"🍜"},
       {name:"Di chuyển", value:1120000, icon:"🚗"},
-      {name:"Nhà ở",    value:3400000, icon:"🏠"},
+      {name:"Nhà ở",     value:3400000, icon:"🏠"},
       {name:"Giải trí",  value: 760000, icon:"🎮"},
     ];
     const fmt = n => n.toLocaleString('vi-VN');
 
-    // ===== Sidebar toggle (mobile) =====
+    // Sidebar toggle (mobile)
     const sidebar = document.getElementById('sidebar');
     document.getElementById('btnMenu').addEventListener('click', ()=> sidebar.classList.toggle('show'));
 
-    // ===== Toolbar shortcuts =====
+    // Shortcuts
     const input = document.getElementById('searchInput');
     window.addEventListener('keydown',(e)=>{
       if(e.key==='/'){ e.preventDefault(); input.focus(); }
       if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); input.focus(); }
     });
 
-    // ===== Last updated =====
+    // Last updated
     function setLastUpdated() {
       const now = new Date();
       document.getElementById('lastUpdated').textContent = 'Cập nhật lúc ' + now.toLocaleString('vi-VN');
@@ -281,16 +314,15 @@
     document.getElementById('btnRefresh').addEventListener('click', setLastUpdated);
     setLastUpdated();
 
-    // ===== Render KPIs =====
+    // KPIs
     document.getElementById('k_users').textContent   = fmt(metrics.users);
     document.getElementById('k_tx').textContent      = fmt(metrics.tx);
     document.getElementById('k_fraud').textContent   = fmt(metrics.fraud);
     document.getElementById('k_revenue').textContent = fmt(metrics.revenue) + ' ₫';
 
-    // ===== Render Transactions =====
+    // Transactions
     const money = v => (v<0?'- ':'+ ') + fmt(Math.abs(v)) + ' ₫';
-    const txTbody = document.getElementById('txTable');
-    txTbody.innerHTML = txRecent.map(r => `
+    document.getElementById('txTable').innerHTML = txRecent.map(r => `
       <tr>
         <td>${r.id}</td>
         <td>${r.user}</td>
@@ -305,13 +337,12 @@
       </tr>
     `).join('');
 
-    // ===== Render Alerts =====
-    const alertTable = document.getElementById('alertTable');
+    // Alerts
     const chip = t => {
       const map = { AI:'b-red', Payment:'b-blue', Security:'b-green' };
       return `<span class="badge ${map[t]||'b-blue'}">${t}</span>`;
     };
-    alertTable.innerHTML = alerts.map(a => `
+    document.getElementById('alertTable').innerHTML = alerts.map(a => `
       <tr>
         <td>${chip(a.type)}</td>
         <td>${a.text}</td>
@@ -319,10 +350,9 @@
       </tr>
     `).join('');
 
-    // ===== Render Categories with progress =====
+    // Categories
     const totalCat = categories.reduce((s,c)=>s+c.value,0);
-    const catList = document.getElementById('categoryList');
-    catList.innerHTML = categories.map(c => {
+    document.getElementById('categoryList').innerHTML = categories.map(c => {
       const pct = totalCat ? Math.round(c.value/totalCat*100) : 0;
       return `
         <div class="cat-row">
@@ -333,7 +363,7 @@
       `;
     }).join('');
 
-    // ===== Simple retina-aware line chart (no libs) =====
+    // Chart (retina-aware, no libs)
     const canvas = document.getElementById('chartActivity');
     const ctx = canvas.getContext('2d');
 
