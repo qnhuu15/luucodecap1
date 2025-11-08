@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SmartExpense – Admin / Tổng quan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Design tokens ===== */
+    :root{
+      --bg:#ECF5FA; --panel:#FFFFFF; --text:#0F172A; --muted:#6B7280;
+      --primary:#22C55E; --danger:#EF4444; --blue:#3B82F6;
+      --border:#E2E8F0; --radius:14px; --shadow:0 8px 24px rgba(15,23,42,.06);
+    }
+
+    /* ===== Header UI Kit (đồng bộ giữa các trang) ===== */
+    :root{
+      --control-h:44px;
+      --pill-radius:999px;
+      --pill-grad:linear-gradient(180deg,#FFFFFF 0%,#F9FAFB 100%);
+      --pill-shadow:inset 0 1px 0 #FFFFFF, 0 6px 16px rgba(15,23,42,.06);
+    }
+    header .search{position:relative; flex:1; max-width:720px}
+    header .search input{
+      width:100%;
+      height:var(--control-h);
+      border-radius:var(--pill-radius);
+      border:1px solid var(--border);
+      padding:0 14px 0 44px;
+      background:var(--pill-grad);
+      box-shadow:var(--pill-shadow);
+      color:var(--text); outline:none;
+    }
+    header .search input::placeholder{color:var(--muted)}
+    header .search .icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);opacity:.6}
+    header .btn, header .select{
+      height:var(--control-h);
+      border-radius:var(--pill-radius);
+      border:1px solid var(--border);
+      padding:0 14px;
+      background:var(--pill-grad);
+      box-shadow:var(--pill-shadow);
+      font-weight:600; cursor:pointer;
+    }
+    header .btn:hover, header .select:hover, header .search input:hover{ background:#F7FAFF; }
+    header .btn[disabled]{opacity:.5;cursor:not-allowed}
+    header .select{
+      appearance:none; -webkit-appearance:none; -moz-appearance:none;
+      background-image:url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%238A94A6' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat:no-repeat; background-position:right 12px center; padding-right:34px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+
+    /* ===== Layout ===== */
+    .app{display:grid;grid-template-columns:260px 1fr;min-height:100dvh}
+    aside{background:var(--panel);border-right:1px solid var(--border);padding:18px;position:sticky;top:0;height:100dvh}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px}
+    .logo-badge{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#FFE9DE 0%,#FFF5EE 100%);box-shadow:0 6px 16px rgba(15,23,42,.08), inset 0 0 0 1px rgba(255,255,255,.6);display:block;overflow:hidden}
+    .brand-logo{width:100%;height:100%;object-fit:contain;object-position:center;display:block}
+
+    .nav{margin-top:16px;display:flex;flex-direction:column;gap:6px}
+    .nav a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);padding:10px 12px;border-radius:12px;transition:background .25s, transform .15s}
+    .nav a .ic{width:22px}
+    .nav a:hover{background:#F3F4F6;transform:translateX(2px)}
+    .nav a.active{background:#A7EFC1;color:#065F46;font-weight:600}
+
+    main{display:flex;flex-direction:column;min-width:0}
+    header{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:12px 16px;background:var(--panel);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+    .toolbar{display:flex;align-items:center;gap:12px;flex:1;justify-content:center}
+    .menu-btn{display:none}
+    /* (giữ .search/.btn gốc cho nơi khác; header đã override ở trên) */
+    .search{position:relative;flex:1;max-width:720px}
+    .btn{all:unset;cursor:pointer;background:#F3F4F6;border:1px solid var(--border);padding:8px 12px;border-radius:999px;font-weight:600}
+    .btn:hover{background:#EDF2F7}
+    .avatar{display:flex;align-items:center;gap:10px}
+    .avatar .pic{width:36px;height:36px;border-radius:50%;background:#FDE68A}
+
+    .content{padding:20px;display:grid;gap:16px}
+
+    /* ===== KPI ===== */
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+    .card{background:var(--panel);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow);border:1px solid var(--border)}
+    .kpi{height:120px;display:flex;flex-direction:column;justify-content:space-between}
+    .kpi .title{font-size:13px;color:var(--muted)}
+    .kpi .value{font-size:28px;font-weight:700;line-height:1.1;letter-spacing:.2px;font-variant-numeric:tabular-nums}
+    .kpi .trend{font-size:12px}
+    .badge{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:999px;font-size:12px;font-weight:700}
+    .b-blue{background:#E0EDFF;color:#1D4ED8}
+    .b-green{background:#DCFCE7;color:#065F46}
+    .b-red{background:#FEE2E2;color:#991B1B}
+    .b-teal{background:#D1FAE5;color:#115E59}
+
+    /* ===== Grid main ===== */
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}
+    .card h3{margin:0 0 12px 0;font-size:16px}
+    .chart{height:320px;border-radius:12px;background:linear-gradient(180deg,#FFFFFF 0%,#FBFBFD 100%);border:1px solid var(--border)}
+
+    /* ===== Tables ===== */
+    table{width:100%;border-collapse:separate;border-spacing:0 10px}
+    th{font-size:12px;color:var(--muted);text-align:left;padding:8px 10px}
+    td{background:var(--panel);padding:12px 10px;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+    tr td:first-child{border-left:1px solid var(--border);border-radius:10px 0 0 10px}
+    tr td:last-child{border-right:1px solid var(--border);border-radius:0 10px 10px 0}
+    .status{display:inline-block;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600}
+    .s-ok{background:#DCFCE7;color:#065F46}
+    .s-flag{background:#FEE2E2;color:#991B1B}
+    .s-review{background:#FEF9C3;color:#854D0E}
+    .muted{color:var(--muted)}
+    .num{font-variant-numeric:tabular-nums;letter-spacing:.2px}
+
+    /* Category row */
+    .cat-row{display:flex;align-items:center;gap:10px;padding:8px 0}
+    .cat-left{display:flex;align-items:center;gap:10px;min-width:140px}
+    .cat-bar{flex:1;height:8px;background:#F3F4F6;border:1px solid var(--border);border-radius:999px;overflow:hidden}
+    .cat-fill{height:100%;background:#22C55E}
+
+    /* Footer info line */
+    .subheader{display:flex;align-items:center;gap:10px;justify-content:flex-end;color:var(--muted);font-size:12px}
+
+    /* ===== Responsive ===== */
+    @media (max-width:1200px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+    @media (max-width:780px){
+      .app{grid-template-columns:1fr}
+      aside{position:fixed;inset:0 40% 0 0;transform:translateX(-100%);transition:.2s;z-index:100}
+      aside.show{transform:none}
+      .menu-btn{display:inline-flex}
+      th:nth-child(3),td:nth-child(3){display:none} /* ẩn cột Type ở bảng gần nhất */
+    }
+  </style>
+
+  <link rel="icon" href="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w96-h96-rw" sizes="96x96">
+  <link rel="apple-touch-icon" href="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w180-h180-rw">
+</head>
+<body>
+  <div class="app">
+    <!-- ===== SIDEBAR ===== -->
+    <aside id="sidebar">
+      <div class="brand">
+        <span class="logo-badge">
+          <img class="brand-logo" src="https://play-lh.googleusercontent.com/oIYzM27-Lax7Zkg4grAxxLYRQkxHrs1osx0Qbf-jADQNpv9400yo0qYcLzDn-Qz2M8A=w480-h960-rw" alt="SmartExpense Admin Logo" loading="lazy">
+        </span>
+        SmartExpense Admin
+      </div>
+      <nav class="nav">
+        <a class="active" href="#"><span class="ic">🏠</span> Tổng quan</a>
+        <a href="nguoidung.html"><span class="ic">👥</span> Người dùng</a>
+        <a href="#"><span class="ic">💳</span> Giao dịch</a>
+        <a href="#"><span class="ic">🤖</span> AI Insights</a>
+        <a href="#"><span class="ic">📊</span> Báo cáo</a>
+        <a href="#"><span class="ic">⚙️</span> Cài đặt</a>
+        <a href="#"><span class="ic">🚪</span> Đăng xuất</a>
+      </nav>
+    </aside>
+
+    <!-- ===== MAIN ===== -->
+    <main>
+      <header>
+        <button class="btn menu-btn" id="btnMenu">☰</button>
+        <h2 style="margin:0;font-size:20px;">Tổng quan</h2>
+
+        <div class="toolbar">
+          <div class="search">
+            <span class="icon">🔎</span>
+            <input id="searchInput" placeholder="Tìm người dùng, giao dịch, cảnh báo..." aria-label="Tìm kiếm" />
+          </div>
+          <button class="btn" id="btnRange" aria-haspopup="listbox" title="Khoảng thời gian">30 ngày ▾</button>
+          <button class="btn" id="btnRefresh" title="Làm mới">↻ Làm mới</button>
+        </div>
+
+        <div class="avatar" aria-label="Tài khoản">
+          <div class="pic"></div>
+          <div style="font-weight:600">Admin</div>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="subheader">
+          <span id="lastUpdated">Cập nhật lúc —</span>
+        </div>
+
+        <!-- KPI -->
+        <section class="kpis">
+          <div class="card kpi">
+            <div class="title">Tổng người dùng</div>
+            <div class="value num" id="k_users">—</div>
+            <div class="trend"><span class="badge b-blue">▲ +4.1% tuần này</span></div>
+          </div>
+          <div class="card kpi">
+            <div class="title">Tổng giao dịch</div>
+            <div class="value num" id="k_tx">—</div>
+            <div class="trend"><span class="badge b-green">▲ +2.7%</span></div>
+          </div>
+          <div class="card kpi">
+            <div class="title">Cảnh báo gian lận (AI)</div>
+            <div class="value num" id="k_fraud">—</div>
+            <div class="trend"><span class="badge b-red">● đang tăng</span></div>
+          </div>
+          <div class="card kpi">
+            <div class="title">Tổng doanh thu hệ thống</div>
+            <div class="value num" id="k_revenue">—</div>
+            <div class="trend"><span class="badge b-teal">✔ xu hướng tốt</span></div>
+          </div>
+        </section>
+
+        <!-- CHART + RIGHT -->
+        <section class="grid">
+          <div class="card">
+            <h3 id="chartTitle">Xu hướng hoạt động (30 ngày)</h3>
+            <canvas id="chartActivity" class="chart"></canvas>
+          </div>
+
+          <div class="card">
+            <h3>Phân bố loại giao dịch</h3>
+            <div id="categoryList"></div>
+            <hr style="border:none;border-top:1px solid var(--border);margin:14px 0">
+            <h3 style="margin-top:0">Cảnh báo gần đây</h3>
+            <table>
+              <thead><tr><th>Loại</th><th>Nội dung</th><th>Thời gian</th></tr></thead>
+              <tbody id="alertTable"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- RECENT TRANSACTIONS -->
+        <section class="card">
+          <h3 style="margin-top:0">Giao dịch gần nhất</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th><th>Người dùng</th><th>Loại</th><th>Số tiền</th><th>Trạng thái</th><th>Thời gian</th>
+              </tr>
+            </thead>
+            <tbody id="txTable"></tbody>
+          </table>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // ===== Demo data =====
+    const metrics = { users: 12450, tx: 128760, fraud: 27, revenue: 1200000000 };
+    const txRecent = [
+      {id:"#TX2391", user:"linh.ng",  type:"Expense", amount:-230000,  status:"Success", time:"2 phút"},
+      {id:"#TX2390", user:"thanh.le", type:"Income",  amount: 4500000, status:"Success", time:"10 phút"},
+      {id:"#TX2389", user:"minh.vo",  type:"Expense", amount:-89000,   status:"Review",  time:"14 phút"},
+      {id:"#TX2388", user:"hoa.ph",   type:"Expense", amount:-1200000, status:"Flagged", time:"20 phút"},
+    ];
+    const alerts = [
+      {type:"AI",       text:"Chi tiêu bất thường (3x) của user minh.vo", time:"5 phút trước"},
+      {type:"Payment",  text:"Kết nối Vietcombank khôi phục",             time:"22 phút trước"},
+      {type:"Security", text:"Admin login từ IP mới 113.23.*",           time:"1 giờ trước"},
+    ];
+    const categories = [
+      {name:"Ăn uống",   value:2150000, icon:"🍜"},
+      {name:"Di chuyển", value:1120000, icon:"🚗"},
+      {name:"Nhà ở",    value:3400000, icon:"🏠"},
+      {name:"Giải trí",  value: 760000, icon:"🎮"},
+    ];
+    const fmt = n => n.toLocaleString('vi-VN');
+
+    // ===== Sidebar toggle (mobile) =====
+    const sidebar = document.getElementById('sidebar');
+    document.getElementById('btnMenu').addEventListener('click', ()=> sidebar.classList.toggle('show'));
+
+    // ===== Toolbar shortcuts =====
+    const input = document.getElementById('searchInput');
+    window.addEventListener('keydown',(e)=>{
+      if(e.key==='/'){ e.preventDefault(); input.focus(); }
+      if((e.ctrlKey||e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); input.focus(); }
+    });
+
+    // ===== Last updated =====
+    function setLastUpdated() {
+      const now = new Date();
+      document.getElementById('lastUpdated').textContent = 'Cập nhật lúc ' + now.toLocaleString('vi-VN');
+    }
+    document.getElementById('btnRefresh').addEventListener('click', setLastUpdated);
+    setLastUpdated();
+
+    // ===== Render KPIs =====
+    document.getElementById('k_users').textContent   = fmt(metrics.users);
+    document.getElementById('k_tx').textContent      = fmt(metrics.tx);
+    document.getElementById('k_fraud').textContent   = fmt(metrics.fraud);
+    document.getElementById('k_revenue').textContent = fmt(metrics.revenue) + ' ₫';
+
+    // ===== Render Transactions =====
+    const money = v => (v<0?'- ':'+ ') + fmt(Math.abs(v)) + ' ₫';
+    const txTbody = document.getElementById('txTable');
+    txTbody.innerHTML = txRecent.map(r => `
+      <tr>
+        <td>${r.id}</td>
+        <td>${r.user}</td>
+        <td class="muted">${r.type}</td>
+        <td class="num"><strong>${money(r.amount)}</strong></td>
+        <td>${
+          r.status==='Success' ? '<span class="status s-ok">Success</span>' :
+          r.status==='Flagged' ? '<span class="status s-flag">Flagged</span>' :
+                                 '<span class="status s-review">Review</span>'
+        }</td>
+        <td class="muted">${r.time} trước</td>
+      </tr>
+    `).join('');
+
+    // ===== Render Alerts =====
+    const alertTable = document.getElementById('alertTable');
+    const chip = t => {
+      const map = { AI:'b-red', Payment:'b-blue', Security:'b-green' };
+      return `<span class="badge ${map[t]||'b-blue'}">${t}</span>`;
+    };
+    alertTable.innerHTML = alerts.map(a => `
+      <tr>
+        <td>${chip(a.type)}</td>
+        <td>${a.text}</td>
+        <td class="muted">${a.time}</td>
+      </tr>
+    `).join('');
+
+    // ===== Render Categories with progress =====
+    const totalCat = categories.reduce((s,c)=>s+c.value,0);
+    const catList = document.getElementById('categoryList');
+    catList.innerHTML = categories.map(c => {
+      const pct = totalCat ? Math.round(c.value/totalCat*100) : 0;
+      return `
+        <div class="cat-row">
+          <div class="cat-left"><span style="font-size:18px">${c.icon}</span><div>${c.name}</div></div>
+          <div class="cat-bar" aria-hidden="true"><div class="cat-fill" style="width:${pct}%"></div></div>
+          <strong class="num" style="min-width:130px;text-align:right">${fmt(c.value)} ₫</strong>
+        </div>
+      `;
+    }).join('');
+
+    // ===== Simple retina-aware line chart (no libs) =====
+    const canvas = document.getElementById('chartActivity');
+    const ctx = canvas.getContext('2d');
+
+    function sizeCanvas(){
+      const dpr = window.devicePixelRatio || 1;
+      const cssW = canvas.clientWidth;
+      const cssH = canvas.clientHeight;
+      canvas.width = Math.round(cssW * dpr);
+      canvas.height = Math.round(cssH * dpr);
+      ctx.setTransform(dpr,0,0,dpr,0,0);
+    }
+
+    function drawLineChart(values){
+      sizeCanvas();
+      const W = canvas.clientWidth, H = canvas.clientHeight;
+      const pad = 32;
+      const max = Math.max(...values) * 1.2;
+      const step = (W - pad*2) / (values.length - 1);
+
+      ctx.clearRect(0,0,W,H);
+      ctx.strokeStyle = '#E5E7EB'; ctx.lineWidth = 1;
+      for(let i=0;i<5;i++){
+        const y = pad + ((H-pad*2)/4)*i;
+        ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(W-pad,y); ctx.stroke();
+      }
+
+      const pts = values.map((v,i)=>[pad + step*i, H - pad - (v/max)*(H - pad*2)]);
+      const grad = ctx.createLinearGradient(0,pad,0,H-pad);
+      grad.addColorStop(0,'rgba(34,197,94,.25)');
+      grad.addColorStop(1,'rgba(34,197,94,0)');
+      ctx.beginPath(); ctx.moveTo(pts[0][0], H-pad);
+      pts.forEach(([x,y])=> ctx.lineTo(x,y));
+      ctx.lineTo(pts[pts.length-1][0], H-pad); ctx.closePath();
+      ctx.fillStyle = grad; ctx.fill();
+
+      ctx.beginPath();
+      pts.forEach(([x,y],i)=> i?ctx.lineTo(x,y):ctx.moveTo(x,y));
+      ctx.strokeStyle = '#22C55E'; ctx.lineWidth = 3; ctx.stroke();
+
+      ctx.fillStyle = '#22C55E';
+      pts.forEach(([x,y])=>{ ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill(); });
+    }
+
+    // initial data (30 ngày)
+    let rangeDays = 30;
+    function genData(days){
+      const base = 10, arr = [];
+      let v = base + Math.random()*10;
+      for(let i=0;i<Math.round(days/3);i++){
+        v += (Math.random()*10 - 2);
+        arr.push(Math.max(6, Math.round(v)));
+      }
+      return arr;
+    }
+    let chartData = genData(rangeDays);
+    drawLineChart(chartData);
+    window.addEventListener('resize', ()=>drawLineChart(chartData));
+
+    // Range switcher
+    const btnRange = document.getElementById('btnRange');
+    btnRange.addEventListener('click', ()=>{
+      rangeDays = rangeDays===30 ? 90 : rangeDays===90 ? 7 : 30;
+      btnRange.textContent = (rangeDays+' ngày ▾');
+      document.getElementById('chartTitle').textContent = `Xu hướng hoạt động (${rangeDays} ngày)`;
+      chartData = genData(rangeDays);
+      drawLineChart(chartData);
+    });
+  </script>
+</body>
+</html>
